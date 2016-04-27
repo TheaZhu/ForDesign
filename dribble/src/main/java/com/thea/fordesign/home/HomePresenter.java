@@ -2,6 +2,7 @@ package com.thea.fordesign.home;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
 
@@ -28,7 +29,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     public void initService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DribbleConstant.OAUTH)
+                .baseUrl(DribbleConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mService = retrofit.create(DribbbleService.class);
@@ -37,17 +38,17 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void test() {
         LogUtil.i(TAG, "test");
-        Call<String> call = mService.authorize();
-        call.enqueue(new Callback<String>() {
+        Call<DribbbleShot> call = mService.getShot(DribbleConstant.AUTH_TYPE + DribbleConstant
+        .CLIENT_ACCESS_TOKEN, 2222);
+        call.enqueue(new Callback<DribbbleShot>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<DribbbleShot> call, Response<DribbbleShot> response) {
                 LogUtil.i(TAG, "code: " + response.code() + ", message: " + response.message());
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                LogUtil.i(TAG, "call executed: " + call.isExecuted());
-                LogUtil.i(TAG, "fail message: " + t.getMessage());
+            public void onFailure(Call<DribbbleShot> call, Throwable t) {
+                LogUtil.i(TAG, "call executed: " + call.isExecuted() + ", url: " + call.request().url());
                 t.printStackTrace();
             }
         });

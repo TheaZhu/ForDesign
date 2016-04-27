@@ -11,4 +11,11 @@
         android:id="@+id/fg_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <!--<Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="@string/test"
+        android:onClick="test"/>-->
 </RelativeLayout>

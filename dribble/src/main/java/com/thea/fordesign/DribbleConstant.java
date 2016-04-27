@@ -10,6 +10,9 @@ public class DribbleConstant {
             "f8ae2b3fa24a3e0dadf3be214789ca0318ad252998a253e68e7f62cd7c1f485c";
     public static final String CLIENT_ACCESS_TOKEN =
             "f591acdfce64a06349b6b70354d21722c9753f290a0e8a90590e9cac54424d29";
+    public static final String USER_ACCESS_TOKEN =
+            "05589f9e8cb9d7e8809c40be35d9f984c4ded4b9fd602f4843d05fc583609aa7";
+    public static final String AUTH_TYPE = "Bearer ";
 
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String OAUTH = "https://dribbble.com/oauth/";
