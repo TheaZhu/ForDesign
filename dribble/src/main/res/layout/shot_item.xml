@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.thea.fordesign.R"/>
+        <import type="com.thea.fordesign.bean.DribbbleUser"/>
+
+        <variable
+            name="shot"
+            type="com.thea.fordesign.bean.DribbbleShot"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shots.ShotItemActionHandler"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{() -> actionHandler.shotClicked(shot)}">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/normal_item_padding">
+
+            <ImageView
+                android:id="@+id/iv_shot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/default_image_description"
+                android:scaleType="centerCrop"
+                tools:src="@mipmap/default_shot"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/iv_shot"
+                android:layout_alignEnd="@id/iv_shot"
+                android:layout_alignLeft="@id/iv_shot"
+                android:layout_alignRight="@id/iv_shot"
+                android:layout_alignStart="@id/iv_shot"
+                android:layout_alignTop="@id/iv_shot"
+                android:background="@color/white_alpha_ee"
+                android:padding="@dimen/normal_item_padding"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_shot_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dribbble_charcoal"
+                    android:textSize="@dimen/text_size_subhead"
+                    android:text="@{shot.title}"
+                    tools:text="@string/default_title"/>
+
+                <TextView
+                    android:id="@+id/tv_shot_updated_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/grey_400"
+                    android:text="@{actionHandler.formatTime(shot.updatedTime)}"
+                    tools:text="@string/default_time"/>
+
+                <TextView
+                    android:id="@+id/tv_shot_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tv_shot_updated_time"
+                    android:layout_below="@id/tv_shot_title"
+                    android:layout_marginBottom="@dimen/normal_vertical_margin"
+                    android:ellipsize="end"
+                    android:text="@{shot.description}"
+                    tools:text="@string/default_description"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_comments_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/iv_shot"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:drawableLeft="@mipmap/ic_comment_inactive"
+                android:drawableStart="@mipmap/ic_comment_inactive"
+                android:gravity="center_vertical"
+                android:text="@{shot.commentsCount}"
+                tools:text="@string/default_comments_count"/>
+
+            <TextView
+                android:id="@+id/tv_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_comments_count"
+                android:layout_toLeftOf="@id/tv_comments_count"
+                android:layout_toStartOf="@id/tv_comments_count"
+                android:drawableLeft="@mipmap/ic_like_inactive"
+                android:drawableStart="@mipmap/ic_like_inactive"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/normal_horizontal_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding"
+                android:text="@{shot.likesCount}"
+                android:onClick="@{() -> actionHandler.likeChanged(shot)}"
+                tools:text="@string/default_likes_count"/>
+
+            <TextView
+                android:id="@+id/tv_views_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_comments_count"
+                android:layout_toLeftOf="@id/tv_likes_count"
+                android:layout_toStartOf="@id/tv_likes_count"
+                android:drawableLeft="@mipmap/ic_view_inactive"
+                android:drawableStart="@mipmap/ic_view_inactive"
+                android:gravity="center_vertical"
+                android:text="@{shot.viewsCount}"
+                tools:text="@string/default_comments_count"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_shot"
+                android:layout_marginEnd="@dimen/normal_horizontal_margin"
+                android:layout_marginRight="@dimen/normal_horizontal_margin"
+                android:layout_marginTop="@dimen/small_vertical_margin"
+                android:layout_toLeftOf="@id/ll_views_count"
+                android:layout_toStartOf="@id/ll_views_count"
+                android:orientation="horizontal"
+                android:onClick="@{() -> actionHandler.designerClicked(shot.user)}">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/default_image_description"
+                    android:scaleType="centerCrop"
+                    tools:src="@mipmap/ic_dribbble_square"/>
+
+                <TextView
+                    android:id="@+id/tv_designer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/small_horizontal_margin"
+                    android:layout_marginStart="@dimen/small_horizontal_margin"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/dribbble_link_blue"
+                    android:text="@{shot.user.name}"
+                    tools:text="@string/default_designer"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

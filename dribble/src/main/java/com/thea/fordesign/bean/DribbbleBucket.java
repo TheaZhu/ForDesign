@@ -11,7 +11,7 @@ public class DribbbleBucket {
      * id : 2754
      * name : Great Marks
      * description : Collecting superb brand marks from the
-     * <a href="https://dribbble.com">Dribbbleverse</a>.
+     * <a href="https://dribbble.com">Dribbble verse</a>.
      * shots_count : 251
      * created_at : 2011-05-20T21:05:55Z
      * updated_at : 2014-02-21T16:37:12Z

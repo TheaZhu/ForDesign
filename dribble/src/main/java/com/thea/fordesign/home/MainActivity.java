@@ -13,9 +13,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager()
+        /*HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fg_home);
-        new HomePresenter(homeFragment);
+        new HomePresenter(homeFragment);*/
     }
 
     /*public void test(View view) {

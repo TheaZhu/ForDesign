@@ -3,4 +3,17 @@
 
     <string name="hello_world">Hello World</string>
     <string name="test">Test</string>
+    
+    <string name="default_image_description">Image</string>
+
+    <string name="default_views_count">24925</string>
+    <string name="default_likes_count">1039</string>
+    <string name="default_comments_count">74</string>
+    <string name="default_designer">Dan Cederholm</string>
+    <string name="default_title">Dribbble is 5!</string>
+    <string name="default_time">June 26, 2014</string>
+    <string name="default_description">
+        Update! Thanks to all who entered and helped us celebrate.
+    </string>
+
 </resources>
