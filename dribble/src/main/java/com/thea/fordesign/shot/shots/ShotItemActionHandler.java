@@ -1,13 +1,9 @@
-package com.thea.fordesign.shots;
+package com.thea.fordesign.shot.shots;
 
 import android.databinding.BaseObservable;
 
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
@@ -23,14 +19,15 @@ public class ShotItemActionHandler extends BaseObservable {
     }
 
     public String formatTime(String timeStr) {
-        SimpleDateFormat parseFormat = new SimpleDateFormat("YYYY-MM-DDTHH:MM:SSZ", Locale.getDefault());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault());
+        /*SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ", Locale
+                .getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             return dateFormat.format(parseFormat.parse(timeStr));
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-        return timeStr;
+        }*/
+        return timeStr.substring(0, timeStr.indexOf("T"));
     }
 
     public void likeChanged(DribbbleShot shot) {

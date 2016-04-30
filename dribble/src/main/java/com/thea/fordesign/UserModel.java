@@ -1,4 +1,4 @@
-package com.thea.fordesign.model;
+package com.thea.fordesign;
 
 import android.content.Context;
 import android.content.SharedPreferences;

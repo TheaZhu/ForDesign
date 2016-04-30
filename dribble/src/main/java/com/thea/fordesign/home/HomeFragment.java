@@ -3,6 +3,7 @@ package com.thea.fordesign.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 import com.thea.fordesign.R;
@@ -41,5 +42,10 @@ public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> i
 
     @Override
     public void showSnack(String msg) {
+    }
+
+    @Override
+    public void showSnack(@StringRes int resId) {
+
     }
 }

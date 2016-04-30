@@ -1,6 +1,7 @@
-package com.thea.fordesign.shots;
+package com.thea.fordesign.shot.shots;
 
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.thea.fordesign.base.BasePresenter;
 import com.thea.fordesign.base.BaseView;
@@ -16,17 +17,23 @@ public interface ShotsContract {
 
     interface View extends BaseView<Presenter> {
 
+        void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener refreshListener);
+
         void setLoadingIndicator(boolean active);
 
         void showShots(List<DribbbleShot> shots);
 
         void showShotDetailsUi(int shotId);
 
-        void setShotLikeState(boolean like);
+        void showUserDetailsUi(int userId);
+
+//        void setShotLikeState(boolean like);
 
     }
 
     interface Presenter extends BasePresenter {
+
+        void result(int requestCode, int resultCode);
 
         void loadShots(boolean forceUpdate);
 

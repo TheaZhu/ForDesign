@@ -14,6 +14,8 @@ import com.thea.fordesign.bean.DribbbleUser;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -116,9 +118,11 @@ public interface DribbbleService {
 
     @GET("shots")
     Call<List<DribbbleShot>> getShots(@Header("Authorization") String authorization, @NonNull
-    @Query("list") String list, @NonNull @Query
-            ("timeframe") String timeFrame, @NonNull @Query("date") String date, @NonNull @Query
-            ("sort") String sort);
+    @Query("list") String list, @NonNull @Query("timeframe") String timeFrame, @NonNull @Query
+            ("date") String date, @NonNull @Query("sort") String sort);
+
+    @GET("shots")
+    Call<List<DribbbleShot>> getShots(@Header("Authorization") String authorization);
 
     @GET("shots/{shot}")
     Call<DribbbleShot> getShot(@Header("Authorization") String authorization, @Path("shot") int
@@ -139,12 +143,12 @@ public interface DribbbleService {
     @GET("shots/{shot}/attachments")
     Call<List<DribbbleAttachment>> getShotAttachments(@Header("Authorization") String
                                                               authorization, @Path("shot") int
-            shotId);
+                                                              shotId);
 
     @GET("shots/{shot}/attachments/{attachment}")
     Call<DribbbleAttachment> getShotAttachment(@Header("Authorization") String authorization,
                                                @Path("shot") int shotId, @Path("attachment") int
-            attachmentId);
+                                                       attachmentId);
 
     @GET("shots/{shot}/comments")
     Call<List<DribbbleComment>> getShotComments(@Header("Authorization") String authorization,
@@ -153,7 +157,7 @@ public interface DribbbleService {
     @GET("shots/{shot}/comments/{comment}")
     Call<DribbbleComment> getShotComment(@Header("Authorization") String authorization, @Path
             ("shot") int shotId, @Path("comment") int
-            commentId);
+                                                 commentId);
 
     @GET("shots/{shot}/likes")
     Call<List<DribbbleLike>> getShotLikes(@Header("Authorization") String authorization, @Path
@@ -166,12 +170,12 @@ public interface DribbbleService {
     @GET("shots/{shot}/comments/{comment}/likes")
     Call<List<DribbbleLike>> getShotCommentLikes(@Header("Authorization") String authorization,
                                                  @Path("shot") int shotId, @Path("comment") int
-            commentId);
+                                                         commentId);
 
     @GET("shots/{shot}/comments/{comment}/like")
     Call<DribbbleLike> getShotCommentLike(@Header("Authorization") String authorization, @Path
             ("shot") int shotId, @Path("comment") int
-            commentId);
+                                                  commentId);
 
     @GET("teams/{team}/members")
     Call<List<DribbbleUser>> getTeamMembers(@Header("Authorization") String authorization, @Path
@@ -198,5 +202,25 @@ public interface DribbbleService {
             url);
 
     @GET
-    Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization, @Url String url);
+    Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization, @Url String
+            url);
+
+    class Builder {
+        private Retrofit.Builder mRetrofitBuilder;
+
+        public Builder() {
+            mRetrofitBuilder = new Retrofit.Builder()
+                    .baseUrl(DribbleConstant.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+        }
+
+        public Builder baseUrl(String baseUrl) {
+            mRetrofitBuilder.baseUrl(baseUrl);
+            return this;
+        }
+
+        public DribbbleService create() {
+            return mRetrofitBuilder.build().create(DribbbleService.class);
+        }
+    }
 }

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <import type="android.view.View"/>
-    </data>
-
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/srl_shots"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.thea.fordesign.shots.ShotsFragment">
+        tools:context=".shot.shots.ShotsFragment">
 
-        <include layout="@layout/shot_item"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_shots"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
