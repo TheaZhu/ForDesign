@@ -1,6 +1,7 @@
 package com.thea.fordesign.shot.shots;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,12 +10,13 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
@@ -64,7 +66,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
         RecyclerView recyclerView = mViewDataBinding.rvShots;
         mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -159,11 +161,27 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         public void onBindViewHolder(ShotViewHolder holder, int position) {
             ShotItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
             ShotItemActionHandler actionHandler = new ShotItemActionHandler(mUserActionsListener);
-            viewDataBinding.setShot(mShots.get(position));
+            DribbbleShot shot = mShots.get(position);
+            viewDataBinding.setShot(shot);
             viewDataBinding.setActionHandler(actionHandler);
 
-            viewDataBinding.ivShot.setImageResource(R.mipmap.default_shot);
-            viewDataBinding.ivAvatar.setImageResource(R.mipmap.ic_dribbble_square);
+            Context context = holder.itemView.getContext();
+//            viewDataBinding.ivShot.setImageResource(R.mipmap.default_shot);
+//            viewDataBinding.ivAvatar.setImageResource(R.mipmap.ic_dribbble_square);
+
+            Glide.with(context)
+                    .load(shot.getUser().getAvatarUrl())
+                    .centerCrop()
+                    .placeholder(R.mipmap.ic_dribbble_square)
+                    .crossFade()
+                    .into(viewDataBinding.ivAvatar);
+
+            Glide.with(context)
+                    .load(shot.getImages().getNormal())
+                    .centerCrop()
+                    .placeholder(R.mipmap.default_shot)
+                    .crossFade()
+                    .into(viewDataBinding.ivShot);
 
             viewDataBinding.tvLikesCount.setCompoundDrawablesWithIntrinsicBounds(R.mipmap
                     .ic_like_inactive, 0, 0, 0);

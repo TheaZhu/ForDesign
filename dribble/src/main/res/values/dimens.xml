@@ -8,7 +8,7 @@
     <dimen name="small_horizontal_margin">8dp</dimen>
     <dimen name="small_vertical_margin">10dp</dimen>
 
-    <dimen name="normal_item_padding">16dp</dimen>
+    <dimen name="item_padding">8dp</dimen>
     <dimen name="normal_horizontal_padding">16dp</dimen>
     <dimen name="normal_vertical_padding">16dp</dimen>
 

@@ -3,7 +3,9 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="java.lang.String"/>
+
         <import type="com.thea.fordesign.bean.DribbbleUser"/>
 
         <variable
@@ -16,14 +18,15 @@
     </data>
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:onClick="@{() -> actionHandler.shotClicked(shot)}">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/normal_item_padding">
+            android:padding="@dimen/item_padding">
 
             <ImageView
                 android:id="@+id/iv_shot"
@@ -43,7 +46,7 @@
                 android:layout_alignStart="@id/iv_shot"
                 android:layout_alignTop="@id/iv_shot"
                 android:background="@color/white_alpha_ee"
-                android:padding="@dimen/normal_item_padding"
+                android:padding="@dimen/normal_vertical_padding"
                 android:visibility="gone">
 
                 <TextView
@@ -77,57 +80,53 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tv_views_count"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_below="@id/iv_shot"
+                android:drawableLeft="@mipmap/ic_view_inactive"
+                android:drawableStart="@mipmap/ic_view_inactive"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{String.valueOf(shot.viewsCount)}"
+                tools:text="@string/default_views_count"/>
+
+            <TextView
+                android:id="@+id/tv_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_views_count"
+                android:layout_alignTop="@id/tv_views_count"
+                android:layout_toEndOf="@id/tv_views_count"
+                android:layout_toRightOf="@id/tv_views_count"
+                android:drawableLeft="@mipmap/ic_like_inactive"
+                android:drawableStart="@mipmap/ic_like_inactive"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:onClick="@{() -> actionHandler.likeChanged(shot)}"
+                android:paddingLeft="@dimen/item_padding"
+                android:paddingRight="@dimen/item_padding"
+                android:text="@{String.valueOf(shot.likesCount)}"
+                tools:text="@string/default_likes_count"/>
+
+            <TextView
                 android:id="@+id/tv_comments_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/iv_shot"
-                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:layout_alignBottom="@id/tv_views_count"
+                android:layout_alignTop="@id/tv_views_count"
+                android:layout_toEndOf="@id/tv_likes_count"
+                android:layout_toRightOf="@id/tv_likes_count"
                 android:drawableLeft="@mipmap/ic_comment_inactive"
                 android:drawableStart="@mipmap/ic_comment_inactive"
                 android:gravity="center_vertical"
                 android:text="@{String.valueOf(shot.commentsCount)}"
                 tools:text="@string/default_comments_count"/>
 
-            <TextView
-                android:id="@+id/tv_likes_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/tv_comments_count"
-                android:layout_alignTop="@id/tv_comments_count"
-                android:layout_toLeftOf="@id/tv_comments_count"
-                android:layout_toStartOf="@id/tv_comments_count"
-                android:drawableLeft="@mipmap/ic_like_inactive"
-                android:drawableStart="@mipmap/ic_like_inactive"
-                android:gravity="center_vertical"
-                android:onClick="@{() -> actionHandler.likeChanged(shot)}"
-                android:paddingLeft="@dimen/normal_horizontal_padding"
-                android:paddingRight="@dimen/normal_horizontal_padding"
-                android:text="@{String.valueOf(shot.likesCount)}"
-                tools:text="@string/default_likes_count"/>
-
-            <TextView
-                android:id="@+id/tv_views_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/tv_comments_count"
-                android:layout_alignTop="@id/tv_comments_count"
-                android:layout_toLeftOf="@id/tv_likes_count"
-                android:layout_toStartOf="@id/tv_likes_count"
-                android:drawableLeft="@mipmap/ic_view_inactive"
-                android:drawableStart="@mipmap/ic_view_inactive"
-                android:gravity="center_vertical"
-                android:text="@{String.valueOf(shot.viewsCount)}"
-                tools:text="@string/default_comments_count"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_shot"
-                android:layout_marginEnd="@dimen/normal_horizontal_margin"
-                android:layout_marginRight="@dimen/normal_horizontal_margin"
-                android:layout_marginTop="@dimen/small_vertical_margin"
+                android:layout_below="@id/tv_comments_count"
                 android:layout_toLeftOf="@id/ll_views_count"
                 android:layout_toStartOf="@id/ll_views_count"
                 android:onClick="@{() -> actionHandler.designerClicked(shot.user)}"
@@ -150,6 +149,7 @@
                     android:layout_marginStart="@dimen/small_horizontal_margin"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:lines="1"
                     android:text="@{shot.user.name}"
                     android:textColor="@color/dribbble_link_blue"
                     tools:text="@string/default_designer"/>
