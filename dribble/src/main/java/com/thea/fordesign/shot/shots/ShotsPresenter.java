@@ -58,6 +58,8 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
+                if (showLoadingUI)
+                    mShotsView.setLoadingIndicator(false);
                 mShotsView.showSnack(R.string.error_load_shots);
             }
         });

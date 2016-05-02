@@ -1,7 +1,6 @@
 package com.thea.fordesign.shot.shots;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -135,7 +134,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
     protected void setData() {
     }
 
-    public static class ShotAdapter extends RecyclerView.Adapter<ShotViewHolder> {
+    public class ShotAdapter extends RecyclerView.Adapter<ShotViewHolder> {
         private List<DribbbleShot> mShots;
 
         private ShotsContract.Presenter mUserActionsListener;
@@ -165,18 +164,17 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
             viewDataBinding.setShot(shot);
             viewDataBinding.setActionHandler(actionHandler);
 
-            Context context = holder.itemView.getContext();
 //            viewDataBinding.ivShot.setImageResource(R.mipmap.default_shot);
 //            viewDataBinding.ivAvatar.setImageResource(R.mipmap.ic_dribbble_square);
 
-            Glide.with(context)
+            /*Glide.with(ShotsFragment.this)
                     .load(shot.getUser().getAvatarUrl())
                     .centerCrop()
                     .placeholder(R.mipmap.ic_dribbble_square)
                     .crossFade()
-                    .into(viewDataBinding.ivAvatar);
+                    .into(viewDataBinding.ivAvatar);*/
 
-            Glide.with(context)
+            Glide.with(ShotsFragment.this)
                     .load(shot.getImages().getNormal())
                     .centerCrop()
                     .placeholder(R.mipmap.default_shot)
