@@ -16,7 +16,7 @@ import android.support.v7.widget.Toolbar;
 public class ActivityUtil {
 
     public static void setupToolbar(@NonNull AppCompatActivity activity, @IdRes int resId) {
-        checkNotNull(activity);
+        Preconditions.checkNotNull(activity, "activity cannot be null");
         // Set up the toolbar.
         Toolbar toolbar = (Toolbar) activity.findViewById(resId);
         activity.setSupportActionBar(toolbar);
@@ -28,17 +28,10 @@ public class ActivityUtil {
      */
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull
     Fragment fragment, @IdRes int frameId) {
-        checkNotNull(fragmentManager);
-        checkNotNull(fragment);
+        Preconditions.checkNotNull(fragmentManager, "fragmentManager cannot be null");
+        Preconditions.checkNotNull(fragment, "fragment cannot be null");
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(frameId, fragment);
         transaction.commit();
-    }
-
-    private static <T> T checkNotNull(T reference) {
-        if (reference == null) {
-            throw new NullPointerException();
-        }
-        return reference;
     }
 }

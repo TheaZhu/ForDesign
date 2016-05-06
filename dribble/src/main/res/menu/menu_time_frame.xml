@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_recent"
+        android:title="@string/time_frame_recent" />
+
+    <item
+        android:id="@+id/action_week"
+        android:title="@string/time_frame_week" />
+
+    <item
+        android:id="@+id/action_month"
+        android:title="@string/time_frame_month" />
+
+    <item
+        android:id="@+id/action_year"
+        android:title="@string/time_frame_year" />
+
+    <item
+        android:id="@+id/action_ever"
+        android:title="@string/time_frame_ever" />
+
+</menu>

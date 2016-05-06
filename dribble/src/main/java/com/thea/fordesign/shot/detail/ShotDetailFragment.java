@@ -14,21 +14,17 @@ import com.thea.fordesign.databinding.ShotsFragmentBinding;
  * create an instance of this fragment.
  */
 public class ShotDetailFragment extends BaseDataBindingFragment<ShotsFragmentBinding> {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_SHOT_ID = "shot_id";
 
-    private String mParam1;
-    private String mParam2;
-
+    private int mShotId = -1;
 
     public ShotDetailFragment() {
     }
 
-    public static ShotDetailFragment newInstance(String param1, String param2) {
+    public static ShotDetailFragment newInstance(int shotId) {
         ShotDetailFragment fragment = new ShotDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_SHOT_ID, shotId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,8 +33,7 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotsFragmentBin
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mShotId = getArguments().getInt(ARG_SHOT_ID);
         }
     }
 
@@ -49,7 +44,10 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotsFragmentBin
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
+    }
 
+    @Override
+    protected void lazyLoad() {
     }
 
     @Override

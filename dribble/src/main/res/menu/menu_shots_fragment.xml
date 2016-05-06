@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_list_type"
+        android:title="ANY"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_sort_type"
+        android:title="POP"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_time_frame"
+        android:title="NOW"
+        app:showAsAction="always"/>
+
+</menu>

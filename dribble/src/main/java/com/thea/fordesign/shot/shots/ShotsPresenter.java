@@ -1,7 +1,6 @@
 package com.thea.fordesign.shot.shots;
 
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.bean.DribbbleShot;
@@ -37,18 +36,19 @@ public class ShotsPresenter implements ShotsContract.Presenter {
     }
 
     @Override
-    public void loadShots(boolean forceUpdate) {
-        loadShots(forceUpdate || mFirstLoad, true);
+    public void loadShots(String list, String sort, String timeFrame) {
+        loadShots(list, sort, timeFrame, true);
         mFirstLoad = false;
     }
 
-    private void loadShots(boolean forceUpdate, final boolean showLoadingUI) {
+    private void loadShots(String list, String sort, String timeFrame, final boolean showLoadingUI) {
         if (showLoadingUI)
             mShotsView.setLoadingIndicator(true);
 
         mRepository.refreshShots();
 
-        mRepository.getShots(new ShotsDataSource.LoadShotsCallback() {
+        mRepository.getShots(list, sort, timeFrame, null, new ShotsDataSource
+                .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
                 if (showLoadingUI)
@@ -83,12 +83,5 @@ public class ShotsPresenter implements ShotsContract.Presenter {
     @Override
     public void start() {
         LogUtil.i(TAG, "start");
-        mShotsView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadShots(true);
-            }
-        });
-        loadShots(true);
     }
 }

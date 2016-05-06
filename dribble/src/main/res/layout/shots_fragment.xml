@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <FrameLayout
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/srl_shots"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".shot.shots.ShotsFragment">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_shots"
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/srl_shots"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:context=".shot.shots.ShotsFragment">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_shots"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_filters"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dribbble_pink"
+                android:text="@string/app_name"/>
+        </LinearLayout>
+    </FrameLayout>
 </layout>

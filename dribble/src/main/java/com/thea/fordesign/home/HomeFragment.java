@@ -31,6 +31,11 @@ public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> i
     }
 
     @Override
+    protected void lazyLoad() {
+
+    }
+
+    @Override
     protected void setData() {
         mViewDataBinding.setActionHandler(mPresenter);
     }

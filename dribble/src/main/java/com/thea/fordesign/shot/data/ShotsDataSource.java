@@ -1,6 +1,7 @@
 package com.thea.fordesign.shot.data;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.thea.fordesign.bean.DribbbleShot;
 
@@ -25,7 +26,8 @@ public interface ShotsDataSource {
         void onDataNotAvailable();
     }
 
-    void getShots(LoadShotsCallback callback);
+    void getShots(@Nullable String list, @Nullable String timeframe, @Nullable String date,
+                  @Nullable String sort, LoadShotsCallback callback);
 
     void getShot(int shotId, GetShotCallback callback);
 

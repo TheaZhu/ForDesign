@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_shots"
+            android:title="@string/my_shots"/>
+
+        <item
+            android:id="@+id/nav_my_projects"
+            android:title="@string/my_projects"/>
+
+        <item
+            android:id="@+id/nav_my_buckets"
+            android:title="@string/my_buckets"/>
+
+        <item
+            android:id="@+id/nav_my_likes"
+            android:title="@string/my_likes"/>
+
+        <item
+            android:id="@+id/nav_my_following"
+            android:title="@string/my_following"/>
+
+        <item
+            android:id="@+id/nav_my_followers"
+            android:title="@string/my_followers"/>
+    </group>
+
+    <!--<item android:title="Yours">
+        <menu>
+            <item
+                android:id="@+id/nav_likes"
+                android:title="@string/likes"/>
+        </menu>
+    </item>-->
+
 </menu>

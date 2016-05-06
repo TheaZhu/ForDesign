@@ -15,7 +15,9 @@
     <color name="green_3">#93ec2c</color>
     <color name="green_4">#b9f573</color>
 
-    <color name="pink_600">#D81B60</color>
+    <color name="dark_pink">#e32b72</color>
+
+    <!--<color name="pink_600">#D81B60</color>-->
     <color name="grey_400">#BDBDBD</color>
 
     <color name="white_alpha_ee">#eeffffff</color>

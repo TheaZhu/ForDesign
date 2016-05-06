@@ -46,11 +46,18 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void getShots(final LoadShotsCallback callback) {
+    public void getShots(@Nullable String list, @Nullable String sort, @Nullable String timeframe,
+                         @Nullable String date, final LoadShotsCallback callback) {
         if (mCachedShots == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get shots");
+            if (list == null)
+                list = DribbleConstant.SHOT_LIST_DEFAULT;
+            if (timeframe == null)
+                timeframe = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
+            if (sort == null)
+                sort = DribbleConstant.SHOT_SORT_DEFAULT;
             Call<List<DribbbleShot>> call = mService.getShots(DribbleConstant.AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN);
+                    DribbleConstant.CLIENT_ACCESS_TOKEN, list, sort, timeframe, null, 0, 12);
             call.enqueue(new Callback<List<DribbbleShot>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleShot>> call,

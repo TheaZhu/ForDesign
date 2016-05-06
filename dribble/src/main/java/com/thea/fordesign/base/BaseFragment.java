@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  */
 public abstract class BaseFragment extends Fragment {
     protected View mRootView;
-    protected boolean isVisible;
+    protected boolean isVisible = false;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

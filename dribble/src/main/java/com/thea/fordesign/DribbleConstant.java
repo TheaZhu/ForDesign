@@ -28,23 +28,32 @@ public class DribbleConstant {
     public static final String SCOPE_UPLOAD = "upload";
 
     // default: any type
-    public static final String SHOT_ANIMATED_LIST = "animated";
-    public static final String SHOT_ATTACHMENT_LIST = "attachments";
-    public static final String SHOT_DEBUT_LIST = "debuts";
-    public static final String SHOT_PLAYOFF_LIST = "playoffs";
-    public static final String SHOT_REBOUND_LIST = "rebounds";
-    public static final String SHOT_TEAM_LIST = "teams";
+    public static final String SHOT_LIST_ANY = "any";
+    public static final String SHOT_LIST_ANIMATED = "animated";
+    public static final String SHOT_LIST_ATTACHMENT = "attachments";
+    public static final String SHOT_LIST_DEBUT = "debuts";
+    public static final String SHOT_LIST_PLAYOFF = "playoffs";
+    public static final String SHOT_LIST_REBOUND = "rebounds";
+    public static final String SHOT_LIST_TEAM = "teams";
+    public static final String SHOT_LIST_DEFAULT = SHOT_LIST_ANY;
 
     // default: recent, from now
+    public static final String SHOT_TIME_FRAME_RECENT = "recent";
     public static final String SHOT_TIME_FRAME_WEEK = "week";
     public static final String SHOT_TIME_FRAME_MONTH = "month";
     public static final String SHOT_TIME_FRAME_YEAR = "year";
     public static final String SHOT_TIME_FRAME_EVER = "ever";
+    public static final String SHOT_TIME_FRAME_DEFAULT = SHOT_TIME_FRAME_RECENT;
 
     // default: sorted by popularity
+    public static final String SHOT_SORT_POPULARITY = "popularity";
     public static final String SHOT_SORT_COMMENTS = "comments";
     public static final String SHOT_SORT_RECENT = "recent";
     public static final String SHOT_SORT_VIEWS = "views";
+    public static final String SHOT_SORT_DEFAULT = SHOT_SORT_POPULARITY;
+
+    public static final int PER_PAGE_DEFAULT = 12;
+
 
     public static final int CODE_OK = 200;
     public static final int CODE_NO_CONTENT = 204;

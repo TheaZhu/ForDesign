@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_any"
+        android:title="@string/list_any" />
+
+    <item
+        android:id="@+id/action_debuts"
+        android:title="@string/list_debuts" />
+
+    <item
+        android:id="@+id/action_teams"
+        android:title="@string/list_teams" />
+
+    <item
+        android:id="@+id/action_playoffs"
+        android:title="@string/list_playoffs" />
+
+    <item
+        android:id="@+id/action_rebounds"
+        android:title="@string/list_rebounds" />
+
+    <item
+        android:id="@+id/action_animated"
+        android:title="@string/list_animated" />
+
+    <item
+        android:id="@+id/action_attachments"
+        android:title="@string/list_attachments" />
+
+</menu>
