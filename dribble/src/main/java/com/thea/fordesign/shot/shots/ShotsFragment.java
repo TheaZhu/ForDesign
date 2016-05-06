@@ -52,6 +52,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
     private ShotsContract.Presenter mPresenter;
 
     private ShotAdapter mAdapter;
+    private LoadMoreListener mLoadMoreListener;
 
     public ShotsFragment() {
         mListType = DribbleConstant.SHOT_LIST_DEFAULT;
@@ -122,12 +123,13 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.addOnScrollListener(new LoadMoreListener(layoutManager) {
+        mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 mPresenter.loadMore(mListType, mSortType, mTimeFrameType, currentPage);
             }
-        });
+        };
+        recyclerView.addOnScrollListener(mLoadMoreListener);
 
         mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
     }
@@ -201,6 +203,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         if (!list.equalsIgnoreCase(mListType)) {
             mListType = list;
             mListMenuItem.setTitle(mListType.substring(0, 3).toUpperCase());
+            if (mLoadMoreListener != null)
+                mLoadMoreListener.reset();
             mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
         }
     }
@@ -209,6 +213,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         if (!sort.equalsIgnoreCase(mSortType)) {
             mSortType = sort;
             mSortListMenuItem.setTitle(mSortType.substring(0, 3).toUpperCase());
+            if (mLoadMoreListener != null)
+                mLoadMoreListener.reset();
             mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
         }
     }
@@ -217,6 +223,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         if (!timeFrame.equalsIgnoreCase(mTimeFrameType)) {
             mTimeFrameType = timeFrame;
             mTimeFrameMenuItem.setTitle(mTimeFrameType.substring(0, 3).toUpperCase());
+            if (mLoadMoreListener != null)
+                mLoadMoreListener.reset();
             mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
         }
     }

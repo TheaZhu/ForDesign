@@ -168,7 +168,7 @@ public class ShotsRepository implements ShotsDataSource {
         if (mCachedShots == null) {
             mCachedShots = new LinkedHashMap<>();
         }
-        if (page == 0)
+        if (page <= 1)
             mCachedShots.clear();
         for (DribbbleShot shot : shots) {
             mCachedShots.put(shot.getId(), shot);

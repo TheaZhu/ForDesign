@@ -37,12 +37,13 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void loadShots(String list, String sort, String timeFrame) {
-        loadShots(list, sort, timeFrame, 0, true);
+        loadShots(list, sort, timeFrame, 1, true);
         mFirstLoad = false;
     }
 
     @Override
     public void loadMore(String list, String sort, String timeFrame, int page) {
+        LogUtil.i(TAG, "load more: " + page);
         loadShots(list, sort, timeFrame, page, false);
     }
 
@@ -59,7 +60,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
             public void onShotsLoaded(List<DribbbleShot> shots) {
                 if (showLoadingUI)
                     mShotsView.setLoadingIndicator(false);
-                if (page == 0)
+                if (page == 1)
                     mShotsView.showShots(shots);
                 else
                     mShotsView.insertShots(shots);
