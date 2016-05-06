@@ -37,23 +37,32 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void loadShots(String list, String sort, String timeFrame) {
-        loadShots(list, sort, timeFrame, true);
+        loadShots(list, sort, timeFrame, 0, true);
         mFirstLoad = false;
     }
 
-    private void loadShots(String list, String sort, String timeFrame, final boolean showLoadingUI) {
+    @Override
+    public void loadMore(String list, String sort, String timeFrame, int page) {
+        loadShots(list, sort, timeFrame, page, false);
+    }
+
+    private void loadShots(String list, String sort, String timeFrame, final int page, final boolean
+            showLoadingUI) {
         if (showLoadingUI)
             mShotsView.setLoadingIndicator(true);
 
         mRepository.refreshShots();
 
-        mRepository.getShots(list, sort, timeFrame, null, new ShotsDataSource
+        mRepository.getShots(list, sort, timeFrame, null, page, 12, new ShotsDataSource
                 .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
                 if (showLoadingUI)
                     mShotsView.setLoadingIndicator(false);
-                mShotsView.showShots(shots);
+                if (page == 0)
+                    mShotsView.showShots(shots);
+                else
+                    mShotsView.insertShots(shots);
             }
 
             @Override

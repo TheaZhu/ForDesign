@@ -29,6 +29,7 @@ import com.thea.fordesign.databinding.ShotsFragmentBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.LoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +55,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
     public ShotsFragment() {
         mListType = DribbleConstant.SHOT_LIST_DEFAULT;
-        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
         mSortType = DribbleConstant.SHOT_SORT_DEFAULT;
+        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
     }
 
     public static ShotsFragment newInstance() {
@@ -79,6 +80,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         mListMenuItem = menu.findItem(R.id.menu_list_type);
         mSortListMenuItem = menu.findItem(R.id.menu_sort_type);
         mTimeFrameMenuItem = menu.findItem(R.id.menu_time_frame);
+        initShotsType();
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -117,8 +119,17 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
         RecyclerView recyclerView = mViewDataBinding.rvShots;
         mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        recyclerView.addOnScrollListener(new LoadMoreListener(layoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                mPresenter.loadMore(mListType, mSortType, mTimeFrameType, currentPage);
+            }
+        });
+
+        mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
     }
 
     @Override
@@ -139,6 +150,11 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
     @Override
     public void showShots(List<DribbbleShot> shots) {
         mAdapter.replaceData(shots);
+    }
+
+    @Override
+    public void insertShots(List<DribbbleShot> shots) {
+        mAdapter.insertData(shots);
     }
 
     @Override
@@ -181,6 +197,36 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
     protected void setData() {
     }
 
+    public void changeListType(String list) {
+        if (!list.equalsIgnoreCase(mListType)) {
+            mListType = list;
+            mListMenuItem.setTitle(mListType.substring(0, 3).toUpperCase());
+            mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+        }
+    }
+
+    public void changeSortType(String sort) {
+        if (!sort.equalsIgnoreCase(mSortType)) {
+            mSortType = sort;
+            mSortListMenuItem.setTitle(mSortType.substring(0, 3).toUpperCase());
+            mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+        }
+    }
+
+    public void changeTimeFrameType(String timeFrame) {
+        if (!timeFrame.equalsIgnoreCase(mTimeFrameType)) {
+            mTimeFrameType = timeFrame;
+            mTimeFrameMenuItem.setTitle(mTimeFrameType.substring(0, 3).toUpperCase());
+            mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+        }
+    }
+
+    private void initShotsType() {
+        mListMenuItem.setTitle(mListType.substring(0, 3).toUpperCase());
+        mSortListMenuItem.setTitle(mSortType.substring(0, 3).toUpperCase());
+        mTimeFrameMenuItem.setTitle(mTimeFrameType.substring(0, 3).toUpperCase());
+    }
+
     private void showListPopUpMenu() {
         PopupMenu popup = new PopupMenu(getContext(), getActivity().findViewById(R.id
                 .menu_list_type));
@@ -191,30 +237,28 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
                 String list = mListType;
                 switch (item.getItemId()) {
                     case R.id.action_any:
-                        mListType = DribbleConstant.SHOT_LIST_ANY;
+                        list = DribbleConstant.SHOT_LIST_ANY;
                         break;
                     case R.id.action_debuts:
-                        mListType = DribbleConstant.SHOT_LIST_DEBUT;
+                        list = DribbleConstant.SHOT_LIST_DEBUT;
                         break;
                     case R.id.action_teams:
-                        mListType = DribbleConstant.SHOT_LIST_TEAM;
+                        list = DribbleConstant.SHOT_LIST_TEAM;
                         break;
                     case R.id.action_playoffs:
-                        mListType = DribbleConstant.SHOT_LIST_PLAYOFF;
+                        list = DribbleConstant.SHOT_LIST_PLAYOFF;
                         break;
                     case R.id.action_rebounds:
-                        mListType = DribbleConstant.SHOT_LIST_REBOUND;
+                        list = DribbleConstant.SHOT_LIST_REBOUND;
                         break;
                     case R.id.action_animated:
-                        mListType = DribbleConstant.SHOT_LIST_ANIMATED;
+                        list = DribbleConstant.SHOT_LIST_ANIMATED;
                         break;
                     case R.id.action_attachments:
-                        mListType = DribbleConstant.SHOT_LIST_ATTACHMENT;
+                        list = DribbleConstant.SHOT_LIST_ATTACHMENT;
                         break;
                 }
-                mListMenuItem.setTitle(mListType.substring(0, 3).toUpperCase());
-                if (!list.equalsIgnoreCase(mListType))
-                    mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+                changeListType(list);
                 return true;
             }
         });
@@ -228,24 +272,20 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                String sort = mSortType;
                 switch (item.getItemId()) {
                     case R.id.action_popularity:
-                        mSortType = DribbleConstant.SHOT_SORT_POPULARITY;
+                        changeSortType(DribbleConstant.SHOT_SORT_POPULARITY);
                         break;
                     case R.id.action_recent:
-                        mSortType = DribbleConstant.SHOT_SORT_RECENT;
+                        changeSortType(DribbleConstant.SHOT_SORT_RECENT);
                         break;
                     case R.id.action_views:
-                        mSortType = DribbleConstant.SHOT_SORT_VIEWS;
+                        changeSortType(DribbleConstant.SHOT_SORT_VIEWS);
                         break;
                     case R.id.action_comments:
-                        mSortType = DribbleConstant.SHOT_SORT_COMMENTS;
+                        changeSortType(DribbleConstant.SHOT_SORT_COMMENTS);
                         break;
                 }
-                mSortListMenuItem.setTitle(mSortType.substring(0, 3).toUpperCase());
-                if (!sort.equalsIgnoreCase(mSortType))
-                    mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
                 return true;
             }
         });
@@ -260,27 +300,23 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                String timeFrame = mTimeFrameType;
                 switch (item.getItemId()) {
                     case R.id.action_recent:
-                        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_RECENT;
+                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_RECENT);
                         break;
                     case R.id.action_week:
-                        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_WEEK;
+                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_WEEK);
                         break;
                     case R.id.action_month:
-                        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_MONTH;
+                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_MONTH);
                         break;
                     case R.id.action_year:
-                        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_YEAR;
+                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_YEAR);
                         break;
                     case R.id.action_ever:
-                        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_EVER;
+                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_EVER);
                         break;
                 }
-                mTimeFrameMenuItem.setTitle(mTimeFrameType.substring(0, 3).toUpperCase());
-                if (!timeFrame.equalsIgnoreCase(mTimeFrameType))
-                    mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
                 return true;
             }
         });
@@ -301,6 +337,12 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         public void replaceData(List<DribbbleShot> shots) {
             mShots = shots;
             notifyDataSetChanged();
+        }
+
+        public void insertData(List<DribbbleShot> shots) {
+            int start = mShots.size();
+            mShots.addAll(shots);
+            notifyItemRangeInserted(start, shots.size());
         }
 
         @Override

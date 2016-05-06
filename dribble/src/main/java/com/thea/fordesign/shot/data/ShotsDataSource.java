@@ -27,7 +27,7 @@ public interface ShotsDataSource {
     }
 
     void getShots(@Nullable String list, @Nullable String timeframe, @Nullable String date,
-                  @Nullable String sort, LoadShotsCallback callback);
+                  @Nullable String sort, int page, int perPage, LoadShotsCallback callback);
 
     void getShot(int shotId, GetShotCallback callback);
 

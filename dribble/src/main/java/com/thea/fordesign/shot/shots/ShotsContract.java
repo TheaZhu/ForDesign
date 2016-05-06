@@ -24,6 +24,8 @@ public interface ShotsContract {
 
         void showShots(List<DribbbleShot> shots);
 
+        void insertShots(List<DribbbleShot> shots);
+
         void showShotDetailsUi(int shotId);
 
         void showUserDetailsUi(int userId);
@@ -37,6 +39,8 @@ public interface ShotsContract {
         void result(int requestCode, int resultCode);
 
         void loadShots(String list, String sort, String timeFrame);
+
+        void loadMore(String list, String sort, String timeFrame, int page);
 
         void openShotDetails(@NonNull DribbbleShot requestedShot);
 

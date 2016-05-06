@@ -47,7 +47,8 @@ public class ShotsRepository implements ShotsDataSource {
 
     @Override
     public void getShots(@Nullable String list, @Nullable String sort, @Nullable String timeframe,
-                         @Nullable String date, final LoadShotsCallback callback) {
+                         @Nullable String date, final int page, int perPage, final LoadShotsCallback
+                                 callback) {
         if (mCachedShots == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get shots");
             if (list == null)
@@ -57,7 +58,8 @@ public class ShotsRepository implements ShotsDataSource {
             if (sort == null)
                 sort = DribbleConstant.SHOT_SORT_DEFAULT;
             Call<List<DribbbleShot>> call = mService.getShots(DribbleConstant.AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN, list, sort, timeframe, null, 0, 12);
+                            DribbleConstant.CLIENT_ACCESS_TOKEN, list, sort, timeframe, null, page,
+                    perPage);
             call.enqueue(new Callback<List<DribbbleShot>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleShot>> call,
@@ -65,7 +67,7 @@ public class ShotsRepository implements ShotsDataSource {
                     LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
                             response.message());
                     List<DribbbleShot> shots = response.body();
-                    refreshCache(shots);
+                    refreshCache(page, shots);
                     if (callback != null)
                         callback.onShotsLoaded(shots);
                 }
@@ -162,11 +164,12 @@ public class ShotsRepository implements ShotsDataSource {
         mCachedShots.remove(shotId);
     }
 
-    private void refreshCache(List<DribbbleShot> shots) {
+    private void refreshCache(int page, List<DribbbleShot> shots) {
         if (mCachedShots == null) {
             mCachedShots = new LinkedHashMap<>();
         }
-        mCachedShots.clear();
+        if (page == 0)
+            mCachedShots.clear();
         for (DribbbleShot shot : shots) {
             mCachedShots.put(shot.getId(), shot);
         }
