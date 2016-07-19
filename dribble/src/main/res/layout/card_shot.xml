@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <data class=".databinding.ShotItemBinding">
 
         <import type="java.lang.String"/>
 
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:onClick="@{() -> actionHandler.shotClicked(shot)}">
+        android:onClick="@{(v) -> actionHandler.shotClicked(shot, v)}">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,8 +31,9 @@
                 android:id="@+id/iv_shot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:contentDescription="@string/default_image_description"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/image_shot"
                 tools:src="@mipmap/default_shot"/>
 
             <RelativeLayout
@@ -95,14 +96,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_below="@id/iv_shot"
-                android:paddingLeft="@dimen/item_padding"
-                android:paddingRight="@dimen/item_padding"
-                android:drawableLeft="@mipmap/ic_like_inactive"
-                android:drawableStart="@mipmap/ic_like_inactive"
+                android:drawableLeft="@mipmap/ic_like_inactive_small"
+                android:drawableStart="@mipmap/ic_like_inactive_small"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:ellipsize="end"
                 android:onClick="@{() -> actionHandler.likeChanged(shot)}"
+                android:paddingLeft="@dimen/item_padding"
+                android:paddingRight="@dimen/item_padding"
                 android:text="@{String.valueOf(shot.likesCount)}"
                 tools:text="@string/default_likes_count"/>
 
@@ -110,16 +111,16 @@
                 android:id="@+id/tv_comments_count"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_below="@id/iv_shot"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:paddingLeft="@dimen/item_padding"
-                android:paddingRight="@dimen/normal_horizontal_padding"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/iv_shot"
                 android:drawableLeft="@mipmap/ic_comment_inactive"
                 android:drawableStart="@mipmap/ic_comment_inactive"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="1"
-                android:ellipsize="end"
+                android:paddingLeft="@dimen/item_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding"
                 android:text="@{String.valueOf(shot.commentsCount)}"
                 tools:text="@string/default_comments_count"/>
 

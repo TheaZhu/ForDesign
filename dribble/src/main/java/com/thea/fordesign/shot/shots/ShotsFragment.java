@@ -1,10 +1,13 @@
 package com.thea.fordesign.shot.shots;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -20,12 +23,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.DribbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.databinding.ShotItemBinding;
-import com.thea.fordesign.databinding.ShotsFragmentBinding;
+import com.thea.fordesign.databinding.ShotsFragBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
@@ -37,9 +41,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding> implements
+public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> implements
         ShotsContract.View {
     public static final String TAG = ShotsFragment.class.getSimpleName();
+    public static final String ARG_SHOT_URL = "shot_url";
+    public static final String ARG_CHOOSE_TYPE = "choose_shot_type";
+
+    private String mShotsUrl;
+    private boolean mCanChooseType = true;
 
     private String mListType;
     private String mTimeFrameType;
@@ -64,6 +73,24 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         return new ShotsFragment();
     }
 
+    public static ShotsFragment newInstance(String shotsUrl, boolean canChooseType) {
+        ShotsFragment fragment = new ShotsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARG_SHOT_URL, shotsUrl);
+        bundle.putBoolean(ARG_CHOOSE_TYPE, canChooseType);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mShotsUrl = getArguments().getString(ARG_SHOT_URL);
+            mCanChooseType = getArguments().getBoolean(ARG_CHOOSE_TYPE, true);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -77,11 +104,13 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_shots_fragment, menu);
-        mListMenuItem = menu.findItem(R.id.menu_list_type);
-        mSortListMenuItem = menu.findItem(R.id.menu_sort_type);
-        mTimeFrameMenuItem = menu.findItem(R.id.menu_time_frame);
-        initShotsType();
+        if (mCanChooseType) {
+            inflater.inflate(R.menu.menu_shots_fragment, menu);
+            mListMenuItem = menu.findItem(R.id.menu_list_type);
+            mSortListMenuItem = menu.findItem(R.id.menu_sort_type);
+            mTimeFrameMenuItem = menu.findItem(R.id.menu_time_frame);
+            initShotsType();
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -103,18 +132,19 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
 
     @Override
     protected int getLayoutId() {
-        return R.layout.shots_fragment;
+        return R.layout.fragment_shots;
     }
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        if (mCanChooseType)
+            setHasOptionsMenu(true);
         mViewDataBinding.srlShots.setColorSchemeResources(R.color.dribbble_pink, R.color
                 .dribbble_link_blue, R.color.dribbble_playbook);
         mViewDataBinding.srlShots.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+                loadShots();
             }
         });
 
@@ -126,12 +156,15 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                mPresenter.loadMore(mListType, mSortType, mTimeFrameType, currentPage);
+                if (mShotsUrl != null)
+                    mPresenter.loadMore(mShotsUrl, currentPage);
+                else
+                    mPresenter.loadMore(mListType, mSortType, mTimeFrameType, currentPage);
             }
         };
         recyclerView.addOnScrollListener(mLoadMoreListener);
 
-        mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+        loadShots();
     }
 
     @Override
@@ -160,10 +193,21 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
     }
 
     @Override
-    public void showShotDetailsUi(int shotId) {
+    public void showShotDetailsUi(int shotId, String imageUrl, View v) {
         Intent intent = new Intent(getContext(), ShotDetailActivity.class);
         intent.putExtra(ShotDetailActivity.EXTRA_SHOT_ID, shotId);
-        startActivity(intent);
+        intent.putExtra(ShotDetailActivity.EXTRA_SHOT_IMAGE_URL, imageUrl);
+        if (Build.VERSION.SDK_INT >= 21) {
+            View sharedView = v.findViewById(R.id.iv_shot);
+            String transitionName = getString(R.string.image_shot);
+
+            ActivityOptions transitionActivityOptions = ActivityOptions
+                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+
+            startActivity(intent, transitionActivityOptions.toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -195,8 +239,11 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         showSnack(getString(resId));
     }
 
-    @Override
-    protected void setData() {
+    private void loadShots() {
+        if (mShotsUrl != null)
+            mPresenter.loadShots(mShotsUrl);
+        else
+            mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
     }
 
     public void changeListType(String list) {
@@ -356,7 +403,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
         @Override
         public ShotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ShotItemBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent
-                    .getContext()), R.layout.shot_item, parent, false);
+                    .getContext()), R.layout.card_shot, parent, false);
             return new ShotViewHolder(viewDataBinding.getRoot());
         }
 
@@ -368,25 +415,16 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragmentBinding>
             viewDataBinding.setShot(shot);
             viewDataBinding.setActionHandler(actionHandler);
 
-//            viewDataBinding.ivShot.setImageResource(R.mipmap.default_shot);
-//            viewDataBinding.ivAvatar.setImageResource(R.mipmap.ic_dribbble_square);
-
-            /*Glide.with(ShotsFragment.this)
-                    .load(shot.getUser().getAvatarUrl())
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_dribbble_square)
-                    .crossFade()
-                    .into(viewDataBinding.ivAvatar);*/
-
             Glide.with(ShotsFragment.this)
                     .load(shot.getImages().getNormal())
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .centerCrop()
                     .placeholder(R.mipmap.default_shot)
                     .crossFade()
                     .into(viewDataBinding.ivShot);
 
             viewDataBinding.tvLikesCount.setCompoundDrawablesWithIntrinsicBounds(R.mipmap
-                    .ic_like_inactive, 0, 0, 0);
+                    .ic_like_inactive_small, 0, 0, 0);
             viewDataBinding.executePendingBindings();
         }
 

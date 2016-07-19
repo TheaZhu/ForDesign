@@ -21,13 +21,13 @@ public abstract class BaseDataBindingFragment<T extends ViewDataBinding> extends
         return mRootView;
     }
 
-    @Override
+    /*@Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setData();
     }
 
-    protected abstract void setData();
+    protected abstract void setData();*/
 
     @Override
     protected void lazyLoad() {}

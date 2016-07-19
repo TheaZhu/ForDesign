@@ -1,6 +1,8 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <data class=".databinding.HomeFragBinding">
 
         <variable
             name="actionHandler"
@@ -8,16 +10,13 @@
     </data>
 
     <FrameLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.thea.fordesign.home.HomeFragment">
+        android:layout_height="match_parent">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/test"
-            android:onClick="@{() -> actionHandler.test()}"/>
+            android:text="@string/test"/>
     </FrameLayout>
 </layout>

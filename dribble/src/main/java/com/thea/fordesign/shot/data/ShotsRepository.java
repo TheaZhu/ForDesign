@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class ShotsRepository implements ShotsDataSource {
     public static final String TAG = ShotsRepository.class.getSimpleName();
 
-    private static ShotsRepository sInstance = null;
+    private static volatile ShotsRepository sInstance = null;
 
     private DribbbleService mService;
 
@@ -87,11 +87,44 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
+    public void getShots(@Nullable String url, final int page, final LoadShotsCallback callback) {
+        if (mCachedShots == null || mCacheIsDirty) {
+            LogUtil.i(TAG, "get shots");
+            Call<List<DribbbleShot>> call = mService.getShots(DribbleConstant.AUTH_TYPE +
+                            DribbleConstant.CLIENT_ACCESS_TOKEN, url, page);
+            call.enqueue(new Callback<List<DribbbleShot>>() {
+                @Override
+                public void onResponse(Call<List<DribbbleShot>> call,
+                                       Response<List<DribbbleShot>> response) {
+                    LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
+                            response.message());
+                    List<DribbbleShot> shots = response.body();
+                    refreshCache(page, shots);
+                    if (callback != null)
+                        callback.onShotsLoaded(shots);
+                }
+
+                @Override
+                public void onFailure(Call<List<DribbbleShot>> call, Throwable t) {
+                    LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() + ", url: " +
+                            call.request().url());
+                    t.printStackTrace();
+                    if (callback != null)
+                        callback.onDataNotAvailable();
+                }
+            });
+        } else if (callback != null) {
+            callback.onShotsLoaded(new ArrayList<>(mCachedShots.values()));
+        }
+    }
+
+    @Override
     public void getShot(int shotId, final GetShotCallback callback) {
         DribbbleShot cachedShot = getShotWithId(shotId);
 
         // Respond immediately with cache if available
         if (cachedShot != null) {
+            LogUtil.i(TAG, "get shot local: " + shotId);
             if (callback != null)
                 callback.onShotLoaded(cachedShot);
         } else {
@@ -121,7 +154,7 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void saveShot(@NonNull DribbbleShot Shot) {
+    public void saveShot(@NonNull DribbbleShot shot) {
 
     }
 
@@ -136,12 +169,12 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void unlikeShot(@NonNull DribbbleShot shot) {
+    public void dislikeShot(@NonNull DribbbleShot shot) {
 
     }
 
     @Override
-    public void unlikeShot(int shotId) {
+    public void dislikeShot(int shotId) {
 
     }
 
@@ -156,7 +189,6 @@ public class ShotsRepository implements ShotsDataSource {
             mCachedShots = new LinkedHashMap<>();
         }
         mCachedShots.clear();
-
     }
 
     @Override

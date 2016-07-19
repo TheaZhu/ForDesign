@@ -1,45 +1,14 @@
 package com.thea.fordesign.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbbleTeam {
-
-    /**
-     * id : 39
-     * name : Dribbble
-     * username : dribbble
-     * html_url : https://dribbble.com/dribbble
-     * avatar_url : https://d13yacurqjgara.cloudfront
-     * .net/users/39/avatars/normal/apple-flat-precomposed.png?1388527574
-     * bio : Show and tell for designers. This is Dribbble on Dribbble.
-     * location : Salem, MA
-     * links : {"web":"http://dribbble.com","twitter":"https://twitter.com/dribbble"}
-     * buckets_count : 1
-     * comments_received_count : 2037
-     * followers_count : 25011
-     * followings_count : 6120
-     * likes_count : 44
-     * likes_received_count : 15811
-     * members_count : 7
-     * projects_count : 4
-     * rebounds_received_count : 416
-     * shots_count : 91
-     * can_upload_shot : true
-     * type : Team
-     * pro : false
-     * buckets_url : https://dribbble.com/v1/users/39/buckets
-     * followers_url : https://dribbble.com/v1/users/39/followers
-     * following_url : https://dribbble.com/v1/users/39/following
-     * likes_url : https://dribbble.com/v1/users/39/likes
-     * members_url : https://dribbble.com/v1/teams/39/members
-     * shots_url : https://dribbble.com/v1/users/39/shots
-     * team_shots_url : https://dribbble.com/v1/users/39/teams
-     * created_at : 2009-08-18T18:34:31Z
-     * updated_at : 2014-02-14T22:32:11Z
-     */
+public class DribbbleTeam implements Parcelable {
 
     private int id;
     private String name;
@@ -343,4 +312,91 @@ public class DribbbleTeam {
     public void setUpdatedTime(String updatedTime) {
         this.updatedTime = updatedTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.username);
+        dest.writeString(this.bio);
+        dest.writeString(this.location);
+        dest.writeString(this.type);
+        dest.writeByte(this.pro ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.links, flags);
+        dest.writeString(this.htmlUrl);
+        dest.writeString(this.avatarUrl);
+        dest.writeInt(this.bucketsCount);
+        dest.writeString(this.bucketsUrl);
+        dest.writeInt(this.commentsReceivedCount);
+        dest.writeInt(this.followersCount);
+        dest.writeInt(this.followingsCount);
+        dest.writeString(this.followersUrl);
+        dest.writeString(this.followingUrl);
+        dest.writeInt(this.likesCount);
+        dest.writeInt(this.likesReceivedCount);
+        dest.writeString(this.likesUrl);
+        dest.writeInt(this.membersCount);
+        dest.writeString(this.membersUrl);
+        dest.writeInt(this.projectsCount);
+        dest.writeInt(this.reboundsReceivedCount);
+        dest.writeInt(this.shotsCount);
+        dest.writeByte(this.canUploadShot ? (byte) 1 : (byte) 0);
+        dest.writeString(this.shotsUrl);
+        dest.writeString(this.teamShotsUrl);
+        dest.writeString(this.createdTime);
+        dest.writeString(this.updatedTime);
+    }
+
+    public DribbbleTeam() {
+    }
+
+    protected DribbbleTeam(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.username = in.readString();
+        this.bio = in.readString();
+        this.location = in.readString();
+        this.type = in.readString();
+        this.pro = in.readByte() != 0;
+        this.links = in.readParcelable(DribbbleUser.Links.class.getClassLoader());
+        this.htmlUrl = in.readString();
+        this.avatarUrl = in.readString();
+        this.bucketsCount = in.readInt();
+        this.bucketsUrl = in.readString();
+        this.commentsReceivedCount = in.readInt();
+        this.followersCount = in.readInt();
+        this.followingsCount = in.readInt();
+        this.followersUrl = in.readString();
+        this.followingUrl = in.readString();
+        this.likesCount = in.readInt();
+        this.likesReceivedCount = in.readInt();
+        this.likesUrl = in.readString();
+        this.membersCount = in.readInt();
+        this.membersUrl = in.readString();
+        this.projectsCount = in.readInt();
+        this.reboundsReceivedCount = in.readInt();
+        this.shotsCount = in.readInt();
+        this.canUploadShot = in.readByte() != 0;
+        this.shotsUrl = in.readString();
+        this.teamShotsUrl = in.readString();
+        this.createdTime = in.readString();
+        this.updatedTime = in.readString();
+    }
+
+    public static final Parcelable.Creator<DribbbleTeam> CREATOR = new Parcelable.Creator<DribbbleTeam>() {
+        @Override
+        public DribbbleTeam createFromParcel(Parcel source) {
+            return new DribbbleTeam(source);
+        }
+
+        @Override
+        public DribbbleTeam[] newArray(int size) {
+            return new DribbbleTeam[size];
+        }
+    };
 }

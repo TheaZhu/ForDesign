@@ -5,17 +5,13 @@ import com.google.gson.annotations.SerializedName;
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbbleLike {
-    /**
-     * id : 24400091
-     * created_at : 2014-01-06T17:19:59Z
-     */
+public class DribbbleFollower {
 
     private int id;
     @SerializedName("created_at")
     private String createdTime;
-
-    private DribbbleUser user;
+    @SerializedName(value = "follower", alternate = {"followee"})
+    private DribbbleUser follower;
 
     public int getId() {
         return id;
@@ -33,11 +29,11 @@ public class DribbbleLike {
         this.createdTime = createdTime;
     }
 
-    public DribbbleUser getUser() {
-        return user;
+    public DribbbleUser getFollower() {
+        return follower;
     }
 
-    public void setUser(DribbbleUser user) {
-        this.user = user;
+    public void setFollower(DribbbleUser follower) {
+        this.follower = follower;
     }
 }

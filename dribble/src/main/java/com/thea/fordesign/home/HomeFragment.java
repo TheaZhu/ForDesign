@@ -8,12 +8,12 @@ import android.support.v4.app.Fragment;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
-import com.thea.fordesign.databinding.HomeFragmentBinding;
+import com.thea.fordesign.databinding.HomeFragBinding;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> implements HomeContract.View {
+public class HomeFragment extends BaseDataBindingFragment<HomeFragBinding> implements HomeContract.View {
     public static final String TAG = HomeFragment.class.getSimpleName();
 
     private HomeContract.Presenter mPresenter;
@@ -23,7 +23,7 @@ public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> i
 
     @Override
     protected int getLayoutId() {
-        return R.layout.home_fragment;
+        return R.layout.fragment_home;
     }
 
     @Override
@@ -33,11 +33,6 @@ public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> i
     @Override
     protected void lazyLoad() {
 
-    }
-
-    @Override
-    protected void setData() {
-        mViewDataBinding.setActionHandler(mPresenter);
     }
 
     @Override
@@ -51,6 +46,5 @@ public class HomeFragment extends BaseDataBindingFragment<HomeFragmentBinding> i
 
     @Override
     public void showSnack(@StringRes int resId) {
-
     }
 }

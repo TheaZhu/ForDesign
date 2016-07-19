@@ -1,7 +1,11 @@
 package com.thea.fordesign.shot.detail;
 
-import com.thea.fordesign.base.BasePresenter;
+import android.support.annotation.NonNull;
+
 import com.thea.fordesign.base.BaseView;
+import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.user.UserItemPresenter;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
@@ -10,9 +14,34 @@ public interface ShotDetailContract {
 
     interface View extends BaseView<Presenter> {
 
+        void showShot(DribbbleShot shot);
+
+        void showShotLiked();
+
+        void showShotDisliked();
+
+        void showUserDetailsUi(@NonNull DribbbleUser user, android.view.View v);
+
     }
 
-    interface Presenter extends BasePresenter {
-        void loadShot(int shotId);
+    interface Presenter extends UserItemPresenter {
+
+        void result(int requestCode, int resultCode);
+
+        void getShot();
+
+        void likeShot(@NonNull DribbbleShot shot);
+
+        void shareShot(@NonNull DribbbleShot shot, int where);
+
+        void openViewers(@NonNull DribbbleShot shot);
+
+        void openLikers(@NonNull DribbbleShot shot);
+
+        void openCommenters(@NonNull DribbbleShot shot);
+
+        void openBuckets(@NonNull DribbbleShot shot);
+
+        String formatTime(String timeStr);
     }
 }

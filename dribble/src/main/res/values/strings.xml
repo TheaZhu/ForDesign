@@ -23,6 +23,13 @@
     <string name="my_following">My Following</string>
     <string name="my_followers">My Followers</string>
 
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+
+    // transition name
+    <string name="image_shot">Image Shot</string>
+    <string name="image_user_avatar">User Avatar</string>
+
     // list type
     <string name="list_any">Shots</string>
     <string name="list_debuts">Debuts</string>
@@ -45,21 +52,29 @@
     <string name="time_frame_year">This Past Year</string>
     <string name="time_frame_ever">All Time</string>
 
-    <string name="hello_world">Hello World</string>
-    <string name="test">Test</string>
-
     <string name="default_image_description">Image</string>
 
     <string name="default_views_count">24925</string>
     <string name="default_likes_count">1039</string>
     <string name="default_comments_count">74</string>
+    <string name="default_buckets_count">8</string>
     <string name="default_designer">Dan Cederholm</string>
     <string name="default_title">Dribbble is 5!</string>
     <string name="default_time">June 26, 2014</string>
     <string name="default_description">
         Update! Thanks to all who entered and helped us celebrate.
     </string>
-    
+
     <string name="error_load_shots">Error when load shots.</string>
+    <string name="error_get_shot">Error when get shot.</string>
+    <string name="error_load_shot_comments">Error when load shot comments.</string>
+    <string name="error_load_user_followings">Error when load user followings.</string>
+
+    <string name="hint_add_comment">Add comment</string>
+
+    <string name="add_comment">ADD</string>
+
+    <string name="hello_world">Hello World</string>
+    <string name="test">Test</string>
 
 </resources>

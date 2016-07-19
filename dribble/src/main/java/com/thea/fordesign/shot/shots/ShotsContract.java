@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.thea.fordesign.base.BasePresenter;
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleShot;
-import com.thea.fordesign.bean.DribbbleUser;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public interface ShotsContract {
 
         void insertShots(List<DribbbleShot> shots);
 
-        void showShotDetailsUi(int shotId);
+        void showShotDetailsUi(int shotId, String imageUrl, android.view.View v);
 
         void showUserDetailsUi(int userId);
 
@@ -40,11 +39,13 @@ public interface ShotsContract {
 
         void loadShots(String list, String sort, String timeFrame);
 
+        void loadShots(String shotsUrl);
+
         void loadMore(String list, String sort, String timeFrame, int page);
 
-        void openShotDetails(@NonNull DribbbleShot requestedShot);
+        void loadMore(String shotsUrl, int page);
 
-        void openUserDetails(@NonNull DribbbleUser requestedUser);
+        void openShotDetails(@NonNull DribbbleShot requestedShot, android.view.View v);
 
         void likeShot(@NonNull DribbbleShot shot, boolean like);
 

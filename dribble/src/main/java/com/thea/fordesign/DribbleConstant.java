@@ -16,6 +16,7 @@ public class DribbleConstant {
 
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String OAUTH = "https://dribbble.com/oauth/";
+    public static final String REDIRECT_URI = "http://thea.com";
     public static final String HEADER_LINK = "Link: " +
             "<https://api.dribbble.com/v1/user/followers?page=1&per_page=100>; rel=\"prev\", " +
             "<https://api.dribbble.com/v1/user/followers?page=3&per_page=100>; rel=\"next\"";

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".databinding.CommentsFragBinding">
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shot.comments.CommentContract.Presenter"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/normal_horizontal_padding"
+        android:paddingRight="@dimen/normal_horizontal_padding">
+
+        <RelativeLayout
+            android:id="@+id/rl_add_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/tv_add_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/add_comment"
+                android:onClick="@{() -> actionHandler.addComment()}"/>
+
+            <EditText
+                android:id="@+id/et_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tv_add_comment"
+                android:inputType="text"
+                android:hint="@string/hint_add_comment"/>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_shot_comments"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_add_comment"/>
+    </RelativeLayout>
+</layout>

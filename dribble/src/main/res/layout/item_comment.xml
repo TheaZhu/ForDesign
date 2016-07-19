@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".databinding.CommentItemBinding">
+
+        <import type="android.text.Html"/>
+
+        <import type="com.thea.fordesign.bean.DribbbleUser"/>
+
+        <variable
+            name="comment"
+            type="com.thea.fordesign.bean.DribbbleComment"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shot.comments.CommentItemActionHandler"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/small_vertical_padding">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_comment_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"
+            tools:src="@mipmap/ic_dribbble_square"/>
+
+        <TextView
+            android:id="@+id/tv_comment_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_comment_avatar"
+            android:layout_marginLeft="@dimen/normal_horizontal_margin"
+            android:layout_toRightOf="@id/iv_comment_avatar"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:text="@{comment.user.name}"
+            android:textColor="@color/dribbble_charcoal"
+            tools:text="@string/default_designer"/>
+
+        <TextView
+            android:id="@+id/tv_shot_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_comment_user"
+            android:layout_below="@id/tv_comment_user"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{Html.fromHtml(comment.body ?? &quot;&quot;)}"
+            android:textColor="@color/grey_400"
+            tools:text="@string/default_description"/>
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignLeft="@id/tv_comment_user"
+            android:layout_below="@id/tv_shot_description"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:background="@color/grey_200"/>
+
+    </RelativeLayout>
+</layout>

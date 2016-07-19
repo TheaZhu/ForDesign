@@ -29,17 +29,19 @@ public interface ShotsDataSource {
     void getShots(@Nullable String list, @Nullable String timeframe, @Nullable String date,
                   @Nullable String sort, int page, int perPage, LoadShotsCallback callback);
 
+    void getShots(@Nullable String url, int page, LoadShotsCallback callback);
+
     void getShot(int shotId, GetShotCallback callback);
 
-    void saveShot(@NonNull DribbbleShot Shot);
+    void saveShot(@NonNull DribbbleShot shot);
 
     void likeShot(@NonNull DribbbleShot shot);
 
     void likeShot(int shotId);
 
-    void unlikeShot(@NonNull DribbbleShot shot);
+    void dislikeShot(@NonNull DribbbleShot shot);
 
-    void unlikeShot(int shotId);
+    void dislikeShot(int shotId);
 
     void refreshShots();
 

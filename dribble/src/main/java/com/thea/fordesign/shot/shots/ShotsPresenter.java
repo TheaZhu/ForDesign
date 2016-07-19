@@ -1,10 +1,10 @@
 package com.thea.fordesign.shot.shots;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.bean.DribbbleShot;
-import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.shot.data.ShotsDataSource;
 import com.thea.fordesign.shot.data.ShotsRepository;
 import com.thea.fordesign.util.LogUtil;
@@ -42,9 +42,21 @@ public class ShotsPresenter implements ShotsContract.Presenter {
     }
 
     @Override
+    public void loadShots(String shotsUrl) {
+        loadShots(shotsUrl, 1, true);
+        mFirstLoad = false;
+    }
+
+    @Override
     public void loadMore(String list, String sort, String timeFrame, int page) {
         LogUtil.i(TAG, "load more: " + page);
         loadShots(list, sort, timeFrame, page, false);
+    }
+
+    @Override
+    public void loadMore(String shotsUrl, int page) {
+        LogUtil.i(TAG, "load more: " + page);
+        loadShots(shotsUrl, page, false);
     }
 
     private void loadShots(String list, String sort, String timeFrame, final int page, final boolean
@@ -75,14 +87,36 @@ public class ShotsPresenter implements ShotsContract.Presenter {
         });
     }
 
-    @Override
-    public void openShotDetails(@NonNull DribbbleShot requestedShot) {
-        mShotsView.showShotDetailsUi(requestedShot.getId());
+    private void loadShots(String url, final int page, final boolean showLoadingUI) {
+        if (showLoadingUI)
+            mShotsView.setLoadingIndicator(true);
+
+        mRepository.refreshShots();
+
+        mRepository.getShots(url, page, new ShotsDataSource.LoadShotsCallback() {
+            @Override
+            public void onShotsLoaded(List<DribbbleShot> shots) {
+                if (showLoadingUI)
+                    mShotsView.setLoadingIndicator(false);
+                if (page == 1)
+                    mShotsView.showShots(shots);
+                else
+                    mShotsView.insertShots(shots);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                if (showLoadingUI)
+                    mShotsView.setLoadingIndicator(false);
+                mShotsView.showSnack(R.string.error_load_shots);
+            }
+        });
     }
 
     @Override
-    public void openUserDetails(@NonNull DribbbleUser requestedUser) {
-        mShotsView.showUserDetailsUi(requestedUser.getId());
+    public void openShotDetails(@NonNull DribbbleShot requestedShot, View v) {
+        mShotsView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImages().getNormal()
+                , v);
     }
 
     @Override

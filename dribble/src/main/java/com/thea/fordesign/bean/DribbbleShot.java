@@ -1,5 +1,8 @@
 package com.thea.fordesign.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -7,39 +10,11 @@ import java.util.List;
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbbleShot {
-    /**
-     * id : 471756
-     * title : Sasquatch
-     * description : <p>Quick, messy, five minute sketch of something that might become a
-     * fictional something.</p>
-     * width : 400
-     * height : 300
-     * images : {"hidpi":null,"normal":"https://d13yacurqjgara.cloudfront
-     * .net/users/1/screenshots/471756/sasquatch.png","teaser":"https://d13yacurqjgara.cloudfront
-     * .net/users/1/screenshots/471756/sasquatch_teaser.png"}
-     * views_count : 4372
-     * likes_count : 149
-     * comments_count : 27
-     * attachments_count : 0
-     * rebounds_count : 2
-     * buckets_count : 8
-     * created_at : 2012-03-15T01:52:33Z
-     * updated_at : 2012-03-15T02:12:57Z
-     * html_url : https://dribbble.com/shots/471756-Sasquatch
-     * attachments_url : https://api.dribbble.com/v1/shots/471756/attachments
-     * buckets_url : https://api.dribbble.com/v1/shots/471756/buckets
-     * comments_url : https://api.dribbble.com/v1/shots/471756/comments
-     * likes_url : https://api.dribbble.com/v1/shots/471756/likes
-     * projects_url : https://api.dribbble.com/v1/shots/471756/projects
-     * rebounds_url : https://api.dribbble.com/v1/shots/471756/rebounds
-     * animated : false
-     * tags : ["fiction","sasquatch","sketch","wip"]
-     */
+public class DribbbleShot implements Parcelable {
 
     private int id;
-    private String title;
-    private String description;
+    private String title = "";
+    private String description = "";
     private int width;
     private int height;
     private boolean animated;
@@ -280,7 +255,38 @@ public class DribbbleShot {
         this.tags = tags;
     }
 
-    public static class Image {
+    @Override
+    public String toString() {
+        return "DribbbleShot{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", width=" + width +
+                ", height=" + height +
+                ", animated=" + animated +
+                ", tags=" + tags +
+                ", images=" + images +
+                ", user=" + user.toString() +
+                ", team=" + team +
+                ", viewsCount=" + viewsCount +
+                ", likesCount=" + likesCount +
+                ", commentsCount=" + commentsCount +
+                ", attachmentsCount=" + attachmentsCount +
+                ", reboundsCount=" + reboundsCount +
+                ", bucketsCount=" + bucketsCount +
+                ", createdTime='" + createdTime + '\'' +
+                ", updatedTime='" + updatedTime + '\'' +
+                ", htmlUrl='" + htmlUrl + '\'' +
+                ", attachmentsUrl='" + attachmentsUrl + '\'' +
+                ", bucketsUrl='" + bucketsUrl + '\'' +
+                ", commentsUrl='" + commentsUrl + '\'' +
+                ", likesUrl='" + likesUrl + '\'' +
+                ", projectsUrl='" + projectsUrl + '\'' +
+                ", reboundsUrl='" + reboundsUrl + '\'' +
+                '}';
+    }
+
+    public static class Image implements Parcelable {
         private String hidpi;
         private String normal;
         private String teaser;
@@ -308,5 +314,115 @@ public class DribbbleShot {
         public void setTeaser(String teaser) {
             this.teaser = teaser;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.hidpi);
+            dest.writeString(this.normal);
+            dest.writeString(this.teaser);
+        }
+
+        public Image() {
+        }
+
+        protected Image(Parcel in) {
+            this.hidpi = in.readString();
+            this.normal = in.readString();
+            this.teaser = in.readString();
+        }
+
+        public static final Parcelable.Creator<Image> CREATOR = new Parcelable.Creator<Image>() {
+            @Override
+            public Image createFromParcel(Parcel source) {
+                return new Image(source);
+            }
+
+            @Override
+            public Image[] newArray(int size) {
+                return new Image[size];
+            }
+        };
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeInt(this.width);
+        dest.writeInt(this.height);
+        dest.writeByte(this.animated ? (byte) 1 : (byte) 0);
+        dest.writeStringList(this.tags);
+        dest.writeParcelable(this.images, flags);
+        dest.writeParcelable(this.user, flags);
+        dest.writeParcelable(this.team, flags);
+        dest.writeInt(this.viewsCount);
+        dest.writeInt(this.likesCount);
+        dest.writeInt(this.commentsCount);
+        dest.writeInt(this.attachmentsCount);
+        dest.writeInt(this.reboundsCount);
+        dest.writeInt(this.bucketsCount);
+        dest.writeString(this.createdTime);
+        dest.writeString(this.updatedTime);
+        dest.writeString(this.htmlUrl);
+        dest.writeString(this.attachmentsUrl);
+        dest.writeString(this.bucketsUrl);
+        dest.writeString(this.commentsUrl);
+        dest.writeString(this.likesUrl);
+        dest.writeString(this.projectsUrl);
+        dest.writeString(this.reboundsUrl);
+    }
+
+    public DribbbleShot() {
+    }
+
+    protected DribbbleShot(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.width = in.readInt();
+        this.height = in.readInt();
+        this.animated = in.readByte() != 0;
+        this.tags = in.createStringArrayList();
+        this.images = in.readParcelable(Image.class.getClassLoader());
+        this.user = in.readParcelable(DribbbleUser.class.getClassLoader());
+        this.team = in.readParcelable(DribbbleTeam.class.getClassLoader());
+        this.viewsCount = in.readInt();
+        this.likesCount = in.readInt();
+        this.commentsCount = in.readInt();
+        this.attachmentsCount = in.readInt();
+        this.reboundsCount = in.readInt();
+        this.bucketsCount = in.readInt();
+        this.createdTime = in.readString();
+        this.updatedTime = in.readString();
+        this.htmlUrl = in.readString();
+        this.attachmentsUrl = in.readString();
+        this.bucketsUrl = in.readString();
+        this.commentsUrl = in.readString();
+        this.likesUrl = in.readString();
+        this.projectsUrl = in.readString();
+        this.reboundsUrl = in.readString();
+    }
+
+    public static final Parcelable.Creator<DribbbleShot> CREATOR = new Parcelable.Creator<DribbbleShot>() {
+        @Override
+        public DribbbleShot createFromParcel(Parcel source) {
+            return new DribbbleShot(source);
+        }
+
+        @Override
+        public DribbbleShot[] newArray(int size) {
+            return new DribbbleShot[size];
+        }
+    };
 }

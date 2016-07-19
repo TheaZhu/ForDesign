@@ -6,17 +6,6 @@ import com.google.gson.annotations.SerializedName;
  * @author Thea (theazhu0321@gmail.com)
  */
 public class DribbbleAttachment {
-    /**
-     * id : 206165
-     * url : https://d13yacurqjgara.cloudfront
-     * .net/users/1/screenshots/1412410/attachments/206165/weathered-ball-detail.jpg
-     * thumbnail_url : https://d13yacurqjgara.cloudfront
-     * .net/users/1/screenshots/1412410/attachments/206165/thumbnail/weathered-ball-detail.jpg
-     * size : 116375
-     * content_type : image/jpeg
-     * views_count : 325
-     * created_at : 2014-02-07T16:35:09Z
-     */
 
     private int id;
     private String url;

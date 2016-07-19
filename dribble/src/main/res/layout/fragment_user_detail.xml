@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".databinding.UserDetailFragBinding">
+
+        <import type="com.thea.fordesign.bean.DribbbleUser.Links"/>
+
+        <variable
+            name="user"
+            type="com.thea.fordesign.bean.DribbbleUser"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.user.detail.UserDetailContract.SubPresenter"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_50"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/normal_vertical_padding"
+            android:paddingTop="@dimen/normal_vertical_padding">
+
+            <include
+                layout="@layout/card_user_counts"
+                app:actionHandler="@{actionHandler}"
+                app:user="@{user}"/>
+
+            <LinearLayout
+                android:id="@+id/ll_location"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/normal_horizontal_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like_inactive_24dp"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{user.location}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_web"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> actionHandler.openWeb(user.links.web)}"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/normal_horizontal_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like_inactive_24dp"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{user.links.web}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> actionHandler.openTwitter(user.links.twitter)}"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/normal_horizontal_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_like_inactive_24dp"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{user.links.twitter}"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

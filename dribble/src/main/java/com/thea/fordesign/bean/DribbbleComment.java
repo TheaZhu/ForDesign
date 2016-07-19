@@ -6,18 +6,6 @@ import com.google.gson.annotations.SerializedName;
  * @author Thea (theazhu0321@gmail.com)
  */
 public class DribbbleComment {
-    /**
-     * id : 1145736
-     * body : <p>Could he somehow make the shape of an "S" with his arms? I feel like i see
-     * potential for some hidden shapes in here...</p>
-
-     <p>Looks fun!
-     </p>
-     * likes_count : 1
-     * likes_url : https://api.dribbble.com/v1/shots/471756/comments/1145736/likes
-     * created_at : 2012-03-15T04:24:39Z
-     * updated_at : 2012-03-15T04:24:39Z
-     */
 
     private int id;
     private String body;

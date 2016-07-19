@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+
     <color name="dribbble_pink">#ea4c89</color>
     <color name="dribbble_charcoal">#333333</color>
     <color name="dribbble_link_blue">#3a8bbb</color>
@@ -18,7 +21,10 @@
     <color name="dark_pink">#e32b72</color>
 
     <!--<color name="pink_600">#D81B60</color>-->
+    <color name="grey_50">#FAFAFA</color>
+    <color name="grey_200">#EEEEEE</color>
     <color name="grey_400">#BDBDBD</color>
 
     <color name="white_alpha_ee">#eeffffff</color>
+    <color name="white_alpha_99">#99ffffff</color>
 </resources>

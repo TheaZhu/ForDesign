@@ -6,15 +6,6 @@ import com.google.gson.annotations.SerializedName;
  * @author Thea (theazhu0321@gmail.com)
  */
 public class DribbbleProject {
-    /**
-     * id : 3
-     * name : Web Standards Sherpa
-     * description : I did visual design and art direction for this project, working with the
-     * <a href="http://webstandards.org">Web Standards Project</a> and Microsoft.
-     * shots_count : 4
-     * created_at : 2011-04-14T03:43:47Z
-     * updated_at : 2012-04-04T22:39:53Z
-     */
 
     private int id;
     private String name;
