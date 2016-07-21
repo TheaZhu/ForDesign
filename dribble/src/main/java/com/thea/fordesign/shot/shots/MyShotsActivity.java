@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.thea.fordesign.R;
+import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseActivity;
 import com.thea.fordesign.util.ActivityUtil;
 
@@ -26,7 +27,7 @@ public class MyShotsActivity extends BaseActivity {
                 ActivityUtil.addFragmentToActivity(
                         getSupportFragmentManager(), shotsFragment, R.id.fl_content);
             }
-            new ShotsPresenter(shotsFragment);
+            new ShotsPresenter(shotsFragment, new UserModel(this));
         }
     }
 }

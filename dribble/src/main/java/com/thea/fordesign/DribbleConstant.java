@@ -13,6 +13,7 @@ public class DribbleConstant {
     public static final String USER_ACCESS_TOKEN =
             "05589f9e8cb9d7e8809c40be35d9f984c4ded4b9fd602f4843d05fc583609aa7";
     public static final String AUTH_TYPE = "Bearer ";
+    public static final String USER_SCOPE = "public+write+comment+upload";
 
     public static final String BASE_URL = "https://api.dribbble.com/v1/";
     public static final String OAUTH = "https://dribbble.com/oauth/";
@@ -56,6 +57,7 @@ public class DribbleConstant {
     public static final int PER_PAGE_DEFAULT = 12;
 
 
+    public static final int CODE_ERROR = 199;
     public static final int CODE_OK = 200;
     public static final int CODE_NO_CONTENT = 204;
     public static final int CODE_NOT_MODIFIED = 304;

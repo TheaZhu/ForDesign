@@ -19,6 +19,8 @@ import com.thea.fordesign.shot.shots.MyShotsActivity;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
 import com.thea.fordesign.sign.SignInActivity;
+import com.thea.fordesign.user.followers.FollowersFragment;
+import com.thea.fordesign.user.followers.MyFollowersActivity;
 import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.LogUtil;
 
@@ -58,7 +60,7 @@ public class MainActivity extends BaseActivity implements NavigationView
             ActivityUtil.addFragmentToActivity(
                     getSupportFragmentManager(), shotsFragment, R.id.fl_content);
         }
-        new ShotsPresenter(shotsFragment);
+        new ShotsPresenter(shotsFragment, new UserModel(this));
     }
 
     private void initDrawerLayout() {
@@ -149,11 +151,30 @@ public class MainActivity extends BaseActivity implements NavigationView
         if (!userModel.getUserSignIn() || userModel.getDribbbleUserAccessToken() == null) {
             trySignIn();
         } else {
+            Intent intent;
             switch (item.getItemId()) {
                 case R.id.nav_my_shots:
-                    Intent intent = new Intent(this, MyShotsActivity.class);
+                    intent = new Intent(this, MyShotsActivity.class);
                     if (mUser != null)
                         intent.putExtra(MyShotsActivity.EXTRA_SHOTS_URL, mUser.getShotsUrl());
+                    startActivity(intent);
+                    break;
+                case R.id.nav_my_followers:
+                    intent = new Intent(this, MyFollowersActivity.class);
+                    if (mUser != null) {
+                        intent.putExtra(MyFollowersActivity.EXTRA_FOLLOWER_URL, mUser.getFollowersUrl());
+                        intent.putExtra(MyFollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
+                                .TYPE_FOLLOWER);
+                    }
+                    startActivity(intent);
+                    break;
+                case R.id.nav_my_following:
+                    intent = new Intent(this, MyFollowersActivity.class);
+                    if (mUser != null) {
+                        intent.putExtra(MyFollowersActivity.EXTRA_FOLLOWER_URL, mUser.getFollowingUrl());
+                        intent.putExtra(MyFollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
+                                .TYPE_FOLLOWING);
+                    }
                     startActivity(intent);
                     break;
                 default:

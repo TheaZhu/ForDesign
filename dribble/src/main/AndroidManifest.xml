@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".shot.shots.MyShotsActivity">
         </activity>
+        <activity android:name=".user.followers.MyFollowersActivity">
+        </activity>
     </application>
 
 </manifest>

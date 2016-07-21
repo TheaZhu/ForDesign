@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.DribbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUserLike;
 import com.thea.fordesign.util.LogUtil;
 
 import java.util.ArrayList;
@@ -46,9 +47,9 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void getShots(@Nullable String list, @Nullable String sort, @Nullable String timeframe,
-                         @Nullable String date, final int page, int perPage, final LoadShotsCallback
-                                 callback) {
+    public void getShots(@NonNull String authorization, @Nullable String list, @Nullable String
+            sort, @Nullable String timeframe, @Nullable String date, final int page, int perPage,
+                         final LoadShotsCallback callback) {
         if (mCachedShots == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get shots");
             if (list == null)
@@ -57,9 +58,8 @@ public class ShotsRepository implements ShotsDataSource {
                 timeframe = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
             if (sort == null)
                 sort = DribbleConstant.SHOT_SORT_DEFAULT;
-            Call<List<DribbbleShot>> call = mService.getShots(DribbleConstant.AUTH_TYPE +
-                            DribbleConstant.CLIENT_ACCESS_TOKEN, list, sort, timeframe, null, page,
-                    perPage);
+            Call<List<DribbbleShot>> call = mService.getShots(authorization, list, sort,
+                    timeframe, null, page, perPage);
             call.enqueue(new Callback<List<DribbbleShot>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleShot>> call,
@@ -87,11 +87,11 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void getShots(@Nullable String url, final int page, final LoadShotsCallback callback) {
+    public void getShots(@NonNull String authorization, @Nullable String url, final int page,
+                         final LoadShotsCallback callback) {
         if (mCachedShots == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get shots");
-            Call<List<DribbbleShot>> call = mService.getShots(DribbleConstant.AUTH_TYPE +
-                            DribbleConstant.CLIENT_ACCESS_TOKEN, url, page);
+            Call<List<DribbbleShot>> call = mService.getShots(authorization, url, page);
             call.enqueue(new Callback<List<DribbbleShot>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleShot>> call,
@@ -119,7 +119,7 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void getShot(int shotId, final GetShotCallback callback) {
+    public void getShot(@NonNull String authorization, int shotId, final GetShotCallback callback) {
         DribbbleShot cachedShot = getShotWithId(shotId);
 
         // Respond immediately with cache if available
@@ -129,8 +129,7 @@ public class ShotsRepository implements ShotsDataSource {
                 callback.onShotLoaded(cachedShot);
         } else {
             LogUtil.i(TAG, "get shot: " + shotId);
-            Call<DribbbleShot> call = mService.getShot(DribbleConstant.AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN, shotId);
+            Call<DribbbleShot> call = mService.getShot(authorization, shotId);
             call.enqueue(new Callback<DribbbleShot>() {
                 @Override
                 public void onResponse(Call<DribbbleShot> call, Response<DribbbleShot> response) {
@@ -154,27 +153,54 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void saveShot(@NonNull DribbbleShot shot) {
+    public void saveShot(@NonNull String authorization, @NonNull DribbbleShot shot) {
 
     }
 
     @Override
-    public void likeShot(@NonNull DribbbleShot shot) {
+    public void likeShot(@NonNull String authorization, @NonNull DribbbleShot shot,
+                         LikeShotCallback callback) {
+        likeShot(authorization, shot.getId(), callback);
+    }
+
+    @Override
+    public void likeShot(@NonNull String authorization, int shotId, final LikeShotCallback
+            callback) {
+        Call<DribbbleUserLike> call = mService.likeShot(authorization, shotId);
+        call.enqueue(new Callback<DribbbleUserLike>() {
+            @Override
+            public void onResponse(Call<DribbbleUserLike> call, Response<DribbbleUserLike>
+                    response) {
+                LogUtil.i(TAG, "like shot code: " + response.code() + ", message: " + response
+                        .message());
+                if (callback != null) {
+                    int code = response.code();
+                    if (code == 201)
+                        callback.onSuccess(response.body());
+                    else
+                        callback.onFail(code, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DribbbleUserLike> call, Throwable t) {
+                LogUtil.i(TAG, "get shot call executed: " + call.isExecuted() + ", url: " + call
+                        .request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFail(DribbleConstant.CODE_ERROR, t.getMessage());
+
+            }
+        });
+    }
+
+    @Override
+    public void dislikeShot(@NonNull String authorization, @NonNull DribbbleShot shot) {
 
     }
 
     @Override
-    public void likeShot(int shotId) {
-
-    }
-
-    @Override
-    public void dislikeShot(@NonNull DribbbleShot shot) {
-
-    }
-
-    @Override
-    public void dislikeShot(int shotId) {
+    public void dislikeShot(@NonNull String authorization, int shotId) {
 
     }
 

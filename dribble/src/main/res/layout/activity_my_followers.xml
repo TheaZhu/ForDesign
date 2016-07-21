@@ -7,6 +7,6 @@
     android:fitsSystemWindows="true"
     android:background="@color/dribbble_pink"
     android:id="@+id/fl_content"
-    tools:context="com.thea.fordesign.shot.shots.MyShotsActivity">
+    tools:context="com.thea.fordesign.user.followers.MyFollowersActivity">
 
 </FrameLayout>

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.R;
+import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseDataBindingActivity;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.UserDetailActBinding;
@@ -82,7 +83,7 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
         adapter.addItem(userDetailFragment, "DETAILS");
 
         ShotsFragment shotsFragment = ShotsFragment.newInstance(mUser.getShotsUrl(), false);
-        new ShotsPresenter(shotsFragment);
+        new ShotsPresenter(shotsFragment, new UserModel(this));
         adapter.addItem(shotsFragment, "SHOTS");
 
         FollowersFragment followingsFragment = FollowersFragment.newInstance(mUser

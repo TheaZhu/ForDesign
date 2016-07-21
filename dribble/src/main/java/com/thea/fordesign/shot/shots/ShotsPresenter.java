@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.thea.fordesign.R;
+import com.thea.fordesign.UserModel;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.shot.data.ShotsDataSource;
 import com.thea.fordesign.shot.data.ShotsRepository;
@@ -19,14 +20,16 @@ public class ShotsPresenter implements ShotsContract.Presenter {
     public static final String TAG = ShotsPresenter.class.getSimpleName();
 
     private final ShotsContract.View mShotsView;
+    private final UserModel mUserModel;
 
     private final ShotsRepository mRepository;
 
     private boolean mFirstLoad = true;
 
-    public ShotsPresenter(ShotsContract.View shotsView) {
+    public ShotsPresenter(@NonNull ShotsContract.View shotsView, @NonNull UserModel userModel) {
         mShotsView = Preconditions.checkNotNull(shotsView, "shotsView cannot be null");
         mRepository = ShotsRepository.getInstance();
+        mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
         mShotsView.setPresenter(this);
     }
 
@@ -66,7 +69,8 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
         mRepository.refreshShots();
 
-        mRepository.getShots(list, sort, timeFrame, null, page, 12, new ShotsDataSource
+        mRepository.getShots(mUserModel.getDribbbleAccessToken(), list, sort, timeFrame, null,
+                page, 12, new ShotsDataSource
                 .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
@@ -93,7 +97,8 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
         mRepository.refreshShots();
 
-        mRepository.getShots(url, page, new ShotsDataSource.LoadShotsCallback() {
+        mRepository.getShots(mUserModel.getDribbbleAccessToken(), url, page, new ShotsDataSource
+                .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
                 if (showLoadingUI)

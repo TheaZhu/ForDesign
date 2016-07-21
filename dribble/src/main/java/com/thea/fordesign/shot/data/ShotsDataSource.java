@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUserLike;
 
 import java.util.List;
 
@@ -26,22 +27,31 @@ public interface ShotsDataSource {
         void onDataNotAvailable();
     }
 
-    void getShots(@Nullable String list, @Nullable String timeframe, @Nullable String date,
-                  @Nullable String sort, int page, int perPage, LoadShotsCallback callback);
+    interface LikeShotCallback {
 
-    void getShots(@Nullable String url, int page, LoadShotsCallback callback);
+        void onSuccess(DribbbleUserLike like);
 
-    void getShot(int shotId, GetShotCallback callback);
+        void onFail(int errCode, String message);
+    }
 
-    void saveShot(@NonNull DribbbleShot shot);
+    void getShots(@NonNull String authorization, @Nullable String list, @Nullable String timeframe,
+                  @Nullable String date, @Nullable String sort, int page, int perPage,
+                  LoadShotsCallback callback);
 
-    void likeShot(@NonNull DribbbleShot shot);
+    void getShots(@NonNull String authorization, @Nullable String url, int page,
+                  LoadShotsCallback callback);
 
-    void likeShot(int shotId);
+    void getShot(@NonNull String authorization, int shotId, GetShotCallback callback);
 
-    void dislikeShot(@NonNull DribbbleShot shot);
+    void saveShot(@NonNull String authorization, @NonNull DribbbleShot shot);
 
-    void dislikeShot(int shotId);
+    void likeShot(@NonNull String authorization, @NonNull DribbbleShot shot, LikeShotCallback callback);
+
+    void likeShot(@NonNull String authorization, int shotId, LikeShotCallback callback);
+
+    void dislikeShot(@NonNull String authorization, @NonNull DribbbleShot shot);
+
+    void dislikeShot(@NonNull String authorization, int shotId);
 
     void refreshShots();
 

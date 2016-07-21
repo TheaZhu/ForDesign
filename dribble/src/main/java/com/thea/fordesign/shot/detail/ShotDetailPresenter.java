@@ -3,8 +3,10 @@ package com.thea.fordesign.shot.detail;
 import android.support.annotation.NonNull;
 
 import com.thea.fordesign.R;
+import com.thea.fordesign.UserModel;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.bean.DribbbleUserLike;
 import com.thea.fordesign.shot.data.ShotsDataSource;
 import com.thea.fordesign.shot.data.ShotsRepository;
 import com.thea.fordesign.util.Preconditions;
@@ -16,13 +18,16 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
 
     private final ShotDetailContract.View mDetailView;
     private final ShotsRepository mRepository;
+    private final UserModel mUserModel;
 
     private int mShotId;
     private DribbbleShot mShot;
 
-    public ShotDetailPresenter(int shotId, ShotDetailContract.View detailView) {
+    public ShotDetailPresenter(int shotId, @NonNull ShotDetailContract.View detailView, @NonNull
+    UserModel userModel) {
         mDetailView = Preconditions.checkNotNull(detailView, "detailView cannot be null");
         mRepository = ShotsRepository.getInstance();
+        mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
         mShotId = shotId;
 
         mDetailView.setPresenter(this);
@@ -37,7 +42,8 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
         if (mShot != null)
             mDetailView.showShot(mShot);
         else
-            mRepository.getShot(mShotId, new ShotsDataSource.GetShotCallback() {
+            mRepository.getShot(mUserModel.getDribbbleAccessToken(), mShotId, new ShotsDataSource
+                    .GetShotCallback() {
 
                 @Override
                 public void onShotLoaded(DribbbleShot shot) {
@@ -62,7 +68,19 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
 
     @Override
     public void likeShot(@NonNull DribbbleShot shot) {
-        mDetailView.showSnack("登录功能开发中");
+        mRepository.likeShot(mUserModel.getDribbbleAccessToken(), shot, new ShotsDataSource
+                .LikeShotCallback() {
+
+            @Override
+            public void onSuccess(DribbbleUserLike like) {
+                mDetailView.showSnack("喜欢shot成功");
+            }
+
+            @Override
+            public void onFail(int errCode, String message) {
+                mDetailView.showSnack(message);
+            }
+        });
     }
 
     @Override

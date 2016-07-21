@@ -47,6 +47,8 @@ public class SignInActivity extends BaseActivity {
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setVerticalScrollBarEnabled(false);
         //webView.requestFocus();
+        mWebView.getSettings().setDomStorageEnabled(true);
+        mWebView.getSettings().setDatabaseEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -83,7 +85,7 @@ public class SignInActivity extends BaseActivity {
             }
         });
         mWebView.loadUrl(DribbleConstant.OAUTH + "/authorize?client_id=" + DribbleConstant
-                .CLIENT_ID);
+                .CLIENT_ID + "&scope=" + DribbleConstant.USER_SCOPE);
     }
 
     private void getAccessToken(String code) {
@@ -112,5 +114,6 @@ public class SignInActivity extends BaseActivity {
         userModel.setDribbbleUserAccessToken(accessToken.getTokenType() + " " +
                 accessToken.getAccessToken());
         userModel.setUserSignIn(true);
+        LogUtil.i(TAG, "scope: " + accessToken.getScope());
     }
 }

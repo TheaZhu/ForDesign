@@ -28,7 +28,7 @@ import com.thea.fordesign.DribbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
-import com.thea.fordesign.databinding.ShotItemBinding;
+import com.thea.fordesign.databinding.LaconicShotItemBinding;
 import com.thea.fordesign.databinding.ShotsFragBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
@@ -402,14 +402,14 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
 
         @Override
         public ShotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            ShotItemBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent
-                    .getContext()), R.layout.card_shot, parent, false);
+            LaconicShotItemBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent
+                    .getContext()), R.layout.card_shot_without_infos, parent, false);
             return new ShotViewHolder(viewDataBinding.getRoot());
         }
 
         @Override
         public void onBindViewHolder(ShotViewHolder holder, int position) {
-            ShotItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
+            LaconicShotItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
             ShotItemActionHandler actionHandler = new ShotItemActionHandler(mUserActionsListener);
             DribbbleShot shot = mShots.get(position);
             viewDataBinding.setShot(shot);
@@ -423,8 +423,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
                     .crossFade()
                     .into(viewDataBinding.ivShot);
 
-            viewDataBinding.tvLikesCount.setCompoundDrawablesWithIntrinsicBounds(R.mipmap
-                    .ic_like_inactive_small, 0, 0, 0);
+//            viewDataBinding.tvLikesCount.setCompoundDrawablesWithIntrinsicBounds(R.mipmap
+//                    .ic_like_inactive_small, 0, 0, 0);
             viewDataBinding.executePendingBindings();
         }
 

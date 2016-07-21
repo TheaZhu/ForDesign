@@ -10,6 +10,7 @@ import com.thea.fordesign.bean.DribbbleProject;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleTeam;
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.bean.DribbbleUserLike;
 
 import java.util.List;
 
@@ -212,6 +213,10 @@ public interface DribbbleService {
     @GET
     Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization,
                                       @Url String url);
+
+    @POST("shots/{shot}/like")
+    Call<DribbbleUserLike> likeShot(@Header("Authorization") String authorization,
+                                    @Path("shot") int shotId);
 
     class Builder {
         private Retrofit.Builder mRetrofitBuilder;
