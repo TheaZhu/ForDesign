@@ -23,10 +23,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey_50"
+            android:background="@color/grey_100"
             android:orientation="vertical"
             android:paddingBottom="@dimen/normal_vertical_padding"
-            android:paddingTop="@dimen/normal_vertical_padding">
+            android:paddingTop="@dimen/small_vertical_padding">
 
             <include
                 layout="@layout/card_user_counts"
@@ -46,12 +46,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_like_inactive_24dp"
+                    android:src="@drawable/ic_location_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@{user.location}"/>
@@ -61,7 +62,6 @@
                 android:id="@+id/ll_web"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="@dimen/normal_vertical_margin"
                 android:gravity="center_vertical"
                 android:onClick="@{() -> actionHandler.openWeb(user.links.web)}"
                 android:orientation="horizontal"
@@ -71,12 +71,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_like_inactive_24dp"
+                    android:src="@drawable/ic_web_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@{user.links.web}"/>
@@ -86,7 +87,6 @@
                 android:id="@+id/ll_twitter"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="@dimen/normal_vertical_margin"
                 android:gravity="center_vertical"
                 android:onClick="@{() -> actionHandler.openTwitter(user.links.twitter)}"
                 android:orientation="horizontal"
@@ -96,12 +96,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_like_inactive_24dp"
+                    android:src="@drawable/ic_twitter_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
                     android:ellipsize="end"
                     android:lines="1"
                     android:text="@{user.links.twitter}"/>

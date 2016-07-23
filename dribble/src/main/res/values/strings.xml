@@ -26,6 +26,10 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
 
+    <!-- user detail -->
+    <string name="action_follow">FOLLOW</string>
+    <string name="action_unfollow">UNFOLLOW</string>
+
     // transition name
     <string name="image_shot">Image Shot</string>
     <string name="image_user_avatar">User Avatar</string>

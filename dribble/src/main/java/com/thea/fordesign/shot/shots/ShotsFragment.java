@@ -246,7 +246,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
     }
 
-    public void changeListType(String list) {
+    private void changeListType(String list) {
         if (!list.equalsIgnoreCase(mListType)) {
             mListType = list;
             mListMenuItem.setTitle(mListType.substring(0, 3).toUpperCase());
@@ -256,7 +256,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         }
     }
 
-    public void changeSortType(String sort) {
+    private void changeSortType(String sort) {
         if (!sort.equalsIgnoreCase(mSortType)) {
             mSortType = sort;
             mSortListMenuItem.setTitle(mSortType.substring(0, 3).toUpperCase());
@@ -266,7 +266,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         }
     }
 
-    public void changeTimeFrameType(String timeFrame) {
+    private void changeTimeFrameType(String timeFrame) {
         if (!timeFrame.equalsIgnoreCase(mTimeFrameType)) {
             mTimeFrameType = timeFrame;
             mTimeFrameMenuItem.setTitle(mTimeFrameType.substring(0, 3).toUpperCase());

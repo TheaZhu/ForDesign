@@ -46,19 +46,24 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
         super.onCreate(savedInstanceState);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        mViewDataBinding.ctlUser.setExpandedTitleColor(0x00ffffff);
-//        mViewDataBinding.ctlUser.set
+//        getSupportActionBar().setDisplayShowTitleEnabled(true);
+//        mViewDataBinding.ctlUser.setCollapsedTitleTextColor(0xFFFFFF);
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_USER)) {
             mUser = intent.getParcelableExtra(EXTRA_USER);
         }
         LogUtil.i(TAG, mUser.getId() + ": " + mUser.getName());
-        initTabLayoutWithViewPager();
         new UserDetailPresenter(this);
+        initTabLayoutWithViewPager();
         showUser(mUser);
     }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_user_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

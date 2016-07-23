@@ -48,19 +48,13 @@ public interface UserDetailContract {
 
     interface SubView extends BaseView<SubPresenter> {
 
-        void showUser(@NonNull DribbbleUser user);
-
-        void showShotsUi(@NonNull String shotsUrl);
-
         void showBucketsUi(@NonNull String bucketsUrl);
 
-        void showProjectsUi(@NonNull String projectsUrl);
+        void showLikesUi(@NonNull String likesUrl);
 
         void showFollowersUi(@NonNull String followersUrl);
 
-        void showFollowingsUi(@NonNull String followingsUrl);
-
-        void showLikesUi(@NonNull String likesUrl);
+        void showTeamsUi(@NonNull String teamsUrl);
 
         void showWeb(@NonNull String web);
 
@@ -69,17 +63,17 @@ public interface UserDetailContract {
 
     interface SubPresenter extends BasePresenter {
 
-        void openShots(@NonNull String shotsUrl);
+        void openShots(@NonNull String bucketsUrl);
 
         void openBuckets(@NonNull String bucketsUrl);
 
-        void openProjects(@NonNull String projectsUrl);
+        void openLikes(@NonNull String likesUrl);
 
         void openFollowers(@NonNull String followersUrl);
 
         void openFollowings(@NonNull String followingsUrl);
 
-        void openLikes(@NonNull String likesUrl);
+        void openTeams(@NonNull String teamsUrl);
 
         void openWeb(String web);
 
