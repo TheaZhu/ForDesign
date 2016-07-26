@@ -10,14 +10,14 @@
 
         <variable
             name="actionHandler"
-            type="com.thea.fordesign.shot.shots.ShotItemActionHandler"/>
+            type="com.thea.fordesign.shot.ShotItemPresenter"/>
     </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:onClick="@{(v) -> actionHandler.shotClicked(shot, v)}">
+        android:onClick="@{(v) -> actionHandler.openShotDetails(shot, v)}">
 
         <RelativeLayout
             android:layout_width="match_parent"

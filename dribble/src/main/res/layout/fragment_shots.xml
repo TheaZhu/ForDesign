@@ -4,38 +4,17 @@
 
     <data class=".databinding.ShotsFragBinding"></data>
 
-    <FrameLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/srl_shots"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_200">
+        tools:context=".shot.shots.ShotsFragment">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/srl_shots"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_shots"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".shot.shots.ShotsFragment">
+            android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_shots"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_filters"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/dribbble_pink"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

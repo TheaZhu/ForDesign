@@ -2,9 +2,9 @@ package com.thea.fordesign.shot.shots;
 
 import android.support.annotation.NonNull;
 
-import com.thea.fordesign.base.BasePresenter;
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.shot.ShotItemPresenter;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public interface ShotsContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends ShotItemPresenter {
 
         void result(int requestCode, int resultCode);
 
@@ -44,8 +44,6 @@ public interface ShotsContract {
         void loadMore(String list, String sort, String timeFrame, int page);
 
         void loadMore(String shotsUrl, int page);
-
-        void openShotDetails(@NonNull DribbbleShot requestedShot, android.view.View v);
 
         void likeShot(@NonNull DribbbleShot shot, boolean like);
 

@@ -52,6 +52,11 @@ public class UserDetailFragPresenter implements UserDetailContract.SubPresenter 
     }
 
     @Override
+    public void openProjects(int userId) {
+        mDetailView.showProjectsUi(userId);
+    }
+
+    @Override
     public void openWeb(String web) {
         mDetailView.showWeb(web);
     }

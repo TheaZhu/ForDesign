@@ -64,7 +64,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.ViewHo
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
-                .placeholder(R.mipmap.default_shot)
+                .placeholder(R.mipmap.default_user_avatar)
                 .into(viewDataBinding.ivAvatar);
         viewDataBinding.executePendingBindings();
     }

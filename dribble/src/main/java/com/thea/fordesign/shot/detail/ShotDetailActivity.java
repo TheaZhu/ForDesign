@@ -24,8 +24,7 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         ShotDetailFragment fragment = (ShotDetailFragment) getSupportFragmentManager()
                 .findFragmentByTag(ShotDetailFragment.TAG);

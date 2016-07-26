@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class=".databinding.ProjectsFragBinding"></data>
+
+    <FrameLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_100">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/srl_projects"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".shot.shots.ShotsFragment">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_projects"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

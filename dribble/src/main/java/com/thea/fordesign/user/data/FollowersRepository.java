@@ -1,9 +1,9 @@
 package com.thea.fordesign.user.data;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
 import com.thea.fordesign.bean.DribbbleFollower;
 import com.thea.fordesign.util.LogUtil;
 
@@ -19,28 +19,26 @@ import retrofit2.Response;
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class FollowingsRepository implements FollowersDataSource {
-    public static final String TAG = FollowingsRepository.class.getSimpleName();
+public class FollowersRepository implements FollowersDataSource {
+    public static final String TAG = FollowersRepository.class.getSimpleName();
 
     private DribbbleService mService;
-    Map<Integer, DribbbleFollower> mCachedFollowings;
+    Map<Integer, DribbbleFollower> mCachedFollowers;
     boolean mCacheIsDirty = false;
 
-    private FollowingsRepository() {
+    private FollowersRepository() {
         mService = new DribbbleService.Builder().create();
     }
 
-    public static FollowingsRepository getInstance() {
+    public static FollowersRepository getInstance() {
         return Singleton.INSTANCE;
     }
 
-    public void getFollowings(@Nullable String url, final int page, final LoadFollowersCallback
-            callback) {
-        if (mCachedFollowings == null || mCacheIsDirty) {
+    public void getFollowers(@NonNull String authorization, @Nullable String url, final int page,
+                             final LoadFollowersCallback callback) {
+        if (mCachedFollowers == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get followings");
-            Call<List<DribbbleFollower>> call = mService.getUserFollowers(DribbleConstant
-                    .AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN, url, page);
+            Call<List<DribbbleFollower>> call = mService.getUserFollowers(authorization, url, page);
             call.enqueue(new Callback<List<DribbbleFollower>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleFollower>> call,
@@ -63,7 +61,7 @@ public class FollowingsRepository implements FollowersDataSource {
                 }
             });
         } else if (callback != null) {
-            callback.onFollowersLoaded(new ArrayList<>(mCachedFollowings.values()));
+            callback.onFollowersLoaded(new ArrayList<>(mCachedFollowers.values()));
         }
     }
 
@@ -72,27 +70,27 @@ public class FollowingsRepository implements FollowersDataSource {
     }
 
     private void refreshCache(int page, List<DribbbleFollower> followings) {
-        if (mCachedFollowings == null) {
-            mCachedFollowings = new LinkedHashMap<>();
+        if (mCachedFollowers == null) {
+            mCachedFollowers = new LinkedHashMap<>();
         }
         if (page <= 1)
-            mCachedFollowings.clear();
+            mCachedFollowers.clear();
         for (DribbbleFollower follower : followings) {
-            mCachedFollowings.put(follower.getId(), follower);
+            mCachedFollowers.put(follower.getId(), follower);
         }
         mCacheIsDirty = false;
     }
 
     @Nullable
-    private DribbbleFollower getFollowingWithId(int id) {
-        if (mCachedFollowings == null || mCachedFollowings.isEmpty()) {
+    private DribbbleFollower getFollowerWithId(int id) {
+        if (mCachedFollowers == null || mCachedFollowers.isEmpty()) {
             return null;
         } else {
-            return mCachedFollowings.get(id);
+            return mCachedFollowers.get(id);
         }
     }
 
     private static class Singleton {
-        private static final FollowingsRepository INSTANCE = new FollowingsRepository();
+        private static final FollowersRepository INSTANCE = new FollowersRepository();
     }
 }

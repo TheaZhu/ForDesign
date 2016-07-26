@@ -10,7 +10,7 @@
         <item name="android:windowBackground">@color/grey_100</item>
         <item name="android:textColorPrimary">@color/dribbble_charcoal</item>
         <item name="android:textColorSecondary">@color/dribbble_slate</item>
-        <item name="android:textColorHint">@color/dribbble_link_blue</item>
+        <item name="android:textColorHint">@color/dribbble_slate</item>
         <item name="android:textColorLink">@color/dribbble_link_blue</item>
     </style>
 

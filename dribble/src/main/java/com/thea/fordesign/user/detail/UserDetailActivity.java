@@ -22,7 +22,7 @@ import com.thea.fordesign.databinding.UserDetailActBinding;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
 import com.thea.fordesign.user.followers.FollowersFragment;
-import com.thea.fordesign.user.followers.FollowingsPresenter;
+import com.thea.fordesign.user.followers.FollowersPresenter;
 import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
@@ -46,8 +46,6 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
         super.onCreate(savedInstanceState);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(true);
-//        mViewDataBinding.ctlUser.setCollapsedTitleTextColor(0xFFFFFF);
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_USER)) {
@@ -93,7 +91,7 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
 
         FollowersFragment followingsFragment = FollowersFragment.newInstance(mUser
                 .getFollowingUrl(), FollowersFragment.TYPE_FOLLOWING, false);
-        new FollowingsPresenter(followingsFragment);
+        new FollowersPresenter(followingsFragment, new UserModel(this));
         adapter.addItem(followingsFragment, "FOLLOWINGS");
 
         /*ShotsFragment likesFragment = ShotsFragment.newInstance(mUser.getLikesUrl(), false);
@@ -120,7 +118,7 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
-                .placeholder(R.mipmap.ic_dribbble_square)
+                .placeholder(R.mipmap.default_user_avatar)
                 .into(mViewDataBinding.ivAvatar);
 
         mViewDataBinding.executePendingBindings();

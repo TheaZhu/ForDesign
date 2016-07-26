@@ -28,6 +28,10 @@ import com.thea.fordesign.widget.LoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
 /**
  * A simple {@link BaseDataBindingFragment} subclass.
  */
@@ -130,12 +134,13 @@ public class UsersFragment extends BaseDataBindingFragment<UsersFragBinding> imp
             return;
         }
 
-        srl.post(new Runnable() {
-            @Override
-            public void run() {
-                srl.setRefreshing(active);
-            }
-        });
+        Observable.just(active).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        mViewDataBinding.srlUsers.setRefreshing(active);
+                    }
+                });
     }
 
     @Override

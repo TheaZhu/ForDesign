@@ -70,25 +70,24 @@ public class ShotsPresenter implements ShotsContract.Presenter {
         mRepository.refreshShots();
 
         mRepository.getShots(mUserModel.getDribbbleAccessToken(), list, sort, timeFrame, null,
-                page, 12, new ShotsDataSource
-                .LoadShotsCallback() {
-            @Override
-            public void onShotsLoaded(List<DribbbleShot> shots) {
-                if (showLoadingUI)
-                    mShotsView.setLoadingIndicator(false);
-                if (page == 1)
-                    mShotsView.showShots(shots);
-                else
-                    mShotsView.insertShots(shots);
-            }
+                page, 12, new ShotsDataSource.LoadShotsCallback() {
+                    @Override
+                    public void onShotsLoaded(List<DribbbleShot> shots) {
+                        if (showLoadingUI)
+                            mShotsView.setLoadingIndicator(false);
+                        if (page == 1)
+                            mShotsView.showShots(shots);
+                        else
+                            mShotsView.insertShots(shots);
+                    }
 
-            @Override
-            public void onDataNotAvailable() {
-                if (showLoadingUI)
-                    mShotsView.setLoadingIndicator(false);
-                mShotsView.showSnack(R.string.error_load_shots);
-            }
-        });
+                    @Override
+                    public void onDataNotAvailable() {
+                        if (showLoadingUI)
+                            mShotsView.setLoadingIndicator(false);
+                        mShotsView.showSnack(R.string.error_load_shots);
+                    }
+                });
     }
 
     private void loadShots(String url, final int page, final boolean showLoadingUI) {
@@ -116,6 +115,11 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 mShotsView.showSnack(R.string.error_load_shots);
             }
         });
+    }
+
+    @Override
+    public String formatTime(String timeStr) {
+        return timeStr.substring(0, timeStr.indexOf("T"));
     }
 
     @Override

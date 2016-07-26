@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -33,10 +34,15 @@ import com.thea.fordesign.databinding.ShotsFragBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -149,10 +155,10 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         });
 
         RecyclerView recyclerView = mViewDataBinding.rvShots;
-        mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
+        mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, createLoadingView(recyclerView)));
         mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
@@ -167,19 +173,28 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         loadShots();
     }
 
+    private View createLoadingView(ViewGroup parent) {
+        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.loading_layout,
+                parent, false);
+        TextView tv = (TextView) loadingView.findViewById(R.id.tv_loading_message);
+        tv.setText(R.string.loading);
+
+        return loadingView;
+    }
+
     @Override
     public void setLoadingIndicator(final boolean active) {
-        final SwipeRefreshLayout srl = mViewDataBinding.srlShots;
+        SwipeRefreshLayout srl = mViewDataBinding.srlShots;
         if (srl == null || srl.isRefreshing() == active) {
             return;
         }
-
-        srl.post(new Runnable() {
-            @Override
-            public void run() {
-                srl.setRefreshing(active);
-            }
-        });
+        Observable.just(active).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        mViewDataBinding.srlShots.setRefreshing(active);
+                    }
+                });
     }
 
     @Override
@@ -402,18 +417,18 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
 
         @Override
         public ShotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LaconicShotItemBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(parent
-                    .getContext()), R.layout.card_shot_without_infos, parent, false);
+            LaconicShotItemBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from
+                    (parent
+                            .getContext()), R.layout.card_shot_without_infos, parent, false);
             return new ShotViewHolder(viewDataBinding.getRoot());
         }
 
         @Override
         public void onBindViewHolder(ShotViewHolder holder, int position) {
             LaconicShotItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
-            ShotItemActionHandler actionHandler = new ShotItemActionHandler(mUserActionsListener);
             DribbbleShot shot = mShots.get(position);
             viewDataBinding.setShot(shot);
-            viewDataBinding.setActionHandler(actionHandler);
+            viewDataBinding.setActionHandler(mUserActionsListener);
 
             Glide.with(ShotsFragment.this)
                     .load(shot.getImages().getNormal())

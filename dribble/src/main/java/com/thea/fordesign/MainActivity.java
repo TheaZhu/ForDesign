@@ -15,12 +15,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.base.BaseActivity;
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.bucket.buckets.BucketsActivity;
+import com.thea.fordesign.like.user.UserLikesActivity;
+import com.thea.fordesign.project.projects.ProjectsActivity;
 import com.thea.fordesign.shot.shots.MyShotsActivity;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
 import com.thea.fordesign.sign.SignInActivity;
+import com.thea.fordesign.user.followers.FollowersActivity;
 import com.thea.fordesign.user.followers.FollowersFragment;
-import com.thea.fordesign.user.followers.MyFollowersActivity;
 import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.LogUtil;
 
@@ -109,7 +112,7 @@ public class MainActivity extends BaseActivity implements NavigationView
                             .asBitmap()
                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .centerCrop()
-                            .placeholder(R.mipmap.ic_dribbble_square)
+                            .placeholder(R.mipmap.default_user_avatar)
                             .into(mAvatar);
                 }
 
@@ -151,38 +154,88 @@ public class MainActivity extends BaseActivity implements NavigationView
         if (!userModel.getUserSignIn() || userModel.getDribbbleUserAccessToken() == null) {
             trySignIn();
         } else {
-            Intent intent;
             switch (item.getItemId()) {
                 case R.id.nav_my_shots:
-                    intent = new Intent(this, MyShotsActivity.class);
-                    if (mUser != null)
-                        intent.putExtra(MyShotsActivity.EXTRA_SHOTS_URL, mUser.getShotsUrl());
-                    startActivity(intent);
+                    showMyShots();
+                    break;
+                case R.id.nav_my_projects:
+                    showMyProjects();
+                    break;
+                case R.id.nav_my_buckets:
+                    showMyBuckets();
+                    break;
+                case R.id.nav_my_likes:
+                    showMyLikes();
                     break;
                 case R.id.nav_my_followers:
-                    intent = new Intent(this, MyFollowersActivity.class);
-                    if (mUser != null) {
-                        intent.putExtra(MyFollowersActivity.EXTRA_FOLLOWER_URL, mUser.getFollowersUrl());
-                        intent.putExtra(MyFollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
-                                .TYPE_FOLLOWER);
-                    }
-                    startActivity(intent);
+                    showMyFollowers();
                     break;
                 case R.id.nav_my_following:
-                    intent = new Intent(this, MyFollowersActivity.class);
-                    if (mUser != null) {
-                        intent.putExtra(MyFollowersActivity.EXTRA_FOLLOWER_URL, mUser.getFollowingUrl());
-                        intent.putExtra(MyFollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
-                                .TYPE_FOLLOWING);
-                    }
-                    startActivity(intent);
+                    showMyFollowings();
                     break;
                 default:
+                    mDrawerLayout.closeDrawers();
                     break;
             }
             item.setChecked(true);
-            mDrawerLayout.closeDrawers();
         }
         return true;
+    }
+
+    private void showMyShots() {
+        Intent intent = new Intent(this, MyShotsActivity.class);
+        if (mUser != null)
+            intent.putExtra(MyShotsActivity.EXTRA_SHOTS_URL, mUser.getShotsUrl());
+        startActivity(intent);
+    }
+
+    private void showMyProjects() {
+        Intent intent = new Intent(this, ProjectsActivity.class);
+        if (mUser != null) {
+            intent.putExtra(ProjectsActivity.EXTRA_TITLE, getString(R.string.title_my_projects));
+            intent.putExtra(ProjectsActivity.EXTRA_USER_ID, mUser.getId());
+        }
+        startActivity(intent);
+    }
+
+    private void showMyBuckets() {
+        Intent intent = new Intent(this, BucketsActivity.class);
+        if (mUser != null) {
+            intent.putExtra(BucketsActivity.EXTRA_TITLE, getString(R.string.title_my_buckets));
+            intent.putExtra(BucketsActivity.EXTRA_BUCKETS_URL, mUser.getBucketsUrl());
+        }
+        startActivity(intent);
+    }
+
+    private void showMyLikes() {
+        Intent intent = new Intent(this, UserLikesActivity.class);
+        if (mUser != null) {
+            intent.putExtra(UserLikesActivity.EXTRA_TITLE, getString(R.string.title_my_likes));
+            intent.putExtra(UserLikesActivity.EXTRA_LIKE_URL, mUser.getLikesUrl());
+        }
+        startActivity(intent);
+    }
+
+    private void showMyFollowers() {
+        Intent intent = new Intent(this, FollowersActivity.class);
+        if (mUser != null) {
+            intent.putExtra(FollowersActivity.EXTRA_TITLE, getString(R.string.title_my_followers));
+            intent.putExtra(FollowersActivity.EXTRA_FOLLOWER_URL, mUser.getFollowersUrl());
+            intent.putExtra(FollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
+                    .TYPE_FOLLOWER);
+        }
+        startActivity(intent);
+    }
+
+    private void showMyFollowings() {
+        Intent intent = new Intent(this, FollowersActivity.class);
+        if (mUser != null) {
+            intent.putExtra(FollowersActivity.EXTRA_TITLE, getString(R.string.title_my_following));
+            intent.putExtra(FollowersActivity.EXTRA_FOLLOWER_URL, mUser
+                    .getFollowingUrl());
+            intent.putExtra(FollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment
+                    .TYPE_FOLLOWING);
+        }
+        startActivity(intent);
     }
 }

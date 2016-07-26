@@ -37,7 +37,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_shot_24dp"
+                    android:src="@mipmap/ic_shot_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -50,11 +50,36 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_buckets_count"
+                android:id="@+id/ll_likes_count"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignRight="@id/ll_shots_count"
                 android:layout_below="@id/ll_shots_count"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_likes_24dp"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{user.likesCount + &quot;  likes&quot;}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_buckets_count"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignRight="@id/ll_shots_count"
+                android:layout_below="@id/ll_likes_count"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:onClick="@{() -> actionHandler.openBuckets(user.bucketsUrl)}">
@@ -62,7 +87,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bucket_24dp"
+                    android:src="@mipmap/ic_bucket_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -75,19 +100,20 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_likes_count"
+                android:id="@+id/ll_projects_count"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignRight="@id/ll_shots_count"
                 android:layout_below="@id/ll_buckets_count"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}">
+                android:onClick="@{() -> actionHandler.openProjects(user.id)}">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_likes_24dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_project_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -96,7 +122,7 @@
                     android:layout_marginLeft="@dimen/normal_horizontal_margin"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="@{user.likesCount + &quot;  likes&quot;}"/>
+                    android:text="@{user.projectsCount + &quot;  projects&quot;}"/>
             </LinearLayout>
 
             <View
@@ -107,7 +133,7 @@
                 android:layout_alignBottom="@id/ll_likes_count"
                 android:layout_marginLeft="@dimen/normal_horizontal_margin"
                 android:layout_marginRight="@dimen/normal_horizontal_margin"
-                android:background="@color/grey_200"
+                android:background="@color/grey_400"
                 app:layout_heightPercent="100%"/>
 
             <LinearLayout
@@ -122,7 +148,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_follower_24dp"
+                    android:src="@mipmap/ic_follower_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -147,7 +173,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_following_24dp"
+                    android:src="@mipmap/ic_following_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -172,7 +198,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_team_24dp"
+                    android:src="@mipmap/ic_team_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView

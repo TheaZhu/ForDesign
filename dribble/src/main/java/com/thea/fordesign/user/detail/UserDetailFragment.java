@@ -13,7 +13,12 @@ import android.support.v4.app.Fragment;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.bucket.buckets.BucketsActivity;
 import com.thea.fordesign.databinding.UserDetailFragBinding;
+import com.thea.fordesign.like.user.UserLikesActivity;
+import com.thea.fordesign.project.projects.ProjectsActivity;
+import com.thea.fordesign.user.followers.FollowersActivity;
+import com.thea.fordesign.user.followers.FollowersFragment;
 import com.thea.fordesign.util.Preconditions;
 
 /**
@@ -61,12 +66,27 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
 
     @Override
     public void showBucketsUi(@NonNull String bucketsUrl) {
+        Intent intent = new Intent(getContext(), BucketsActivity.class);
+        intent.putExtra(BucketsActivity.EXTRA_TITLE, getString(R.string.title_buckets));
+        intent.putExtra(BucketsActivity.EXTRA_BUCKETS_URL, bucketsUrl);
+        startActivity(intent);
+    }
 
+    @Override
+    public void showProjectsUi(int userId) {
+        Intent intent = new Intent(getContext(), ProjectsActivity.class);
+        intent.putExtra(ProjectsActivity.EXTRA_TITLE, getString(R.string.title_projects));
+        intent.putExtra(ProjectsActivity.EXTRA_USER_ID, userId);
+        startActivity(intent);
     }
 
     @Override
     public void showFollowersUi(@NonNull String followersUrl) {
-
+        Intent intent = new Intent(getContext(), FollowersActivity.class);
+        intent.putExtra(FollowersActivity.EXTRA_TITLE, getString(R.string.title_followers));
+        intent.putExtra(FollowersActivity.EXTRA_FOLLOWER_URL, followersUrl);
+        intent.putExtra(FollowersActivity.EXTRA_ITEM_TYPE, FollowersFragment.TYPE_FOLLOWER);
+        startActivity(intent);
     }
 
     @Override
@@ -76,7 +96,10 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
 
     @Override
     public void showLikesUi(@NonNull String likesUrl) {
-
+        Intent intent = new Intent(getContext(), UserLikesActivity.class);
+        intent.putExtra(UserLikesActivity.EXTRA_TITLE, getString(R.string.title_user_likes));
+        intent.putExtra(UserLikesActivity.EXTRA_LIKE_URL, likesUrl);
+        startActivity(intent);
     }
 
     @Override

@@ -39,7 +39,15 @@
         </activity>
         <activity android:name=".shot.shots.MyShotsActivity">
         </activity>
-        <activity android:name=".user.followers.MyFollowersActivity">
+        <activity android:name=".user.followers.FollowersActivity">
+        </activity>
+        <activity android:name=".like.shot.ShotLikesActivity">
+        </activity>
+        <activity android:name=".like.user.UserLikesActivity">
+        </activity>
+        <activity android:name=".bucket.buckets.BucketsActivity">
+        </activity>
+        <activity android:name=".project.projects.ProjectsActivity">
         </activity>
     </application>
 

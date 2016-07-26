@@ -40,7 +40,8 @@ public interface DribbbleService {
     Call<List<DribbbleBucket>> getUserBuckets(@Header("Authorization") String authorization);
 
     @GET("user/projects")
-    Call<List<DribbbleProject>> getUserProjects(@Header("Authorization") String authorization);
+    Call<List<DribbbleProject>> getUserProjects(@Header("Authorization") String authorization,
+                                                @Query("page") int page);
 
     @GET("user/shots")
     Call<List<DribbbleShot>> getUserShots(@Header("Authorization") String authorization);
@@ -63,7 +64,8 @@ public interface DribbbleService {
     Call checkIfFollowing(@Header("Authorization") String authorization, @Path("user") int userId);
 
     @GET("user/likes")
-    Call<List<DribbbleShotLike>> getUserLikes(@Header("Authorization") String authorization);
+    Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
+                                              @Query("page") int page);
 
     @GET("users/{user}")
     Call<DribbbleUser> getUser(@Header("Authorization") String authorization,
@@ -75,7 +77,8 @@ public interface DribbbleService {
 
     @GET("users/{user}/projects")
     Call<List<DribbbleProject>> getUserProjects(@Header("Authorization") String authorization,
-                                                @Path("user") int userId);
+                                                @Path("user") int userId,
+                                                @Query("page") int page);
 
     @GET("users/{user}/shots")
     Call<List<DribbbleShot>> getUserShots(@Header("Authorization") String authorization,
@@ -96,8 +99,9 @@ public interface DribbbleService {
                                               @Path("user") int userId);
 
     @GET("users/{user}/likes")
-    Call<List<DribbbleShotLike>> getUserLikes(@Header("Authorization") String authorization,
-                                              @Path("user") int userId);
+    Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
+                                              @Path("user") int userId,
+                                              @Query("page") int page);
 
     @GET("buckets/{bucket}")
     Call<DribbbleBucket> getBucket(@Header("Authorization") String authorization,
@@ -194,12 +198,19 @@ public interface DribbbleService {
                                                   @Query("page") int page);
 
     @GET
+    Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
+                                                  @Url String url,
+                                                  @Query("page") int page);
+
+    @GET
     Call<List<DribbbleBucket>> getBuckets(@Header("Authorization") String authorization,
-                                          @Url String url);
+                                          @Url String url,
+                                          @Query("page") int page);
 
     @GET
     Call<List<DribbbleProject>> getProjects(@Header("Authorization") String authorization,
-                                            @Url String url);
+                                            @Url String url,
+                                            @Query("page") int page);
 
     @GET
     Call<List<DribbbleShot>> getShots(@Header("Authorization") String authorization,

@@ -94,7 +94,7 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
-                .placeholder(R.mipmap.ic_dribbble_square)
+                .placeholder(R.mipmap.default_user_avatar)
                 .into(mViewDataBinding.cvDesigner.ivAvatar);
         mViewDataBinding.executePendingBindings();
     }

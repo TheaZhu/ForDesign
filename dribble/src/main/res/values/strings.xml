@@ -26,7 +26,18 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
 
-    <!-- user detail -->
+    <string name="title_my_shots">My Shots</string>
+    <string name="title_my_likes">My Likes</string>
+    <string name="title_my_buckets">My Buckets</string>
+    <string name="title_my_projects">My Projects</string>
+    <string name="title_my_followers">My Followers</string>
+    <string name="title_my_following">My Following</string>
+    <string name="title_shot_likes">Shot Liker</string>
+    <string name="title_user_likes">User Likes</string>
+    <string name="title_buckets">Buckets</string>
+    <string name="title_projects">Projects</string>
+    <string name="title_followers">Followers</string>
+
     <string name="action_follow">FOLLOW</string>
     <string name="action_unfollow">UNFOLLOW</string>
 
@@ -70,15 +81,20 @@
     </string>
 
     <string name="error_load_shots">Error when load shots.</string>
+    <string name="error_load_buckets">Error when load buckets.</string>
+    <string name="error_load_projects">Error when load projects.</string>
+    <string name="error_load_user_likes">Error when load user likes.</string>
     <string name="error_get_shot">Error when get shot.</string>
     <string name="error_load_shot_comments">Error when load shot comments.</string>
     <string name="error_load_user_followings">Error when load user followings.</string>
 
-    <string name="hint_add_comment">Add comment</string>
+    <string name="loading">Loading</string>
+    <string name="loading_shot">Loading</string>
 
+    <string name="hint_add_comment">Add comment</string>
     <string name="add_comment">ADD</string>
 
-    <string name="hello_world">Hello World</string>
     <string name="test">Test</string>
+
 
 </resources>

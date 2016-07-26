@@ -48,9 +48,11 @@ public interface UserDetailContract {
 
     interface SubView extends BaseView<SubPresenter> {
 
+        void showLikesUi(@NonNull String likesUrl);
+
         void showBucketsUi(@NonNull String bucketsUrl);
 
-        void showLikesUi(@NonNull String likesUrl);
+        void showProjectsUi(int userId);
 
         void showFollowersUi(@NonNull String followersUrl);
 
@@ -68,6 +70,8 @@ public interface UserDetailContract {
         void openBuckets(@NonNull String bucketsUrl);
 
         void openLikes(@NonNull String likesUrl);
+
+        void openProjects(int userId);
 
         void openFollowers(@NonNull String followersUrl);
 
