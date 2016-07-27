@@ -1,5 +1,7 @@
 package com.thea.fordesign.project.projects;
 
+import android.support.annotation.StringRes;
+
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleProject;
 import com.thea.fordesign.project.ProjectItemPresenter;
@@ -13,7 +15,11 @@ public interface ProjectsContract {
 
     interface View extends BaseView<Presenter> {
 
-        void setLoadingIndicator(boolean active);
+        void setRefreshingIndicator(boolean active);
+
+        void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick);
+
+        void setLoadingError();
 
         void showProjects(List<DribbbleProject> projects);
 

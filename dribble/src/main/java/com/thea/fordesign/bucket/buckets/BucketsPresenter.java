@@ -41,17 +41,21 @@ public class BucketsPresenter implements BucketsContract.Presenter {
 
     @Override
     public void loadBuckets() {
-        loadBuckets(mBucketsUrl, 1, true);
+        loadBuckets(mBucketsUrl, 1, true, false);
     }
 
     @Override
     public void loadMore(int page) {
-        loadBuckets(mBucketsUrl, page, false);
+        loadBuckets(mBucketsUrl, page, false, true);
     }
 
-    private void loadBuckets(String url, final int page, final boolean showLoadingUI) {
+    private void loadBuckets(String url, final int page, final boolean showLoadingUI, final boolean
+            isLoadMore) {
         if (showLoadingUI)
-            mBucketsView.setLoadingIndicator(true);
+            mBucketsView.setRefreshingIndicator(true);
+
+        if (isLoadMore)
+            mBucketsView.setLoadingIndicator(true, R.string.loading, false);
 
         mRepository.refreshBuckets();
 
@@ -61,7 +65,7 @@ public class BucketsPresenter implements BucketsContract.Presenter {
             @Override
             public void onBucketsLoaded(List<DribbbleBucket> buckets) {
                 if (showLoadingUI)
-                    mBucketsView.setLoadingIndicator(false);
+                    mBucketsView.setRefreshingIndicator(false);
                 if (page == 1)
                     mBucketsView.showBuckets(buckets);
                 else
@@ -70,9 +74,14 @@ public class BucketsPresenter implements BucketsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                if (showLoadingUI)
-                    mBucketsView.setLoadingIndicator(false);
-                mBucketsView.showSnack(R.string.error_load_buckets);
+                if (showLoadingUI) {
+                    mBucketsView.setRefreshingIndicator(false);
+                    mBucketsView.showSnack(R.string.error_load_buckets);
+                }
+                if (isLoadMore) {
+                    mBucketsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mBucketsView.setLoadingError();
+                }
             }
         });
     }

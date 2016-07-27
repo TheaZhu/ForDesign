@@ -89,6 +89,7 @@
     <string name="error_load_user_followings">Error when load user followings.</string>
 
     <string name="loading">Loading</string>
+    <string name="loading_error">Error when loading, click to try again.</string>
     <string name="loading_shot">Loading</string>
 
     <string name="hint_add_comment">Add comment</string>

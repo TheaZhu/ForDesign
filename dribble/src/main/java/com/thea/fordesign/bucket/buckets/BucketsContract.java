@@ -1,5 +1,7 @@
 package com.thea.fordesign.bucket.buckets;
 
+import android.support.annotation.StringRes;
+
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.bucket.BucketItemPresenter;
@@ -13,7 +15,11 @@ public interface BucketsContract {
 
     interface View extends BaseView<Presenter> {
 
-        void setLoadingIndicator(boolean active);
+        void setRefreshingIndicator(boolean active);
+
+        void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick);
+
+        void setLoadingError();
 
         void showBuckets(List<DribbbleBucket> buckets);
 

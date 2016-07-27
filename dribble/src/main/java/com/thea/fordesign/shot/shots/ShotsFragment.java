@@ -21,7 +21,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,8 +33,10 @@ import com.thea.fordesign.databinding.ShotsFragBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.FooterSpanSizeLookup;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
     private ShotsContract.Presenter mPresenter;
 
     private ShotAdapter mAdapter;
+    private MyLoadingView mLoadingView;
     private LoadMoreListener mLoadMoreListener;
 
     public ShotsFragment() {
@@ -154,11 +156,13 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             }
         });
 
-        RecyclerView recyclerView = mViewDataBinding.rvShots;
+        final RecyclerView recyclerView = mViewDataBinding.rvShots;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setSpanSizeLookup(new FooterSpanSizeLookup(layoutManager));
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
-        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, createLoadingView(recyclerView)));
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
         mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
@@ -168,22 +172,19 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
                     mPresenter.loadMore(mListType, mSortType, mTimeFrameType, currentPage);
             }
         };
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
         recyclerView.addOnScrollListener(mLoadMoreListener);
 
         loadShots();
     }
 
-    private View createLoadingView(ViewGroup parent) {
-        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.loading_layout,
-                parent, false);
-        TextView tv = (TextView) loadingView.findViewById(R.id.tv_loading_message);
-        tv.setText(R.string.loading);
-
-        return loadingView;
-    }
-
     @Override
-    public void setLoadingIndicator(final boolean active) {
+    public void setRefreshingIndicator(final boolean active) {
         SwipeRefreshLayout srl = mViewDataBinding.srlShots;
         if (srl == null || srl.isRefreshing() == active) {
             return;
@@ -195,6 +196,17 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
                         mViewDataBinding.srlShots.setRefreshing(active);
                     }
                 });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override
@@ -259,6 +271,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             mPresenter.loadShots(mShotsUrl);
         else
             mPresenter.loadShots(mListType, mSortType, mTimeFrameType);
+        mLoadMoreListener.reset();
     }
 
     private void changeListType(String list) {

@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,8 +28,10 @@ import com.thea.fordesign.databinding.LaconicShotItemBinding;
 import com.thea.fordesign.databinding.ShotsFragBinding;
 import com.thea.fordesign.shot.detail.ShotDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.FooterSpanSizeLookup;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class UserLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
 
     private ShotAdapter mAdapter;
     private LoadMoreListener mLoadMoreListener;
+    private MyLoadingView mLoadingView;
 
     public UserLikesFragment() {
     }
@@ -100,33 +102,32 @@ public class UserLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
             }
         });
 
-        RecyclerView recyclerView = mViewDataBinding.rvShots;
+        final RecyclerView recyclerView = mViewDataBinding.rvShots;
         mAdapter = new ShotAdapter(new ArrayList<DribbbleUserLike>(), mPresenter);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        layoutManager.setSpanSizeLookup(new FooterSpanSizeLookup(layoutManager));
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, createLoadingView(recyclerView)));
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
         mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 mPresenter.loadMore(mLikesUrl, currentPage);
             }
         };
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
         recyclerView.addOnScrollListener(mLoadMoreListener);
 
         mPresenter.loadLikes(mLikesUrl);
     }
 
-    private View createLoadingView(ViewGroup parent) {
-        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.loading_layout,
-                parent, false);
-        TextView tv = (TextView) loadingView.findViewById(R.id.tv_loading_message);
-        tv.setText(R.string.loading);
-
-        return loadingView;
-    }
-
     @Override
-    public void setLoadingIndicator(final boolean active) {
+    public void setRefreshingIndicator(final boolean active) {
         SwipeRefreshLayout srl = mViewDataBinding.srlShots;
         if (srl == null || srl.isRefreshing() == active) {
             return;
@@ -138,6 +139,21 @@ public class UserLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
                         mViewDataBinding.srlShots.setRefreshing(active);
                     }
                 });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean enableClick) {
+        RecyclerView.Adapter adapter = mViewDataBinding.rvShots.getAdapter();
+        if (adapter instanceof FooterWrapAdapter) {
+            ((FooterWrapAdapter) adapter).setLoading(visible);
+        }
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override

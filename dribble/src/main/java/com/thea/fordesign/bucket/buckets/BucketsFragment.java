@@ -13,17 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.databinding.BucketItemBinding;
 import com.thea.fordesign.databinding.BucketsFragBinding;
-import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,9 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     public static final String TAG = BucketsFragment.class.getSimpleName();
 
     private BucketsContract.Presenter mPresenter;
+    private MyLoadingView mLoadingView;
     private BucketAdapter mAdapter;
+    private LoadMoreListener mLoadMoreListener;
 
     public BucketsFragment() {
     }
@@ -68,33 +69,31 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
             }
         });
 
-        RecyclerView recyclerView = mViewDataBinding.rvBuckets;
-        mAdapter = new BucketAdapter(new ArrayList<DribbbleBucket>(), mPresenter);
+        final RecyclerView recyclerView = mViewDataBinding.rvBuckets;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, createLoadingView(recyclerView)));
-        recyclerView.addOnScrollListener(new LoadMoreListener(layoutManager) {
+        mAdapter = new BucketAdapter(new ArrayList<DribbbleBucket>(), mPresenter);
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
+        mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
-                LogUtil.i(TAG, "current page: " + currentPage);
                 mPresenter.loadMore(currentPage);
             }
-        });
+        };
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
+        recyclerView.addOnScrollListener(mLoadMoreListener);
 
         mPresenter.loadBuckets();
     }
 
-    private View createLoadingView(ViewGroup parent) {
-        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.loading_layout,
-                parent, false);
-        TextView tv = (TextView) loadingView.findViewById(R.id.tv_loading_message);
-        tv.setText(R.string.loading);
-
-        return loadingView;
-    }
-
     @Override
-    public void setLoadingIndicator(final boolean active) {
+    public void setRefreshingIndicator(final boolean active) {
         SwipeRefreshLayout srl = mViewDataBinding.srlBuckets;
         if (srl == null || srl.isRefreshing() == active) {
             return;
@@ -106,6 +105,17 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
                         mViewDataBinding.srlBuckets.setRefreshing(active);
                     }
                 });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override

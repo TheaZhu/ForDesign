@@ -41,17 +41,21 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
 
     @Override
     public void loadProjects() {
-        loadProjects(mUserId, 1, true);
+        loadProjects(mUserId, 1, true, false);
     }
 
     @Override
     public void loadMore(int page) {
-        loadProjects(mUserId, page, false);
+        loadProjects(mUserId, page, false, true);
     }
 
-    private void loadProjects(int userId, final int page, final boolean showLoadingUI) {
+    private void loadProjects(int userId, final int page, final boolean showLoadingUI, final boolean
+            isLoadMore) {
         if (showLoadingUI)
-            mProjectsView.setLoadingIndicator(true);
+            mProjectsView.setRefreshingIndicator(true);
+
+        if (isLoadMore)
+            mProjectsView.setLoadingIndicator(true, R.string.loading, false);
 
         mRepository.refreshProjects();
 
@@ -61,7 +65,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
             @Override
             public void onProjectsLoaded(List<DribbbleProject> projects) {
                 if (showLoadingUI)
-                    mProjectsView.setLoadingIndicator(false);
+                    mProjectsView.setRefreshingIndicator(false);
                 if (page == 1)
                     mProjectsView.showProjects(projects);
                 else
@@ -70,9 +74,14 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                if (showLoadingUI)
-                    mProjectsView.setLoadingIndicator(false);
-                mProjectsView.showSnack(R.string.error_load_projects);
+                if (showLoadingUI) {
+                    mProjectsView.setRefreshingIndicator(false);
+                    mProjectsView.showSnack(R.string.error_load_projects);
+                }
+                if (isLoadMore) {
+                    mProjectsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mProjectsView.setLoadingError();
+                }
             }
         });
     }

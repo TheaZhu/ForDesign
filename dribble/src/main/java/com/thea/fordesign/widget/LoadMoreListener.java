@@ -12,7 +12,8 @@ public abstract class LoadMoreListener extends RecyclerView.OnScrollListener {
 
     private RecyclerView.LayoutManager mLayoutManager;
 
-    protected int visibleItemCount, totalItemCount, firstVisibleItem, lastVisibleItem;
+    protected int visibleItemCount, totalItemCount, firstVisibleItem, lastVisibleItem,
+            lastCompletelyVisibleItem;
     private boolean loading = true;
     private int previousTotal = 0;
     private int currentPage = 1;
@@ -30,12 +31,17 @@ public abstract class LoadMoreListener extends RecyclerView.OnScrollListener {
                     .findFirstVisibleItemPosition();
             lastVisibleItem = ((LinearLayoutManager) mLayoutManager)
                     .findLastVisibleItemPosition();
+            lastCompletelyVisibleItem = ((LinearLayoutManager) mLayoutManager)
+                    .findLastCompletelyVisibleItemPosition();
         } else if (mLayoutManager instanceof GridLayoutManager) {
             firstVisibleItem = ((GridLayoutManager) mLayoutManager).findFirstVisibleItemPosition();
             lastVisibleItem = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            lastCompletelyVisibleItem = ((GridLayoutManager) mLayoutManager)
+                    .findLastCompletelyVisibleItemPosition();
         } else {
             firstVisibleItem = 0;
             lastVisibleItem = totalItemCount;
+            lastCompletelyVisibleItem = totalItemCount;
         }
 
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
@@ -53,13 +59,12 @@ public abstract class LoadMoreListener extends RecyclerView.OnScrollListener {
                     ((FooterWrapAdapter) adapter).setLoading(loading);
             }
         }
-        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem) {
+        if (!loading && (totalItemCount - visibleItemCount) <= firstVisibleItem && dy > 1) {
             currentPage++;
-            onLoadMore(currentPage);
             loading = true;
-            if (hasFooter && mLayoutManager.findViewByPosition(lastVisibleItem - 1).getBottom() >=
-                    recyclerView.getBottom())
+            if (hasFooter && lastCompletelyVisibleItem != lastVisibleItem)
                 ((FooterWrapAdapter) adapter).setLoading(loading);
+            onLoadMore(currentPage);
         }
     }
 
@@ -67,6 +72,11 @@ public abstract class LoadMoreListener extends RecyclerView.OnScrollListener {
         currentPage = 1;
         previousTotal = 0;
         loading = true;
+    }
+
+    public void setLoadingError() {
+        loading = false;
+        currentPage--;
     }
 
     public abstract void onLoadMore(int currentPage);

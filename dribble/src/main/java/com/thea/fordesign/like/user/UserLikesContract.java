@@ -1,5 +1,7 @@
 package com.thea.fordesign.like.user;
 
+import android.support.annotation.StringRes;
+
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleUserLike;
 import com.thea.fordesign.shot.ShotItemPresenter;
@@ -13,7 +15,12 @@ public interface UserLikesContract {
 
     interface View extends BaseView<Presenter> {
 
-        void setLoadingIndicator(boolean active);
+        void setRefreshingIndicator(boolean active);
+
+        void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean
+                enableClick);
+
+        void setLoadingError();
 
         void showLikes(List<DribbbleUserLike> likes);
 

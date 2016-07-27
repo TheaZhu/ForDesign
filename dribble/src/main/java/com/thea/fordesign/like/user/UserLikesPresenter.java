@@ -25,8 +25,6 @@ public class UserLikesPresenter implements UserLikesContract.Presenter {
 
     private final UserLikesRepository mRepository;
 
-    private boolean mFirstLoad = true;
-
     public UserLikesPresenter(@NonNull UserLikesContract.View likesView, @NonNull UserModel userModel) {
         mLikesView = Preconditions.checkNotNull(likesView, "likesView cannot be null");
         mRepository = UserLikesRepository.getInstance();
@@ -40,19 +38,22 @@ public class UserLikesPresenter implements UserLikesContract.Presenter {
 
     @Override
     public void loadLikes(String likesUrl) {
-        loadLikes(likesUrl, 1, true);
-        mFirstLoad = false;
+        loadLikes(likesUrl, 1, true, false);
     }
 
     @Override
     public void loadMore(String likesUrl, int page) {
         LogUtil.i(TAG, "load more: " + page);
-        loadLikes(likesUrl, page, false);
+        loadLikes(likesUrl, page, false, true);
     }
 
-    private void loadLikes(String url, final int page, final boolean showLoadingUI) {
+    private void loadLikes(String url, final int page, final boolean showLoadingUI, final boolean
+            isLoadMore) {
         if (showLoadingUI)
-            mLikesView.setLoadingIndicator(true);
+            mLikesView.setRefreshingIndicator(true);
+
+        if (isLoadMore)
+            mLikesView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshLikes();
 
@@ -61,7 +62,9 @@ public class UserLikesPresenter implements UserLikesContract.Presenter {
             @Override
             public void onLikesLoaded(List<DribbbleUserLike> likes) {
                 if (showLoadingUI)
-                    mLikesView.setLoadingIndicator(false);
+                    mLikesView.setRefreshingIndicator(false);
+                if (isLoadMore)
+                    mLikesView.setLoadingIndicator(false, false, R.string.loading, false);
                 if (page == 1)
                     mLikesView.showLikes(likes);
                 else
@@ -70,9 +73,15 @@ public class UserLikesPresenter implements UserLikesContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                if (showLoadingUI)
-                    mLikesView.setLoadingIndicator(false);
-                mLikesView.showSnack(R.string.error_load_user_likes);
+                if (showLoadingUI) {
+                    mLikesView.setRefreshingIndicator(false);
+                    mLikesView.showSnack(R.string.error_load_user_likes);
+                }
+                if (isLoadMore) {
+                    mLikesView.setLoadingIndicator(true, false,
+                            R.string.loading_error, true);
+                    mLikesView.setLoadingError();
+                }
 
             }
         });

@@ -61,26 +61,31 @@ public class ShotsRepository implements ShotsDataSource {
             Call<List<DribbbleShot>> call = mService.getShots(authorization, list, sort,
                     timeframe, null, page, perPage);
             call.enqueue(new Callback<List<DribbbleShot>>() {
-                @Override
-                public void onResponse(Call<List<DribbbleShot>> call,
-                                       Response<List<DribbbleShot>> response) {
-                    LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
-                            response.message());
-                    List<DribbbleShot> shots = response.body();
-                    refreshCache(page, shots);
-                    if (callback != null)
-                        callback.onShotsLoaded(shots);
-                }
+                 @Override
+                 public void onResponse(Call<List<DribbbleShot>> call,
+                                        Response<List<DribbbleShot>> response) {
+                     LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
+                             response.message());
+                     if (response.code() == 200) {
+                         List<DribbbleShot> shots = response.body();
+                         refreshCache(page, shots);
+                         if (callback != null) callback.onShotsLoaded(shots);
+                     } else if (callback != null) {
+                         callback.onDataNotAvailable();
+                     }
+                 }
 
-                @Override
-                public void onFailure(Call<List<DribbbleShot>> call, Throwable t) {
-                    LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() + ", url: " +
-                            call.request().url());
-                    t.printStackTrace();
-                    if (callback != null)
-                        callback.onDataNotAvailable();
-                }
-            });
+                 @Override
+                 public void onFailure(Call<List<DribbbleShot>> call, Throwable t) {
+                     LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() +
+                             ", url: " + call.request().url());
+                     t.printStackTrace();
+                     if (callback != null)
+                         callback.onDataNotAvailable();
+                 }
+             }
+
+            );
         } else if (callback != null) {
             callback.onShotsLoaded(new ArrayList<>(mCachedShots.values()));
         }
@@ -119,7 +124,8 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void getShot(@NonNull String authorization, int shotId, final GetShotCallback callback) {
+    public void getShot(@NonNull String authorization, int shotId,
+                        final GetShotCallback callback) {
         DribbbleShot cachedShot = getShotWithId(shotId);
 
         // Respond immediately with cache if available
@@ -132,16 +138,19 @@ public class ShotsRepository implements ShotsDataSource {
             Call<DribbbleShot> call = mService.getShot(authorization, shotId);
             call.enqueue(new Callback<DribbbleShot>() {
                 @Override
-                public void onResponse(Call<DribbbleShot> call, Response<DribbbleShot> response) {
-                    LogUtil.i(TAG, "get shot code: " + response.code() + ", message: " + response
-                            .message());
+                public void onResponse(Call<DribbbleShot> call, Response<DribbbleShot>
+                        response) {
+                    LogUtil.i(TAG, "get shot code: " + response.code() + ", message: " +
+                            response
+                                    .message());
                     if (callback != null)
                         callback.onShotLoaded(response.body());
                 }
 
                 @Override
                 public void onFailure(Call<DribbbleShot> call, Throwable t) {
-                    LogUtil.i(TAG, "get shot call executed: " + call.isExecuted() + ", url: " + call
+                    LogUtil.i(TAG, "get shot call executed: " + call.isExecuted() + ", url: "
+                            + call
                             .request().url());
                     t.printStackTrace();
                     if (callback != null)

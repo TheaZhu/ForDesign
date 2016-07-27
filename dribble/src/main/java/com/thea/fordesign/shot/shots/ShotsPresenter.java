@@ -24,8 +24,6 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     private final ShotsRepository mRepository;
 
-    private boolean mFirstLoad = true;
-
     public ShotsPresenter(@NonNull ShotsContract.View shotsView, @NonNull UserModel userModel) {
         mShotsView = Preconditions.checkNotNull(shotsView, "shotsView cannot be null");
         mRepository = ShotsRepository.getInstance();
@@ -40,32 +38,34 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void loadShots(String list, String sort, String timeFrame) {
-        loadShots(list, sort, timeFrame, 1, true);
-        mFirstLoad = false;
+        loadShots(list, sort, timeFrame, 1, true, false);
     }
 
     @Override
     public void loadShots(String shotsUrl) {
-        loadShots(shotsUrl, 1, true);
-        mFirstLoad = false;
+        loadShots(shotsUrl, 1, true, false);
     }
 
     @Override
     public void loadMore(String list, String sort, String timeFrame, int page) {
         LogUtil.i(TAG, "load more: " + page);
-        loadShots(list, sort, timeFrame, page, false);
+        loadShots(list, sort, timeFrame, page, false, true);
     }
 
     @Override
     public void loadMore(String shotsUrl, int page) {
         LogUtil.i(TAG, "load more: " + page);
-        loadShots(shotsUrl, page, false);
+        loadShots(shotsUrl, page, false, true);
     }
 
+    // TODO loadMore分离
     private void loadShots(String list, String sort, String timeFrame, final int page, final boolean
-            showLoadingUI) {
-        if (showLoadingUI)
-            mShotsView.setLoadingIndicator(true);
+            showRefreshingUI, final boolean isLoadMore) {
+        if (showRefreshingUI)
+            mShotsView.setRefreshingIndicator(true);
+
+        if (isLoadMore)
+            mShotsView.setLoadingIndicator(true, R.string.loading, false);
 
         mRepository.refreshShots();
 
@@ -73,8 +73,8 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 page, 12, new ShotsDataSource.LoadShotsCallback() {
                     @Override
                     public void onShotsLoaded(List<DribbbleShot> shots) {
-                        if (showLoadingUI)
-                            mShotsView.setLoadingIndicator(false);
+                        if (showRefreshingUI)
+                            mShotsView.setRefreshingIndicator(false);
                         if (page == 1)
                             mShotsView.showShots(shots);
                         else
@@ -83,16 +83,25 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
                     @Override
                     public void onDataNotAvailable() {
-                        if (showLoadingUI)
-                            mShotsView.setLoadingIndicator(false);
-                        mShotsView.showSnack(R.string.error_load_shots);
+                        if (showRefreshingUI) {
+                            mShotsView.setRefreshingIndicator(false);
+                            mShotsView.showSnack(R.string.error_load_shots);
+                        }
+                        if (isLoadMore) {
+                            mShotsView.setLoadingIndicator(false, R.string.loading_error, true);
+                            mShotsView.setLoadingError();
+                        }
                     }
                 });
     }
 
-    private void loadShots(String url, final int page, final boolean showLoadingUI) {
-        if (showLoadingUI)
-            mShotsView.setLoadingIndicator(true);
+    private void loadShots(String url, final int page, final boolean showRefreshingUI, final boolean
+            isLoadMore) {
+        if (showRefreshingUI)
+            mShotsView.setRefreshingIndicator(true);
+
+        if (isLoadMore)
+            mShotsView.setLoadingIndicator(true, R.string.loading, false);
 
         mRepository.refreshShots();
 
@@ -100,8 +109,10 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
-                if (showLoadingUI)
-                    mShotsView.setLoadingIndicator(false);
+                if (showRefreshingUI)
+                    mShotsView.setRefreshingIndicator(false);
+                if (isLoadMore)
+                    mShotsView.setLoadingIndicator(false, R.string.loading, false);
                 if (page == 1)
                     mShotsView.showShots(shots);
                 else
@@ -110,9 +121,14 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
             @Override
             public void onDataNotAvailable() {
-                if (showLoadingUI)
-                    mShotsView.setLoadingIndicator(false);
-                mShotsView.showSnack(R.string.error_load_shots);
+                if (showRefreshingUI) {
+                    mShotsView.setRefreshingIndicator(false);
+                    mShotsView.showSnack(R.string.error_load_shots);
+                }
+                if (isLoadMore) {
+                    mShotsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mShotsView.setLoadingError();
+                }
             }
         });
     }

@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
@@ -23,6 +22,7 @@ import com.thea.fordesign.databinding.ProjectsFragBinding;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,9 @@ import rx.functions.Action1;
 public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBinding> implements
         ProjectsContract.View {
     private ProjectsContract.Presenter mPresenter;
+    private MyLoadingView mLoadingView;
     private ProjectAdapter mAdapter;
+    private LoadMoreListener mLoadMoreListener;
 
     public ProjectsFragment() {
     }
@@ -65,32 +67,31 @@ public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBindin
             }
         });
 
-        RecyclerView recyclerView = mViewDataBinding.rvProjects;
+        final RecyclerView recyclerView = mViewDataBinding.rvProjects;
         mAdapter = new ProjectAdapter(new ArrayList<DribbbleProject>(), mPresenter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, createLoadingView(recyclerView)));
-        recyclerView.addOnScrollListener(new LoadMoreListener(layoutManager) {
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
+        mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 mPresenter.loadMore(currentPage);
             }
-        });
+        };
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
+        recyclerView.addOnScrollListener(mLoadMoreListener);
 
         mPresenter.loadProjects();
     }
 
-    private View createLoadingView(ViewGroup parent) {
-        View loadingView = LayoutInflater.from(getContext()).inflate(R.layout.loading_layout,
-                parent, false);
-        TextView tv = (TextView) loadingView.findViewById(R.id.tv_loading_message);
-        tv.setText(R.string.loading);
-
-        return loadingView;
-    }
-
     @Override
-    public void setLoadingIndicator(final boolean active) {
+    public void setRefreshingIndicator(final boolean active) {
         final SwipeRefreshLayout srl = mViewDataBinding.srlProjects;
         if (srl == null || srl.isRefreshing() == active) {
             return;
@@ -102,6 +103,17 @@ public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBindin
                         mViewDataBinding.srlProjects.setRefreshing(active);
                     }
                 });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override

@@ -24,7 +24,9 @@ import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.UsersFragBinding;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,8 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
 
     private FollowersContract.Presenter mPresenter;
     private FollowerAdapter mAdapter;
+    private MyLoadingView mLoadingView;
+    private LoadMoreListener mLoadMoreListener;
 
     public FollowersFragment() {
     }
@@ -119,29 +123,35 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
             }
         });
 
-        RecyclerView recyclerView = mViewDataBinding.rvUsers;
-        mAdapter = new FollowerAdapter(this, new ArrayList<DribbbleFollower>(), mPresenter);
+        final RecyclerView recyclerView = mViewDataBinding.rvUsers;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(mAdapter);
-        LoadMoreListener loadMoreListener = new LoadMoreListener(layoutManager) {
+        mAdapter = new FollowerAdapter(this, new ArrayList<DribbbleFollower>(), mPresenter);
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
+        mLoadMoreListener = new LoadMoreListener(layoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 loadMore(currentPage);
             }
         };
-        recyclerView.addOnScrollListener(loadMoreListener);
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
+        recyclerView.addOnScrollListener(mLoadMoreListener);
 
         loadFollowers();
     }
 
     @Override
-    public void setLoadingIndicator(final boolean active) {
+    public void setRefreshingIndicator(final boolean active) {
         final SwipeRefreshLayout srl = mViewDataBinding.srlUsers;
         if (srl == null || srl.isRefreshing() == active) {
             return;
         }
-
         Observable.just(active).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Boolean>() {
                     @Override
@@ -149,6 +159,17 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
                         mViewDataBinding.srlUsers.setRefreshing(active);
                     }
                 });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override

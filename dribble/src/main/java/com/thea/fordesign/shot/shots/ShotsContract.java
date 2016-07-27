@@ -1,6 +1,7 @@
 package com.thea.fordesign.shot.shots;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleShot;
@@ -17,7 +18,11 @@ public interface ShotsContract {
 
 //        void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener refreshListener);
 
-        void setLoadingIndicator(boolean active);
+        void setRefreshingIndicator(boolean active);
+
+        void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick);
+
+        void setLoadingError();
 
 //        void setAdapter(RecyclerView.Adapter adapter);
 
