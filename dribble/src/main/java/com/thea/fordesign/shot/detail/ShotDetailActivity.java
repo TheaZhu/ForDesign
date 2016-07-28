@@ -1,17 +1,11 @@
 package com.thea.fordesign.shot.detail;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.thea.fordesign.R;
-import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseDataBindingActivity;
 import com.thea.fordesign.databinding.ShotDetailActBinding;
 import com.thea.fordesign.util.ActivityUtil;
-import com.thea.fordesign.util.StringUtil;
 
 public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBinding> {
     public static final String TAG = ShotDetailActivity.class.getSimpleName();
@@ -24,9 +18,10 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ShotDetailFragment fragment = (ShotDetailFragment) getSupportFragmentManager()
+        /*ShotDetailFragment fragment = (ShotDetailFragment) getSupportFragmentManager()
                 .findFragmentByTag(ShotDetailFragment.TAG);
         if (fragment == null) {
             fragment = ShotDetailFragment.newInstance();
@@ -42,7 +37,7 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
             displayGifShot(url);
         } else {
             displayBitmapShot(url);
-        }
+        }*/
 //        Glide.with(ShotDetailActivity.this)
 //                .load(getIntent().getStringExtra(EXTRA_SHOT_IMAGE_URL))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -55,7 +50,7 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
         return R.layout.activity_shot_detail;
     }
 
-    public void displayBitmapShot(String url) {
+    /*public void displayBitmapShot(String url) {
         Glide.with(ShotDetailActivity.this)
                 .load(url)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -70,5 +65,5 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .into(target);
-    }
+    }*/
 }
