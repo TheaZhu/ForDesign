@@ -18,12 +18,13 @@
             tools:ignore="ContentDescription"/>
 
         <LinearLayout
+            android:id="@+id/ll_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
 
             <ImageView
                 android:id="@+id/iv_close"
@@ -66,26 +67,11 @@
                 tools:ignore="ContentDescription"/>
         </LinearLayout>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_shot"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:id="@+id/textView"/>
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:layout_alignLeft="@+id/textView"
-            android:layout_alignStart="@+id/textView"
-            android:layout_marginTop="18dp"
-            android:id="@+id/textView2"/>
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nsv_shot_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/ll_actions"
+            android:layout_below="@id/iv_shot"/>
     </RelativeLayout>
 </layout>

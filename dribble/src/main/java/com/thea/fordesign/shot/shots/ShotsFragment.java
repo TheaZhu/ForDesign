@@ -444,7 +444,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             viewDataBinding.setActionHandler(mUserActionsListener);
 
             Glide.with(ShotsFragment.this)
-                    .load(shot.getImages().getNormal())
+                    .load(shot.getImage())
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .centerCrop()
                     .placeholder(R.mipmap.default_shot)

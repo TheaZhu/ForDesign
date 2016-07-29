@@ -94,7 +94,7 @@ public class UserLikesPresenter implements UserLikesContract.Presenter {
 
     @Override
     public void openShotDetails(@NonNull DribbbleShot requestedShot, View v) {
-        mLikesView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImages().getNormal(), v);
+        mLikesView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImage(), v);
     }
 
     @Override

@@ -140,8 +140,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void openShotDetails(@NonNull DribbbleShot requestedShot, View v) {
-        mShotsView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImages().getNormal()
-                , v);
+        mShotsView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImage(), v);
     }
 
     @Override

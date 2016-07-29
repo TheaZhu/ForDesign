@@ -22,6 +22,9 @@ public class DribbleConstant {
             "<https://api.dribbble.com/v1/user/followers?page=1&per_page=100>; rel=\"prev\", " +
             "<https://api.dribbble.com/v1/user/followers?page=3&per_page=100>; rel=\"next\"";
 
+    public static final String DEFAULT_SHOT_IMAGE_URL = "https://d13yacurqjgara.cloudfront.net" +
+            "/assets/logo-bw-0200c7483844c355752e89efaa4ba89b83c9c591d70254ba10f4b25d901359d0.gif";
+
     public static final String KEY_ACCESS_TOKEN = "access_token";
 
     public static final String SCOPE_PUBLIC = "public";

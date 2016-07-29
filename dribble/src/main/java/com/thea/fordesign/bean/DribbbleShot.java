@@ -2,8 +2,10 @@ package com.thea.fordesign.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
+import com.thea.fordesign.DribbleConstant;
 
 import java.util.List;
 
@@ -255,6 +257,16 @@ public class DribbbleShot implements Parcelable {
         this.tags = tags;
     }
 
+    public String getImage() {
+        if (URLUtil.isHttpsUrl(images.hidpi) || URLUtil.isHttpUrl(images.hidpi))
+            return images.hidpi;
+        else if (URLUtil.isHttpsUrl(images.normal) || URLUtil.isHttpUrl(images.normal))
+            return images.normal;
+        else if (URLUtil.isHttpsUrl(images.teaser) || URLUtil.isHttpUrl(images.teaser))
+            return images.teaser;
+        return DribbleConstant.DEFAULT_SHOT_IMAGE_URL;
+    }
+
     @Override
     public String toString() {
         return "DribbbleShot{" +
@@ -414,7 +426,8 @@ public class DribbbleShot implements Parcelable {
         this.reboundsUrl = in.readString();
     }
 
-    public static final Parcelable.Creator<DribbbleShot> CREATOR = new Parcelable.Creator<DribbbleShot>() {
+    public static final Parcelable.Creator<DribbbleShot> CREATOR = new Parcelable
+            .Creator<DribbbleShot>() {
         @Override
         public DribbbleShot createFromParcel(Parcel source) {
             return new DribbbleShot(source);

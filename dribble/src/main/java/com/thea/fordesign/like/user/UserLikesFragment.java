@@ -242,7 +242,7 @@ public class UserLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
             viewDataBinding.setActionHandler(mUserActionsListener);
 
             Glide.with(UserLikesFragment.this)
-                    .load(shot.getImages().getNormal())
+                    .load(shot.getImage())
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .centerCrop()
                     .placeholder(R.mipmap.default_shot)
