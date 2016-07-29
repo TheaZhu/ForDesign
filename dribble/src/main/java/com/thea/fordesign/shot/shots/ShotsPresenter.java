@@ -65,7 +65,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
             mShotsView.setRefreshingIndicator(true);
 
         if (isLoadMore)
-            mShotsView.setLoadingIndicator(true, R.string.loading, false);
+            mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshShots();
 
@@ -75,6 +75,8 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                     public void onShotsLoaded(List<DribbbleShot> shots) {
                         if (showRefreshingUI)
                             mShotsView.setRefreshingIndicator(false);
+                        if (isLoadMore)
+                            mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
                         if (page == 1)
                             mShotsView.showShots(shots);
                         else
@@ -88,7 +90,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                             mShotsView.showSnack(R.string.error_load_shots);
                         }
                         if (isLoadMore) {
-                            mShotsView.setLoadingIndicator(false, R.string.loading_error, true);
+                            mShotsView.setLoadingIndicator(true, false, R.string.loading_error, true);
                             mShotsView.setLoadingError();
                         }
                     }
@@ -101,7 +103,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
             mShotsView.setRefreshingIndicator(true);
 
         if (isLoadMore)
-            mShotsView.setLoadingIndicator(true, R.string.loading, false);
+            mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshShots();
 
@@ -112,7 +114,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 if (showRefreshingUI)
                     mShotsView.setRefreshingIndicator(false);
                 if (isLoadMore)
-                    mShotsView.setLoadingIndicator(false, R.string.loading, false);
+                    mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
                 if (page == 1)
                     mShotsView.showShots(shots);
                 else
@@ -126,7 +128,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                     mShotsView.showSnack(R.string.error_load_shots);
                 }
                 if (isLoadMore) {
-                    mShotsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mShotsView.setLoadingIndicator(true, false, R.string.loading_error, true);
                     mShotsView.setLoadingError();
                 }
             }

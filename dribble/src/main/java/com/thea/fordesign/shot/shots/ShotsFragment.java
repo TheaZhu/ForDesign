@@ -198,7 +198,12 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
     }
 
     @Override
-    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId,
+                                    boolean enableClick) {
+        RecyclerView.Adapter adapter = mViewDataBinding.rvShots.getAdapter();
+        if (adapter instanceof FooterWrapAdapter) {
+            ((FooterWrapAdapter) adapter).setLoading(visible);
+        }
         mLoadingView.setLoadingIndicator(active, getString(resId));
         mLoadingView.enableClick(enableClick);
     }
@@ -232,7 +237,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
 //
 //            startActivity(intent, transitionActivityOptions.toBundle());
 //        } else {
-            startActivity(intent);
+        startActivity(intent);
 //        }
     }
 
