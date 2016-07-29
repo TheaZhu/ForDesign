@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data class=".databinding.BucketItemBinding">
 
@@ -19,8 +17,51 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:onClick="@{(v) -> actionHandler.openBucketShots(bucket.id)}">
+        android:onClick="@{() -> actionHandler.openBucketShots(bucket.id)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/small_vertical_margin"
+            android:layout_marginLeft="@dimen/normal_vertical_margin"
+            android:layout_marginRight="@dimen/normal_horizontal_margin"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_bucket_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{bucket.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+                <TextView
+                    android:id="@+id/tv_shot_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/tv_bucket_name"
+                    android:gravity="right"
+                    android:text="@{bucket.shotsCount + &quot;  shot&quot;}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_bucket_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{bucket.description}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        </LinearLayout>
 
         <!--<android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

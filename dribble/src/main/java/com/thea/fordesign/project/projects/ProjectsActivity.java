@@ -17,7 +17,6 @@ public class ProjectsActivity extends BaseDataBindingActivity<ProjectsActBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_projects);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

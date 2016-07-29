@@ -37,7 +37,7 @@
                     android:scheme="http"/>
             </intent-filter>
         </activity>
-        <activity android:name=".shot.shots.MyShotsActivity">
+        <activity android:name=".shot.shots.ShotsActivity">
         </activity>
         <activity android:name=".user.followers.FollowersActivity">
         </activity>

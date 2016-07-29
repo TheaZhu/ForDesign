@@ -29,7 +29,7 @@ import retrofit2.http.Url;
  */
 public interface DribbbleService {
 
-    @POST("token?client_id=" + DribbleConstant.CLIENT_ID + "&client_secret=" + DribbleConstant
+    @POST("token?client_id=" + DribbbleConstant.CLIENT_ID + "&client_secret=" + DribbbleConstant
             .CLIENT_SECRET)
     Call<AccessToken> postToken(@Query("code") String code);
 
@@ -218,6 +218,11 @@ public interface DribbbleService {
                                       @Query("page") int page);
 
     @GET
+    Call<List<DribbbleShotLike>> getShotLikes(@Header("Authorization") String authorization,
+                                      @Url String url,
+                                      @Query("page") int page);
+
+    @GET
     Call<List<DribbbleComment>> getShotComments(@Header("Authorization") String authorization,
                                                 @Url String url);
 
@@ -233,7 +238,7 @@ public interface DribbbleService {
         private Retrofit.Builder mRetrofitBuilder;
 
         public Builder() {
-            mRetrofitBuilder = new Retrofit.Builder().baseUrl(DribbleConstant.BASE_URL)
+            mRetrofitBuilder = new Retrofit.Builder().baseUrl(DribbbleConstant.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
         }
 

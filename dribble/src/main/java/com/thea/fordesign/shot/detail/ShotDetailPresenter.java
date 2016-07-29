@@ -95,7 +95,7 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
 
     @Override
     public void openLikers(@NonNull DribbbleShot shot) {
-
+        mDetailView.showLikesUi(shot.getLikesUrl());
     }
 
     @Override

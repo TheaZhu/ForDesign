@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseActivity;
@@ -32,7 +32,7 @@ public class SignInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mService = new DribbbleService.Builder().baseUrl(DribbleConstant.OAUTH).create();
+        mService = new DribbbleService.Builder().baseUrl(DribbbleConstant.OAUTH).create();
 
         mWebView = (WebView) findViewById(R.id.webview);
         init();
@@ -64,7 +64,7 @@ public class SignInActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 LogUtil.i(TAG, "url: " + url);
-                if (url != null && url.startsWith(DribbleConstant.REDIRECT_URI)) {
+                if (url != null && url.startsWith(DribbbleConstant.REDIRECT_URI)) {
                     // use the parameter your API exposes for the code (mostly it's "code")
                     Uri uri = Uri.parse(url);
                     String code = uri.getQueryParameter("code");
@@ -84,8 +84,8 @@ public class SignInActivity extends BaseActivity {
 //                hideWaitingDialog();
             }
         });
-        mWebView.loadUrl(DribbleConstant.OAUTH + "/authorize?client_id=" + DribbleConstant
-                .CLIENT_ID + "&scope=" + DribbleConstant.USER_SCOPE);
+        mWebView.loadUrl(DribbbleConstant.OAUTH + "/authorize?client_id=" + DribbbleConstant
+                .CLIENT_ID + "&scope=" + DribbbleConstant.USER_SCOPE);
     }
 
     private void getAccessToken(String code) {

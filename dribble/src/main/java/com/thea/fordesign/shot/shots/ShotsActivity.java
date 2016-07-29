@@ -7,11 +7,12 @@ import android.view.MenuItem;
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseDataBindingActivity;
-import com.thea.fordesign.databinding.MyShotsActBinding;
+import com.thea.fordesign.databinding.ShotsActBinding;
 import com.thea.fordesign.util.ActivityUtil;
 
-public class MyShotsActivity extends BaseDataBindingActivity<MyShotsActBinding> {
-    public static final String TAG = MyShotsActivity.class.getSimpleName();
+public class ShotsActivity extends BaseDataBindingActivity<ShotsActBinding> {
+    public static final String TAG = ShotsActivity.class.getSimpleName();
+    public static final String EXTRA_TITLE = "activity_title";
     public static final String EXTRA_SHOTS_URL = "shots_url";
 
     @Override
@@ -21,6 +22,8 @@ public class MyShotsActivity extends BaseDataBindingActivity<MyShotsActBinding> 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
+        getSupportActionBar().setTitle(intent.getStringExtra(EXTRA_TITLE));
+
         if (intent.hasExtra(EXTRA_SHOTS_URL)) {
             String mShotUrl = intent.getStringExtra(EXTRA_SHOTS_URL);
             ShotsFragment shotsFragment = (ShotsFragment) getSupportFragmentManager()
@@ -36,7 +39,7 @@ public class MyShotsActivity extends BaseDataBindingActivity<MyShotsActBinding> 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_my_shots;
+        return R.layout.activity_shots;
     }
 
     @Override

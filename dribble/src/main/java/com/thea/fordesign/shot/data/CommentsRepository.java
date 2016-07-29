@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleComment;
 import com.thea.fordesign.util.LogUtil;
 
@@ -49,8 +49,8 @@ public class CommentsRepository implements CommentsDataSource {
     public void getComments(@Nullable String url, final LoadCommentsCallback callback) {
         if (mCachedComments == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get comments");
-            Call<List<DribbbleComment>> call = mService.getShotComments(DribbleConstant.AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN, url);
+            Call<List<DribbbleComment>> call = mService.getShotComments(DribbbleConstant.AUTH_TYPE +
+                    DribbbleConstant.CLIENT_ACCESS_TOKEN, url);
             call.enqueue(new Callback<List<DribbbleComment>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleComment>> call,

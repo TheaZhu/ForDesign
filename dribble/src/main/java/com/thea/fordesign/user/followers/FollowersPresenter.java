@@ -44,7 +44,7 @@ public class FollowersPresenter implements FollowersContract.Presenter {
     @Override
     public void loadFollowers(String url) {
         mFollowersView.setRefreshingIndicator(true);
-        mRepository.refreshShots();
+        mRepository.refreshFollowers();
 
         mRepository.getFollowers(mUserModel.getDribbbleAccessToken(), url, 1, new
                 FollowersDataSource.LoadFollowersCallback() {
@@ -66,7 +66,7 @@ public class FollowersPresenter implements FollowersContract.Presenter {
     public void loadMore(String url, int page) {
         LogUtil.i(TAG, "load more: " + page);
         mFollowersView.setLoadingIndicator(true, R.string.loading, false);
-        mRepository.refreshShots();
+        mRepository.refreshFollowers();
 
         mRepository.getFollowers(mUserModel.getDribbbleAccessToken(), url, page, new
                 FollowersDataSource.LoadFollowersCallback() {

@@ -36,6 +36,6 @@ public class UserModel {
 
     public String getDribbbleAccessToken() {
         return getDribbbleUserAccessToken() != null ? getDribbbleUserAccessToken() :
-                DribbleConstant.AUTH_TYPE + DribbleConstant.CLIENT_ACCESS_TOKEN;
+                DribbbleConstant.AUTH_TYPE + DribbbleConstant.CLIENT_ACCESS_TOKEN;
     }
 }

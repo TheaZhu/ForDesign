@@ -29,7 +29,9 @@
     <string name="title_my_shots">My Shots</string>
     <string name="title_my_likes">My Likes</string>
     <string name="title_my_buckets">My Buckets</string>
+    <string name="title_bucket_shots">Bucket Shots</string>
     <string name="title_my_projects">My Projects</string>
+    <string name="title_project_shots">Project Shots</string>
     <string name="title_my_followers">My Followers</string>
     <string name="title_my_following">My Following</string>
     <string name="title_shot_likes">Shot Liker</string>

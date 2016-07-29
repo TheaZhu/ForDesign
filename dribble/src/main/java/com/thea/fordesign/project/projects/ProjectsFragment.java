@@ -1,6 +1,7 @@
 package com.thea.fordesign.project.projects;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleProject;
 import com.thea.fordesign.databinding.ProjectItemBinding;
 import com.thea.fordesign.databinding.ProjectsFragBinding;
+import com.thea.fordesign.shot.shots.ShotsActivity;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
@@ -128,7 +131,11 @@ public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBindin
 
     @Override
     public void showProjectShotsUi(int projectId) {
-
+        Intent intent = new Intent(getContext(), ShotsActivity.class);
+        intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_project_shots));
+        intent.putExtra(ShotsActivity.EXTRA_SHOTS_URL, DribbbleConstant.BASE_URL + "projects/" +
+                projectId + "/shots");
+        startActivity(intent);
     }
 
     @Override

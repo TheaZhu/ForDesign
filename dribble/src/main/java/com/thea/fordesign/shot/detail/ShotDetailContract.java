@@ -22,6 +22,8 @@ public interface ShotDetailContract {
 
         void showUserDetailsUi(@NonNull DribbbleUser user, android.view.View v);
 
+        void showLikesUi(@NonNull String likesUrl);
+
     }
 
     interface Presenter extends UserItemPresenter {

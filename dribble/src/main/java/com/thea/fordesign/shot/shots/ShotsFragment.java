@@ -1,10 +1,8 @@
 package com.thea.fordesign.shot.shots;
 
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +22,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
@@ -72,9 +70,9 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
     private LoadMoreListener mLoadMoreListener;
 
     public ShotsFragment() {
-        mListType = DribbleConstant.SHOT_LIST_DEFAULT;
-        mSortType = DribbleConstant.SHOT_SORT_DEFAULT;
-        mTimeFrameType = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
+        mListType = DribbbleConstant.SHOT_LIST_DEFAULT;
+        mSortType = DribbbleConstant.SHOT_SORT_DEFAULT;
+        mTimeFrameType = DribbbleConstant.SHOT_TIME_FRAME_DEFAULT;
     }
 
     public static ShotsFragment newInstance() {
@@ -159,6 +157,7 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         final RecyclerView recyclerView = mViewDataBinding.rvShots;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         layoutManager.setSpanSizeLookup(new FooterSpanSizeLookup(layoutManager));
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new ShotAdapter(new ArrayList<DribbbleShot>(), mPresenter);
         mLoadingView = new MyLoadingView(getContext(), recyclerView);
@@ -224,17 +223,17 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         Intent intent = new Intent(getContext(), ShotDetailActivity.class);
         intent.putExtra(ShotDetailActivity.EXTRA_SHOT_ID, shotId);
         intent.putExtra(ShotDetailActivity.EXTRA_SHOT_IMAGE_URL, imageUrl);
-        if (Build.VERSION.SDK_INT >= 21) {
-            View sharedView = v.findViewById(R.id.iv_shot);
-            String transitionName = getString(R.string.image_shot);
-
-            ActivityOptions transitionActivityOptions = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
-
-            startActivity(intent, transitionActivityOptions.toBundle());
-        } else {
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            View sharedView = v.findViewById(R.id.iv_shot);
+//            String transitionName = getString(R.string.image_shot);
+//
+//            ActivityOptions transitionActivityOptions = ActivityOptions
+//                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+//
+//            startActivity(intent, transitionActivityOptions.toBundle());
+//        } else {
             startActivity(intent);
-        }
+//        }
     }
 
     @Override
@@ -320,25 +319,25 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
                 String list = mListType;
                 switch (item.getItemId()) {
                     case R.id.action_any:
-                        list = DribbleConstant.SHOT_LIST_ANY;
+                        list = DribbbleConstant.SHOT_LIST_ANY;
                         break;
                     case R.id.action_debuts:
-                        list = DribbleConstant.SHOT_LIST_DEBUT;
+                        list = DribbbleConstant.SHOT_LIST_DEBUT;
                         break;
                     case R.id.action_teams:
-                        list = DribbleConstant.SHOT_LIST_TEAM;
+                        list = DribbbleConstant.SHOT_LIST_TEAM;
                         break;
                     case R.id.action_playoffs:
-                        list = DribbleConstant.SHOT_LIST_PLAYOFF;
+                        list = DribbbleConstant.SHOT_LIST_PLAYOFF;
                         break;
                     case R.id.action_rebounds:
-                        list = DribbleConstant.SHOT_LIST_REBOUND;
+                        list = DribbbleConstant.SHOT_LIST_REBOUND;
                         break;
                     case R.id.action_animated:
-                        list = DribbleConstant.SHOT_LIST_ANIMATED;
+                        list = DribbbleConstant.SHOT_LIST_ANIMATED;
                         break;
                     case R.id.action_attachments:
-                        list = DribbleConstant.SHOT_LIST_ATTACHMENT;
+                        list = DribbbleConstant.SHOT_LIST_ATTACHMENT;
                         break;
                 }
                 changeListType(list);
@@ -357,16 +356,16 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_popularity:
-                        changeSortType(DribbleConstant.SHOT_SORT_POPULARITY);
+                        changeSortType(DribbbleConstant.SHOT_SORT_POPULARITY);
                         break;
                     case R.id.action_recent:
-                        changeSortType(DribbleConstant.SHOT_SORT_RECENT);
+                        changeSortType(DribbbleConstant.SHOT_SORT_RECENT);
                         break;
                     case R.id.action_views:
-                        changeSortType(DribbleConstant.SHOT_SORT_VIEWS);
+                        changeSortType(DribbbleConstant.SHOT_SORT_VIEWS);
                         break;
                     case R.id.action_comments:
-                        changeSortType(DribbleConstant.SHOT_SORT_COMMENTS);
+                        changeSortType(DribbbleConstant.SHOT_SORT_COMMENTS);
                         break;
                 }
                 return true;
@@ -385,19 +384,19 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_recent:
-                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_RECENT);
+                        changeTimeFrameType(DribbbleConstant.SHOT_TIME_FRAME_RECENT);
                         break;
                     case R.id.action_week:
-                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_WEEK);
+                        changeTimeFrameType(DribbbleConstant.SHOT_TIME_FRAME_WEEK);
                         break;
                     case R.id.action_month:
-                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_MONTH);
+                        changeTimeFrameType(DribbbleConstant.SHOT_TIME_FRAME_MONTH);
                         break;
                     case R.id.action_year:
-                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_YEAR);
+                        changeTimeFrameType(DribbbleConstant.SHOT_TIME_FRAME_YEAR);
                         break;
                     case R.id.action_ever:
-                        changeTimeFrameType(DribbleConstant.SHOT_TIME_FRAME_EVER);
+                        changeTimeFrameType(DribbbleConstant.SHOT_TIME_FRAME_EVER);
                         break;
                 }
                 return true;

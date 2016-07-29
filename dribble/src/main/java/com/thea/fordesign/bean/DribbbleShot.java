@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 
 import java.util.List;
 
@@ -264,7 +264,7 @@ public class DribbbleShot implements Parcelable {
             return images.normal;
         else if (URLUtil.isHttpsUrl(images.teaser) || URLUtil.isHttpUrl(images.teaser))
             return images.teaser;
-        return DribbleConstant.DEFAULT_SHOT_IMAGE_URL;
+        return DribbbleConstant.DEFAULT_SHOT_IMAGE_URL;
     }
 
     @Override

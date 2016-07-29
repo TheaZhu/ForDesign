@@ -1,6 +1,7 @@
 package com.thea.fordesign.bucket.buckets;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.databinding.BucketItemBinding;
 import com.thea.fordesign.databinding.BucketsFragBinding;
+import com.thea.fordesign.shot.shots.ShotsActivity;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
@@ -130,7 +133,11 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
 
     @Override
     public void showBucketShotsUi(int bucketId) {
-
+        Intent intent = new Intent(getContext(), ShotsActivity.class);
+        intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_bucket_shots));
+        intent.putExtra(ShotsActivity.EXTRA_SHOTS_URL, DribbbleConstant.BASE_URL + "buckets/" +
+                bucketId + "/shots");
+        startActivity(intent);
     }
 
     @Override

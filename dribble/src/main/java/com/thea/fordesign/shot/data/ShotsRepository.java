@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUserLike;
 import com.thea.fordesign.util.LogUtil;
@@ -53,11 +53,11 @@ public class ShotsRepository implements ShotsDataSource {
         if (mCachedShots == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get shots");
             if (list == null)
-                list = DribbleConstant.SHOT_LIST_DEFAULT;
+                list = DribbbleConstant.SHOT_LIST_DEFAULT;
             if (timeframe == null)
-                timeframe = DribbleConstant.SHOT_TIME_FRAME_DEFAULT;
+                timeframe = DribbbleConstant.SHOT_TIME_FRAME_DEFAULT;
             if (sort == null)
-                sort = DribbleConstant.SHOT_SORT_DEFAULT;
+                sort = DribbbleConstant.SHOT_SORT_DEFAULT;
             Call<List<DribbbleShot>> call = mService.getShots(authorization, list, sort,
                     timeframe, null, page, perPage);
             call.enqueue(new Callback<List<DribbbleShot>>() {
@@ -197,7 +197,7 @@ public class ShotsRepository implements ShotsDataSource {
                         .request().url());
                 t.printStackTrace();
                 if (callback != null)
-                    callback.onFail(DribbleConstant.CODE_ERROR, t.getMessage());
+                    callback.onFail(DribbbleConstant.CODE_ERROR, t.getMessage());
 
             }
         });

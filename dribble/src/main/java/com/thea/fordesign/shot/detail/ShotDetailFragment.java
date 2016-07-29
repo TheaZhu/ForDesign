@@ -21,6 +21,7 @@ import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.ShotDetailFragBinding;
+import com.thea.fordesign.like.shot.ShotLikesActivity;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
@@ -126,6 +127,13 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
         } else {
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void showLikesUi(@NonNull String likesUrl) {
+        Intent intent = new Intent(getContext(), ShotLikesActivity.class);
+        intent.putExtra(ShotLikesActivity.EXTRA_LIKE_URL, likesUrl);
+        startActivity(intent);
     }
 
     @Override

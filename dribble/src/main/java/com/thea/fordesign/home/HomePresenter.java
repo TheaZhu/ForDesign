@@ -1,7 +1,7 @@
 package com.thea.fordesign.home;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
@@ -29,7 +29,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     public void initService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(DribbleConstant.BASE_URL)
+                .baseUrl(DribbbleConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         mService = retrofit.create(DribbbleService.class);
@@ -38,7 +38,7 @@ public class HomePresenter implements HomeContract.Presenter {
     @Override
     public void test() {
         LogUtil.i(TAG, "test");
-        Call<DribbbleShot> call = mService.getShot(DribbleConstant.AUTH_TYPE + DribbleConstant
+        Call<DribbbleShot> call = mService.getShot(DribbbleConstant.AUTH_TYPE + DribbbleConstant
         .CLIENT_ACCESS_TOKEN, 2222);
         call.enqueue(new Callback<DribbbleShot>() {
             @Override

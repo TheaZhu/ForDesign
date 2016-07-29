@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbleConstant;
+import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.util.LogUtil;
 
@@ -53,8 +53,8 @@ public class UsersRepository implements UsersDataSource {
                 callback.onUserLoaded(cachedUser);
         } else {
             LogUtil.i(TAG, "get user: " + userId);
-            Call<DribbbleUser> call = mService.getUser(DribbleConstant.AUTH_TYPE +
-                    DribbleConstant.CLIENT_ACCESS_TOKEN, userId);
+            Call<DribbbleUser> call = mService.getUser(DribbbleConstant.AUTH_TYPE +
+                    DribbbleConstant.CLIENT_ACCESS_TOKEN, userId);
             call.enqueue(new Callback<DribbbleUser>() {
                 @Override
                 public void onResponse(Call<DribbbleUser> call, Response<DribbbleUser> response) {

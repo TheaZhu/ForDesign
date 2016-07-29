@@ -17,7 +17,6 @@ public class BucketsActivity extends BaseDataBindingActivity<BucketsActBinding> 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buckets);
         ActivityUtil.setupToolbar(this, R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

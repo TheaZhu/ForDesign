@@ -18,7 +18,7 @@ import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bucket.buckets.BucketsActivity;
 import com.thea.fordesign.like.user.UserLikesActivity;
 import com.thea.fordesign.project.projects.ProjectsActivity;
-import com.thea.fordesign.shot.shots.MyShotsActivity;
+import com.thea.fordesign.shot.shots.ShotsActivity;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
 import com.thea.fordesign.sign.SignInActivity;
@@ -183,9 +183,11 @@ public class MainActivity extends BaseActivity implements NavigationView
     }
 
     private void showMyShots() {
-        Intent intent = new Intent(this, MyShotsActivity.class);
-        if (mUser != null)
-            intent.putExtra(MyShotsActivity.EXTRA_SHOTS_URL, mUser.getShotsUrl());
+        Intent intent = new Intent(this, ShotsActivity.class);
+        if (mUser != null) {
+            intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_my_shots));
+            intent.putExtra(ShotsActivity.EXTRA_SHOTS_URL, mUser.getShotsUrl());
+        }
         startActivity(intent);
     }
 

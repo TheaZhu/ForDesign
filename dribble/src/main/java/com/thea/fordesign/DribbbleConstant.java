@@ -3,7 +3,7 @@ package com.thea.fordesign;
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbleConstant {
+public class DribbbleConstant {
     public static final String CLIENT_ID =
             "454e08950789bb4c0e77cc0399e312c201b55553d3de228a058cc5930992c404";
     public static final String CLIENT_SECRET =

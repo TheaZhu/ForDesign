@@ -2,9 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".shot.shots.MyShotsActivity">
+        tools:context=".shot.shots.ShotsActivity">
 
-    <data class=".databinding.MyShotsActBinding">
+    <data class=".databinding.ShotsActBinding">
     </data>
 
     <android.support.design.widget.CoordinatorLayout

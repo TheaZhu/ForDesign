@@ -37,13 +37,13 @@ public class FollowersRepository implements FollowersDataSource {
     public void getFollowers(@NonNull String authorization, @Nullable String url, final int page,
                              final LoadFollowersCallback callback) {
         if (mCachedFollowers == null || mCacheIsDirty) {
-            LogUtil.i(TAG, "get followings");
+            LogUtil.i(TAG, "get followers");
             Call<List<DribbbleFollower>> call = mService.getUserFollowers(authorization, url, page);
             call.enqueue(new Callback<List<DribbbleFollower>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleFollower>> call,
                                        Response<List<DribbbleFollower>> response) {
-                    LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
+                    LogUtil.i(TAG, "get followers code: " + response.code() + ", message: " +
                             response.message());
                     List<DribbbleFollower> followings = response.body();
                     refreshCache(page, followings);
@@ -53,7 +53,7 @@ public class FollowersRepository implements FollowersDataSource {
 
                 @Override
                 public void onFailure(Call<List<DribbbleFollower>> call, Throwable t) {
-                    LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() + ", url: " +
+                    LogUtil.i(TAG, "get followers call executed: " + call.isExecuted() + ", url: " +
                             call.request().url());
                     t.printStackTrace();
                     if (callback != null)
@@ -65,7 +65,7 @@ public class FollowersRepository implements FollowersDataSource {
         }
     }
 
-    public void refreshShots() {
+    public void refreshFollowers() {
         mCacheIsDirty = true;
     }
 
