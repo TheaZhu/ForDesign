@@ -17,6 +17,7 @@ import com.thea.fordesign.bucket.buckets.BucketsActivity;
 import com.thea.fordesign.databinding.UserDetailFragBinding;
 import com.thea.fordesign.like.user.UserLikesActivity;
 import com.thea.fordesign.project.projects.ProjectsActivity;
+import com.thea.fordesign.team.teams.TeamsActivity;
 import com.thea.fordesign.user.followers.FollowersActivity;
 import com.thea.fordesign.user.followers.FollowersFragment;
 import com.thea.fordesign.util.Preconditions;
@@ -91,7 +92,9 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
 
     @Override
     public void showTeamsUi(@NonNull String teamsUrl) {
-
+        Intent intent = new Intent(getContext(), TeamsActivity.class);
+        intent.putExtra(TeamsActivity.EXTRA_TEAMS_URL, teamsUrl);
+        startActivity(intent);
     }
 
     @Override

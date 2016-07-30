@@ -24,6 +24,8 @@ public interface ShotDetailContract {
 
         void showLikesUi(@NonNull String likesUrl);
 
+        void showCommentsUi(int shotId, @NonNull String commentsUrl);
+
     }
 
     interface Presenter extends UserItemPresenter {
@@ -40,7 +42,7 @@ public interface ShotDetailContract {
 
         void openLikers(@NonNull DribbbleShot shot);
 
-        void openCommenters(@NonNull DribbbleShot shot);
+        void openComments(@NonNull DribbbleShot shot);
 
         void openBuckets(@NonNull DribbbleShot shot);
 

@@ -1,28 +1,19 @@
-package com.thea.fordesign.user.followers;
+package com.thea.fordesign.team.teams;
 
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
-import com.thea.fordesign.bean.DribbbleFollower;
-import com.thea.fordesign.bean.DribbbleUser;
-import com.thea.fordesign.databinding.UsersFragBinding;
-import com.thea.fordesign.user.detail.UserDetailActivity;
+import com.thea.fordesign.bean.DribbbleTeam;
+import com.thea.fordesign.databinding.TeamsFragBinding;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
@@ -38,46 +29,23 @@ import rx.functions.Action1;
 /**
  * A simple {@link BaseDataBindingFragment} subclass.
  */
-public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding> implements
-        FollowersContract.View {
-    public static final String TAG = FollowersFragment.class.getSimpleName();
-    public static final String ARG_FOLLOWER_URL = "follower_url";
-    public static final String ARG_ITEM_TYPE = "item_type";
-    public static final String ARG_HAS_MENU = "has_menu";
-
-    public static final int TYPE_FOLLOWER = 0x01;
-    public static final int TYPE_FOLLOWING = 0x02;
+public class TeamsFragment extends BaseDataBindingFragment<TeamsFragBinding> implements
+        TeamsContract.View {
+    public static final String TAG = TeamsFragment.class.getSimpleName();
 
     private String mUrl;
-    private int mItemType;
-    private boolean mHasMenu = false;
 
-    private FollowersContract.Presenter mPresenter;
-    private FollowerAdapter mAdapter;
+    private TeamsContract.Presenter mPresenter;
+    private TeamAdapter mAdapter;
     private MyLoadingView mLoadingView;
     private LoadMoreListener mLoadMoreListener;
 
-    public FollowersFragment() {
+    public TeamsFragment() {
     }
 
-    public static FollowersFragment newInstance(String url, int itemType, boolean hasMenu) {
-        FollowersFragment fragment = new FollowersFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ARG_FOLLOWER_URL, url);
-        bundle.putInt(ARG_ITEM_TYPE, itemType);
-        bundle.putBoolean(ARG_HAS_MENU, hasMenu);
-        fragment.setArguments(bundle);
+    public static TeamsFragment newInstance() {
+        TeamsFragment fragment = new TeamsFragment();
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mUrl = getArguments().getString(ARG_FOLLOWER_URL);
-            mItemType = getArguments().getInt(ARG_ITEM_TYPE, TYPE_FOLLOWER);
-            mHasMenu = getArguments().getBoolean(ARG_HAS_MENU, false);
-        }
     }
 
     @Override
@@ -87,46 +55,25 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mPresenter.result(requestCode, resultCode);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mHasMenu) {
-            inflater.inflate(R.menu.menu_shots_fragment, menu);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        }
-        return true;
-    }
-
-    @Override
     protected int getLayoutId() {
-        return R.layout.fragment_users;
+        return R.layout.fragment_teams;
     }
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        setHasOptionsMenu(mHasMenu);
-        mViewDataBinding.srlUsers.setColorSchemeResources(R.color.dribbble_pink, R.color
+        mViewDataBinding.srlTeams.setColorSchemeResources(R.color.dribbble_pink, R.color
                 .dribbble_link_blue, R.color.dribbble_playbook);
-        mViewDataBinding.srlUsers.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mViewDataBinding.srlTeams.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadFollowers();
+                loadTeams();
             }
         });
 
-        final RecyclerView recyclerView = mViewDataBinding.rvUsers;
+        final RecyclerView recyclerView = mViewDataBinding.rvTeams;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new FollowerAdapter(this, new ArrayList<DribbbleFollower>(), mPresenter);
+        mAdapter = new TeamAdapter(this, new ArrayList<DribbbleTeam>(), mPresenter);
         mLoadingView = new MyLoadingView(getContext(), recyclerView);
         recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
         mLoadMoreListener = new LoadMoreListener(layoutManager) {
@@ -143,12 +90,12 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
         }, false);
         recyclerView.addOnScrollListener(mLoadMoreListener);
 
-        loadFollowers();
+        loadTeams();
     }
 
     @Override
     public void setRefreshingIndicator(final boolean active) {
-        final SwipeRefreshLayout srl = mViewDataBinding.srlUsers;
+        final SwipeRefreshLayout srl = mViewDataBinding.srlTeams;
         if (srl == null || srl.isRefreshing() == active) {
             return;
         }
@@ -156,7 +103,7 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        mViewDataBinding.srlUsers.setRefreshing(active);
+                        mViewDataBinding.srlTeams.setRefreshing(active);
                     }
                 });
     }
@@ -164,7 +111,7 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
     @Override
     public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean
             enableClick) {
-        RecyclerView.Adapter adapter = mViewDataBinding.rvUsers.getAdapter();
+        RecyclerView.Adapter adapter = mViewDataBinding.rvTeams.getAdapter();
         if (adapter instanceof FooterWrapAdapter) {
             ((FooterWrapAdapter) adapter).setLoading(visible);
         }
@@ -178,22 +125,22 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
     }
 
     @Override
-    public void showFollowers(List<DribbbleFollower> followers) {
-        mAdapter.replaceData(followers);
+    public void showTeams(List<DribbbleTeam> teams) {
+        mAdapter.replaceData(teams);
     }
 
     @Override
-    public void insertFollowers(List<DribbbleFollower> followers) {
-        mAdapter.insertData(followers);
+    public void insertTeams(List<DribbbleTeam> teams) {
+        mAdapter.insertData(teams);
     }
 
     @Override
-    public void showUserDetailsUi(@NonNull DribbbleUser user, View v) {
-        Intent intent = new Intent(getContext(), UserDetailActivity.class);
-        intent.putExtra(UserDetailActivity.EXTRA_USER, user);
+    public void showTeamDetailsUi(@NonNull DribbbleTeam team, View v) {
+        /*Intent intent = new Intent(getContext(), TeamDetailActivity.class);
+        intent.putExtra(TeamDetailActivity.EXTRA_USER, team);
         if (Build.VERSION.SDK_INT >= 21) {
             View sharedView = v.findViewById(R.id.iv_avatar);
-            String transitionName = getString(R.string.image_user_avatar);
+            String transitionName = getString(R.string.image_team_avatar);
 
             ActivityOptions transitionActivityOptions = ActivityOptions
                     .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
@@ -201,11 +148,11 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
             startActivity(intent, transitionActivityOptions.toBundle());
         } else {
             startActivity(intent);
-        }
+        }*/
     }
 
     @Override
-    public void setPresenter(@NonNull FollowersContract.Presenter presenter) {
+    public void setPresenter(@NonNull TeamsContract.Presenter presenter) {
         mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
     }
 
@@ -226,11 +173,11 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
         showSnack(getString(resId));
     }
 
-    private void loadFollowers() {
-        mPresenter.loadFollowers(mUrl);
+    private void loadTeams() {
+        mPresenter.loadTeams();
     }
 
     private void loadMore(int page) {
-        mPresenter.loadMore(mUrl, page);
+        mPresenter.loadMore(page);
     }
 }

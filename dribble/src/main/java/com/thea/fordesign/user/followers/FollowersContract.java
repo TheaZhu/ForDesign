@@ -19,7 +19,8 @@ public interface FollowersContract {
 
         void setRefreshingIndicator(boolean active);
 
-        void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick);
+        void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean
+                enableClick);
 
         void setLoadingError();
 

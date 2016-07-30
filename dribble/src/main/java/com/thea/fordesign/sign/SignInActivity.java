@@ -32,7 +32,7 @@ public class SignInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        mService = new DribbbleService.Builder().baseUrl(DribbbleConstant.OAUTH).create();
+        mService = new DribbbleService.Builder().create();
 
         mWebView = (WebView) findViewById(R.id.webview);
         init();

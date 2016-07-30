@@ -26,9 +26,16 @@ public interface CommentsDataSource {
         void onDataNotAvailable();
     }
 
-    void getComments(@Nullable String url, LoadCommentsCallback callback);
+    interface CreateCommentCallback {
 
-    void getComment(int commentId, GetCommentCallback callback);
+        void onCommentCreated(DribbbleComment comment);
+
+        void onFailed(int errCode, String message);
+    }
+
+    void getComments(@NonNull String authorization, @Nullable String url, int page, LoadCommentsCallback callback);
+
+    void getComment(@NonNull String authorization, int commentId, GetCommentCallback callback);
 
     void saveComment(@NonNull DribbbleComment comment);
 
@@ -39,6 +46,10 @@ public interface CommentsDataSource {
     void dislikeComment(@NonNull DribbbleComment comment);
 
     void dislikeComment(int commentId);
+
+    void createComment(@NonNull String authorization, int shotId, String commentBody,
+                       CreateCommentCallback
+            callback);
 
     void refreshComment();
 

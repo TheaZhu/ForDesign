@@ -49,6 +49,10 @@
         </activity>
         <activity android:name=".project.projects.ProjectsActivity">
         </activity>
+        <activity android:name=".shot.comments.CommentsActivity">
+        </activity>
+        <activity android:name=".team.teams.TeamsActivity">
+        </activity>
     </application>
 
 </manifest>

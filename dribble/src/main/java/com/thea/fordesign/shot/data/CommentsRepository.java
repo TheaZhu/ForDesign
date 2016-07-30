@@ -3,8 +3,8 @@ package com.thea.fordesign.shot.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleComment;
 import com.thea.fordesign.util.LogUtil;
 
@@ -27,7 +27,6 @@ public class CommentsRepository implements CommentsDataSource {
 
     private DribbbleService mService;
 
-    //    List<DribbbleShot> mCachedShots;
     Map<Integer, DribbbleComment> mCachedComments;
     boolean mCacheIsDirty = false;
 
@@ -46,11 +45,11 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
-    public void getComments(@Nullable String url, final LoadCommentsCallback callback) {
+    public void getComments(@NonNull String authorization, @Nullable String url, final int page,
+                            final LoadCommentsCallback callback) {
         if (mCachedComments == null || mCacheIsDirty) {
             LogUtil.i(TAG, "get comments");
-            Call<List<DribbbleComment>> call = mService.getShotComments(DribbbleConstant.AUTH_TYPE +
-                    DribbbleConstant.CLIENT_ACCESS_TOKEN, url);
+            Call<List<DribbbleComment>> call = mService.getShotComments(authorization, url, page);
             call.enqueue(new Callback<List<DribbbleComment>>() {
                 @Override
                 public void onResponse(Call<List<DribbbleComment>> call,
@@ -58,9 +57,12 @@ public class CommentsRepository implements CommentsDataSource {
                     LogUtil.i(TAG, "get comments code: " + response.code() + ", message: " +
                             response.message());
                     List<DribbbleComment> comments = response.body();
-                    refreshCache(comments);
-                    if (callback != null)
-                        callback.onCommentsLoaded(comments);
+                    if (comments != null) {
+                        refreshCache(page, comments);
+                        if (callback != null)
+                            callback.onCommentsLoaded(comments);
+                    } else if (callback != null)
+                        callback.onDataNotAvailable();
                 }
 
                 @Override
@@ -78,7 +80,8 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
-    public void getComment(int commentId, final GetCommentCallback callback) {
+    public void getComment(@NonNull String authorization, int commentId, final GetCommentCallback
+            callback) {
         DribbbleComment cachedComment = getCommentWithId(commentId);
 
         // Respond immediately with cache if available
@@ -119,6 +122,33 @@ public class CommentsRepository implements CommentsDataSource {
     }
 
     @Override
+    public void createComment(@NonNull String authorization, int shotId, String commentBody,
+                              final CreateCommentCallback callback) {
+        Call<DribbbleComment> call = mService.createComment(authorization, shotId, commentBody);
+        call.enqueue(new Callback<DribbbleComment>() {
+            @Override
+            public void onResponse(Call<DribbbleComment> call, Response<DribbbleComment> response) {
+                LogUtil.i(TAG, "create comment code: " + response.code() + ", message: " +
+                        response.message());
+                if (response.code() == DribbbleConstant.CODE_CREATED) {
+                    if (callback != null)
+                        callback.onCommentCreated(response.body());
+                } else if (callback != null)
+                    callback.onFailed(response.code(), response.message());
+            }
+
+            @Override
+            public void onFailure(Call<DribbbleComment> call, Throwable t) {
+                LogUtil.i(TAG, "create comment call executed: " + call.isExecuted() + ", url: " +
+                        call.request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFailed(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
+            }
+        });
+    }
+
+    @Override
     public void refreshComment() {
         mCacheIsDirty = true;
     }
@@ -136,11 +166,15 @@ public class CommentsRepository implements CommentsDataSource {
         mCachedComments.remove(commentId);
     }
 
-    private void refreshCache(List<DribbbleComment> comments) {
+    private void refreshCache(int page, List<DribbbleComment> comments) {
         if (mCachedComments == null) {
             mCachedComments = new LinkedHashMap<>();
         }
-        mCachedComments.clear();
+        if (page <= 1)
+            mCachedComments.clear();
+        for (DribbbleComment comment : comments) {
+            mCachedComments.put(comment.getId(), comment);
+        }
         mCacheIsDirty = false;
     }
 

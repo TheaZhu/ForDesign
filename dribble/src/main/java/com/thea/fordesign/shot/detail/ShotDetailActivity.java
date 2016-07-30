@@ -1,6 +1,5 @@
 package com.thea.fordesign.shot.detail;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +17,7 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
     public static final String EXTRA_SHOT = "dribbble_shot";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        ActivityUtil.setupToolbar(this, R.id.toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -39,7 +38,9 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
                 .load(getIntent().getStringExtra(EXTRA_SHOT_IMAGE_URL))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
+                .placeholder(R.mipmap.default_shot)
                 .into(mViewDataBinding.ivShot);
+//        Html.fromHtml("", Html.FROM_HTML_MODE_COMPACT)
     }
 
     @Override

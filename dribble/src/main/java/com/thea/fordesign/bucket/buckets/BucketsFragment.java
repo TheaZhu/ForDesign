@@ -111,7 +111,11 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     }
 
     @Override
-    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean enableClick) {
+        RecyclerView.Adapter adapter = mViewDataBinding.rvBuckets.getAdapter();
+        if (adapter instanceof FooterWrapAdapter) {
+            ((FooterWrapAdapter) adapter).setLoading(visible);
+        }
         mLoadingView.setLoadingIndicator(active, getString(resId));
         mLoadingView.enableClick(enableClick);
     }

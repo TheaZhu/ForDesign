@@ -314,7 +314,7 @@ public class DribbbleUser implements Parcelable {
                 ", location='" + location + '\'' +
                 ", type='" + type + '\'' +
                 ", pro=" + pro +
-                ", links=" + links +
+                ", links=" + links.toString() +
                 ", htmlUrl='" + htmlUrl + '\'' +
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", bucketsCount=" + bucketsCount +
@@ -371,6 +371,14 @@ public class DribbbleUser implements Parcelable {
         }
 
         public Links() {
+        }
+
+        @Override
+        public String toString() {
+            return "Links{" +
+                    "web='" + web + '\'' +
+                    ", twitter='" + twitter + '\'' +
+                    '}';
         }
 
         protected Links(Parcel in) {

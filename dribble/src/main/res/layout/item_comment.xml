@@ -6,6 +6,8 @@
 
         <import type="android.text.Html"/>
 
+        <import type="java.lang.String"/>
+
         <import type="com.thea.fordesign.bean.DribbbleUser"/>
 
         <variable
@@ -21,50 +23,91 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/normal_horizontal_padding"
+        android:paddingRight="@dimen/normal_horizontal_padding"
         android:paddingTop="@dimen/small_vertical_padding">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_comment_avatar"
+            android:id="@+id/iv_user_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:onClick="@{(v) -> actionHandler.openUserDetails(comment.user, v)}"
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription"
-            tools:src="@mipmap/ic_dribbble_square"/>
+            tools:src="@mipmap/default_user_avatar"/>
 
         <TextView
-            android:id="@+id/tv_comment_user"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/iv_comment_avatar"
+            android:layout_alignTop="@id/iv_user_avatar"
             android:layout_marginLeft="@dimen/normal_horizontal_margin"
-            android:layout_toRightOf="@id/iv_comment_avatar"
+            android:layout_toRightOf="@id/iv_user_avatar"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
+            android:onClick="@{() -> actionHandler.openUserDetails(comment.user, ivUserAvatar)}"
             android:text="@{comment.user.name}"
             android:textColor="@color/dribbble_charcoal"
             tools:text="@string/default_designer"/>
 
         <TextView
-            android:id="@+id/tv_shot_description"
+            android:id="@+id/tv_comment_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/tv_comment_user"
-            android:layout_below="@id/tv_comment_user"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_below="@id/tv_user_name"
             android:layout_marginTop="@dimen/small_vertical_margin"
+            android:lines="1"
             android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{Html.fromHtml(comment.body ?? &quot;&quot;)}"
-            android:textColor="@color/grey_400"
+            android:text="@{Html.fromHtml(comment.body ?? &quot; &quot;)}"
+            android:textColor="@color/dribbble_slate"
             tools:text="@string/default_description"/>
+
+        <TextView
+            android:id="@+id/tv_comment_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_user_name"
+            android:layout_below="@id/tv_comment_body"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:text="@{actionHandler.formatTime(comment.updatedTime)}"
+            android:textColor="@color/dribbble_slate"
+            tools:text="@string/default_time"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_comment_time"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/tv_comment_time"
+            android:onClick="@{() -> actionHandler.likeChanged(comment)}">
+
+            <ImageView
+                android:id="@+id/iv_like_comment"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/ic_like_inactive_normal"
+                tools:ignore="ContentDescription"/>
+
+            <TextView
+                android:id="@+id/tv_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/iv_like_comment"
+                android:text="@{String.valueOf(comment.likesCount)}"
+                android:textColor="@color/dribbble_slate"
+                tools:text="@string/default_likes_count"/>
+
+        </RelativeLayout>
 
         <View
             android:id="@+id/view_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignLeft="@id/tv_comment_user"
-            android:layout_below="@id/tv_shot_description"
-            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:layout_alignLeft="@id/tv_comment_time"
+            android:layout_below="@id/tv_comment_time"
+            android:layout_marginTop="@dimen/small_vertical_padding"
             android:background="@color/grey_200"/>
 
     </RelativeLayout>

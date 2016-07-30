@@ -5,9 +5,9 @@ import com.thea.fordesign.bean.DribbbleAttachment;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.bean.DribbbleComment;
 import com.thea.fordesign.bean.DribbbleFollower;
-import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleProject;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleTeam;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bean.DribbbleUserLike;
@@ -17,6 +17,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -29,8 +31,8 @@ import retrofit2.http.Url;
  */
 public interface DribbbleService {
 
-    @POST("token?client_id=" + DribbbleConstant.CLIENT_ID + "&client_secret=" + DribbbleConstant
-            .CLIENT_SECRET)
+    @POST(DribbbleConstant.OAUTH + "token?client_id=" + DribbbleConstant.CLIENT_ID +
+            "&client_secret=" + DribbbleConstant.CLIENT_SECRET)
     Call<AccessToken> postToken(@Query("code") String code);
 
     @GET("user")
@@ -208,6 +210,11 @@ public interface DribbbleService {
                                           @Query("page") int page);
 
     @GET
+    Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization,
+                                          @Url String url,
+                                          @Query("page") int page);
+
+    @GET
     Call<List<DribbbleProject>> getProjects(@Header("Authorization") String authorization,
                                             @Url String url,
                                             @Query("page") int page);
@@ -224,7 +231,8 @@ public interface DribbbleService {
 
     @GET
     Call<List<DribbbleComment>> getShotComments(@Header("Authorization") String authorization,
-                                                @Url String url);
+                                                @Url String url,
+                                                @Query("page") int page);
 
     @GET
     Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization,
@@ -233,6 +241,12 @@ public interface DribbbleService {
     @POST("shots/{shot}/like")
     Call<DribbbleUserLike> likeShot(@Header("Authorization") String authorization,
                                     @Path("shot") int shotId);
+
+    @FormUrlEncoded
+    @POST("shots/{shot}/comments")
+    Call<DribbbleComment> createComment(@Header("Authorization") String authorization,
+                                        @Path("shot") int shotId,
+                                        @Field("body") String body);
 
     class Builder {
         private Retrofit.Builder mRetrofitBuilder;

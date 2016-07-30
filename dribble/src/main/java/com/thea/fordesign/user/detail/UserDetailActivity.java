@@ -51,7 +51,7 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
         if (intent.hasExtra(EXTRA_USER)) {
             mUser = intent.getParcelableExtra(EXTRA_USER);
         }
-        LogUtil.i(TAG, mUser.getId() + ": " + mUser.getName());
+        LogUtil.i(TAG, mUser.toString());
         new UserDetailPresenter(this);
         initTabLayoutWithViewPager();
         showUser(mUser);

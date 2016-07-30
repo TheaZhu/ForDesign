@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements NavigationView
         }
     };
 
-    public void refreshUser() {
+    private void refreshUser() {
         if (userModel.getUserSignIn() && userModel.getDribbbleUserAccessToken() != null) {
             Call<DribbbleUser> call = mService.getUser(userModel.getDribbbleUserAccessToken());
             call.enqueue(new Callback<DribbbleUser>() {
@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity implements NavigationView
                     LogUtil.i(TAG, "get user code: " + response.code() + ", message: " +
                             response.message());
                     mUser = response.body();
+                    userModel.setDribbbleUser(mUser);
                     mUsername.setText(mUser.getName());
                     Glide.with(MainActivity.this)
                             .load(mUser.getAvatarUrl())

@@ -99,8 +99,8 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
     }
 
     @Override
-    public void openCommenters(@NonNull DribbbleShot shot) {
-
+    public void openComments(@NonNull DribbbleShot shot) {
+        mDetailView.showCommentsUi(shot.getId(), shot.getCommentsUrl());
     }
 
     @Override

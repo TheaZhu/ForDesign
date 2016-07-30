@@ -18,4 +18,5 @@ public abstract class BaseDataBindingActivity<T extends ViewDataBinding> extends
     }
 
     protected abstract int getLayoutId();
+
 }

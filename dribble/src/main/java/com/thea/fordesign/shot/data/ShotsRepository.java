@@ -197,7 +197,7 @@ public class ShotsRepository implements ShotsDataSource {
                         .request().url());
                 t.printStackTrace();
                 if (callback != null)
-                    callback.onFail(DribbbleConstant.CODE_ERROR, t.getMessage());
+                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
 
             }
         });

@@ -3,6 +3,8 @@ package com.thea.fordesign;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.thea.fordesign.bean.DribbbleUser;
+
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
@@ -11,6 +13,8 @@ public class UserModel {
 
     public static final String KEY_USER_SIGN_IN = "user_sign_in";
     public static final String KEY_DRIBBBLE_USER_ACCESS_TOKEN = "dribbble_access_token";
+    public static final String KEY_DRIBBBLE_USER_TYPE = "dribbble_user_type";
+    public static final String KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT = "dribbble_user_can_upload_shot";
 
     private SharedPreferences sp;
 
@@ -26,6 +30,12 @@ public class UserModel {
         sp.edit().putBoolean(KEY_USER_SIGN_IN, signIn).apply();
     }
 
+    public void setDribbbleUser(DribbbleUser user) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT, user.isCanUploadShot());
+        editor.putString(KEY_DRIBBBLE_USER_TYPE, user.getType()).apply();
+    }
+
     public String getDribbbleUserAccessToken() {
         return sp.getString(KEY_DRIBBBLE_USER_ACCESS_TOKEN, null);
     }
@@ -37,5 +47,17 @@ public class UserModel {
     public String getDribbbleAccessToken() {
         return getDribbbleUserAccessToken() != null ? getDribbbleUserAccessToken() :
                 DribbbleConstant.AUTH_TYPE + DribbbleConstant.CLIENT_ACCESS_TOKEN;
+    }
+
+    public boolean isCanUploadShot() {
+        return sp.getBoolean(KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT, false);
+    }
+
+    public String getUserType() {
+        return sp.getString(KEY_DRIBBBLE_USER_TYPE, "User");
+    }
+
+    public boolean canCreate() {
+        return getUserType().equalsIgnoreCase("Player") || getUserType().equalsIgnoreCase("Team");
     }
 }

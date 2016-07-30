@@ -24,8 +24,12 @@ public class CommentItemActionHandler extends BaseObservable {
         mListener.likeComment(comment, isCommented);
     }
 
-    public void userClicked(DribbbleUser user, View v) {
+    public void openUserDetails(DribbbleUser user, View v) {
         mListener.openUserDetails(user, v);
+    }
+
+    public String formatTime(String timeStr) {
+        return timeStr.substring(0, timeStr.indexOf("T"));
     }
 
 }

@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,13 +22,21 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleComment;
+import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.CommentItemBinding;
 import com.thea.fordesign.databinding.CommentsFragBinding;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
+import com.thea.fordesign.widget.FooterWrapAdapter;
+import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,31 +45,17 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
         CommentContract.View {
     public static final String TAG = CommentsFragment.class.getSimpleName();
 
-    public static final String ARG_COMMENTS_URL = "comments_url";
-
     private CommentContract.Presenter mPresenter;
 
-    private String mCommentsUrl;
-
     private CommentAdapter mAdapter;
+    private LoadMoreListener mLoadMoreListener;
+    private MyLoadingView mLoadingView;
 
     public CommentsFragment() {
     }
 
-    public static CommentsFragment newInstance(String commentsUrl) {
-        CommentsFragment fragment = new CommentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ARG_COMMENTS_URL, commentsUrl);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mCommentsUrl = getArguments().getString(ARG_COMMENTS_URL);
-        }
+    public static CommentsFragment newInstance() {
+        return new CommentsFragment();
     }
 
     @Override
@@ -79,12 +74,66 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
         setHasOptionsMenu(true);
         mViewDataBinding.setActionHandler(mPresenter);
 
-        RecyclerView recyclerView = mViewDataBinding.rvShotComments;
-        mAdapter = new CommentAdapter(new ArrayList<DribbbleComment>(), mPresenter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mAdapter);
+        mViewDataBinding.srlComments.setColorSchemeResources(R.color.dribbble_pink, R.color
+                .dribbble_link_blue, R.color.dribbble_playbook);
+        mViewDataBinding.srlComments.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.loadComments();
+            }
+        });
 
-        mPresenter.getComments(mCommentsUrl);
+        final RecyclerView recyclerView = mViewDataBinding.rvShotComments;
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new CommentAdapter(new ArrayList<DribbbleComment>(), mPresenter);
+        mLoadingView = new MyLoadingView(getContext(), recyclerView);
+        recyclerView.setAdapter(new FooterWrapAdapter(mAdapter, mLoadingView.getView()));
+        mLoadMoreListener = new LoadMoreListener(layoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                mPresenter.loadMore(currentPage);
+            }
+        };
+        mLoadingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLoadMoreListener.onScrolled(recyclerView, 0, 2);
+            }
+        }, false);
+        recyclerView.addOnScrollListener(mLoadMoreListener);
+
+        mPresenter.loadComments();
+    }
+
+    @Override
+    public void setRefreshingIndicator(final boolean active) {
+        SwipeRefreshLayout srl = mViewDataBinding.srlComments;
+        if (srl == null || srl.isRefreshing() == active) {
+            return;
+        }
+        Observable.just(active).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        mViewDataBinding.srlComments.setRefreshing(active);
+                    }
+                });
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean enableClick) {
+        RecyclerView.Adapter adapter = mViewDataBinding.rvShotComments.getAdapter();
+        if (adapter instanceof FooterWrapAdapter) {
+            ((FooterWrapAdapter) adapter).setLoading(visible);
+        }
+        mLoadingView.setLoadingIndicator(active, getString(resId));
+        mLoadingView.enableClick(enableClick);
+    }
+
+    @Override
+    public void setLoadingError() {
+        mLoadMoreListener.setLoadingError();
     }
 
     @Override
@@ -93,26 +142,27 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
     }
 
     @Override
-    public void showCommentLiked() {
+    public void insertComments(List<DribbbleComment> comments) {
+        mAdapter.insertData(comments);
+    }
 
+    @Override
+    public void showCommentLiked() {
     }
 
     @Override
     public void showCommentDisliked() {
-
     }
 
     @Override
-    public void showUserDetailsUi(int userId, View v) {
+    public void showUserDetailsUi(@NonNull DribbbleUser requestedUser, View v) {
         Intent intent = new Intent(getActivity(), UserDetailActivity.class);
-        intent.putExtra(UserDetailActivity.EXTRA_USER_ID, userId);
-//        intent.putExtra(UserDetailActivity.EXTRA_AVATAR_URL, (String) sharedView.getTag());
+        intent.putExtra(UserDetailActivity.EXTRA_USER, requestedUser);
         if (Build.VERSION.SDK_INT >= 21) {
-            View sharedView = v.findViewById(R.id.iv_comment_avatar);
             String transitionName = getString(R.string.image_user_avatar);
 
             ActivityOptions transitionActivityOptions = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+                    .makeSceneTransitionAnimation(getActivity(), v, transitionName);
 
             startActivity(intent, transitionActivityOptions.toBundle());
         } else {
@@ -126,8 +176,14 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
     }
 
     @Override
+    public void setCanAddComment(boolean canAddComment) {
+        mViewDataBinding.rlAddComment.setVisibility(canAddComment ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
     public void setPresenter(@NonNull CommentContract.Presenter presenter) {
-        mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");;
+        mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
+        ;
     }
 
     @Override
@@ -178,7 +234,8 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
         @Override
         public void onBindViewHolder(CommentViewHolder holder, int position) {
             CommentItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
-            CommentItemActionHandler actionHandler = new CommentItemActionHandler(mUserActionsListener);
+            CommentItemActionHandler actionHandler = new CommentItemActionHandler
+                    (mUserActionsListener);
             DribbbleComment item = mItems.get(position);
             viewDataBinding.setComment(item);
             viewDataBinding.setActionHandler(actionHandler);
@@ -188,7 +245,8 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .centerCrop()
-                    .into(viewDataBinding.ivCommentAvatar);
+                    .placeholder(R.mipmap.default_user_avatar)
+                    .into(viewDataBinding.ivUserAvatar);
             viewDataBinding.executePendingBindings();
         }
 

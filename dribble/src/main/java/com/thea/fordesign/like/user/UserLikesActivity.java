@@ -3,7 +3,6 @@ package com.thea.fordesign.like.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MenuItem;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
@@ -40,14 +39,4 @@ public class UserLikesActivity extends BaseDataBindingActivity<UserLikesActBindi
         return R.layout.activity_user_likes;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

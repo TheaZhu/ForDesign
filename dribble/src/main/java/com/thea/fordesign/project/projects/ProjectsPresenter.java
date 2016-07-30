@@ -55,7 +55,7 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
             mProjectsView.setRefreshingIndicator(true);
 
         if (isLoadMore)
-            mProjectsView.setLoadingIndicator(true, R.string.loading, false);
+            mProjectsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshProjects();
 
@@ -66,6 +66,8 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
             public void onProjectsLoaded(List<DribbbleProject> projects) {
                 if (showLoadingUI)
                     mProjectsView.setRefreshingIndicator(false);
+                if (isLoadMore)
+                    mProjectsView.setLoadingIndicator(false, false, R.string.loading, false);
                 if (page == 1)
                     mProjectsView.showProjects(projects);
                 else
@@ -79,7 +81,8 @@ public class ProjectsPresenter implements ProjectsContract.Presenter {
                     mProjectsView.showSnack(R.string.error_load_projects);
                 }
                 if (isLoadMore) {
-                    mProjectsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mProjectsView.setLoadingIndicator(true, false,
+                            R.string.loading_error, true);
                     mProjectsView.setLoadingError();
                 }
             }

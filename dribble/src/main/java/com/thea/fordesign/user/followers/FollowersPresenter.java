@@ -65,20 +65,21 @@ public class FollowersPresenter implements FollowersContract.Presenter {
     @Override
     public void loadMore(String url, int page) {
         LogUtil.i(TAG, "load more: " + page);
-        mFollowersView.setLoadingIndicator(true, R.string.loading, false);
+        mFollowersView.setLoadingIndicator(true, true, R.string.loading, false);
         mRepository.refreshFollowers();
 
         mRepository.getFollowers(mUserModel.getDribbbleAccessToken(), url, page, new
                 FollowersDataSource.LoadFollowersCallback() {
                     @Override
                     public void onFollowersLoaded(List<DribbbleFollower> followers) {
-                        mFollowersView.setLoadingIndicator(false, R.string.loading, false);
+                        mFollowersView.setLoadingIndicator(false, false, R.string.loading, false);
                         mFollowersView.insertFollowers(followers);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-                        mFollowersView.setLoadingIndicator(false, R.string.loading_error, true);
+                        mFollowersView.setLoadingIndicator(true, false,
+                                R.string.loading_error, true);
                         mFollowersView.setLoadingError();
                     }
                 });

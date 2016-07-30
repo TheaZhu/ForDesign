@@ -5,6 +5,8 @@
 
     <data class=".databinding.UserDetailFragBinding">
 
+        <import type="android.view.View"/>
+
         <import type="com.thea.fordesign.bean.DribbbleUser.Links"/>
 
         <variable
@@ -41,7 +43,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
-                android:paddingRight="@dimen/normal_horizontal_padding">
+                android:paddingRight="@dimen/normal_horizontal_padding"
+                android:visibility="@{user.location == null ? View.GONE : View.VISIBLE}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -66,7 +69,8 @@
                 android:onClick="@{() -> actionHandler.openWeb(user.links.web)}"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
-                android:paddingRight="@dimen/normal_horizontal_padding">
+                android:paddingRight="@dimen/normal_horizontal_padding"
+                android:visibility="@{user.links.web == null ? View.GONE : View.VISIBLE}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -91,7 +95,8 @@
                 android:onClick="@{() -> actionHandler.openTwitter(user.links.twitter)}"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
-                android:paddingRight="@dimen/normal_horizontal_padding">
+                android:paddingRight="@dimen/normal_horizontal_padding"
+                android:visibility="@{user.links.twitter == null ? View.GONE : View.VISIBLE}">
 
                 <ImageView
                     android:layout_width="wrap_content"

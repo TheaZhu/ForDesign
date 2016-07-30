@@ -55,7 +55,7 @@ public class BucketsPresenter implements BucketsContract.Presenter {
             mBucketsView.setRefreshingIndicator(true);
 
         if (isLoadMore)
-            mBucketsView.setLoadingIndicator(true, R.string.loading, false);
+            mBucketsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshBuckets();
 
@@ -66,6 +66,8 @@ public class BucketsPresenter implements BucketsContract.Presenter {
             public void onBucketsLoaded(List<DribbbleBucket> buckets) {
                 if (showLoadingUI)
                     mBucketsView.setRefreshingIndicator(false);
+                if (isLoadMore)
+                    mBucketsView.setLoadingIndicator(false, false, R.string.loading, false);
                 if (page == 1)
                     mBucketsView.showBuckets(buckets);
                 else
@@ -79,7 +81,8 @@ public class BucketsPresenter implements BucketsContract.Presenter {
                     mBucketsView.showSnack(R.string.error_load_buckets);
                 }
                 if (isLoadMore) {
-                    mBucketsView.setLoadingIndicator(false, R.string.loading_error, true);
+                    mBucketsView.setLoadingIndicator(true, false,
+                            R.string.loading_error, true);
                     mBucketsView.setLoadingError();
                 }
             }

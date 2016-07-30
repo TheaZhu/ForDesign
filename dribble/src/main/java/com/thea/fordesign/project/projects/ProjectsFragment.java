@@ -109,7 +109,11 @@ public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBindin
     }
 
     @Override
-    public void setLoadingIndicator(boolean active, @StringRes int resId, boolean enableClick) {
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean enableClick) {
+        RecyclerView.Adapter adapter = mViewDataBinding.rvProjects.getAdapter();
+        if (adapter instanceof FooterWrapAdapter) {
+            ((FooterWrapAdapter) adapter).setLoading(visible);
+        }
         mLoadingView.setLoadingIndicator(active, getString(resId));
         mLoadingView.enableClick(enableClick);
     }
