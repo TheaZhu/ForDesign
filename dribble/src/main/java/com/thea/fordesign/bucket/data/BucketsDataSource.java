@@ -26,12 +26,32 @@ public interface BucketsDataSource {
         void onDataNotAvailable();
     }
 
+    interface SaveBucketCallback {
+
+        void onBucketSaved(DribbbleBucket bucket);
+
+        void onFailed(int errCode, String message);
+    }
+
+    interface DeleteBucketCallback {
+
+        void onBucketDeleted();
+
+        void onFailed(int errCode, String message);
+    }
+
     void getBuckets(@NonNull String authorization, @Nullable String url, int page,
-                  LoadBucketsCallback callback);
+                    LoadBucketsCallback callback);
 
     void getBucket(@NonNull String authorization, int bucketId, GetBucketCallback callback);
 
-    void saveBucket(@NonNull String authorization, @NonNull DribbbleBucket bucket);
+    void createBucket(@NonNull String authorization, @NonNull String name, String description,
+                      SaveBucketCallback callback);
+
+    void updateBucket(@NonNull String authorization, int bucketId, @NonNull String name, String
+            description, SaveBucketCallback callback);
+
+    void deleteBucket(@NonNull String authorization, int bucketId, DeleteBucketCallback callback);
 
     void refreshBuckets();
 

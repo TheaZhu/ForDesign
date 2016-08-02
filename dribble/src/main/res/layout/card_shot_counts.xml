@@ -45,7 +45,6 @@
                     android:id="@+id/tv_viewers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> actionHandler.openViewers(shot)}"
                     android:text="@{String.valueOf(shot.viewsCount)}"
                     tools:text="@string/default_views_count"/>
             </LinearLayout>

@@ -1,19 +1,26 @@
 package com.thea.fordesign.bucket.buckets;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.R;
@@ -42,6 +49,9 @@ import rx.functions.Action1;
 public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding> implements
         BucketsContract.View {
     public static final String TAG = BucketsFragment.class.getSimpleName();
+    public static final String ARG_HAS_MENU = "has_menu";
+
+    private boolean hasMenu;
 
     private BucketsContract.Presenter mPresenter;
     private MyLoadingView mLoadingView;
@@ -51,8 +61,38 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     public BucketsFragment() {
     }
 
-    public static BucketsFragment newInstance() {
-        return new BucketsFragment();
+    public static BucketsFragment newInstance(boolean hasMenu) {
+        BucketsFragment fragment = new BucketsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(ARG_HAS_MENU, hasMenu);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            hasMenu = getArguments().getBoolean(ARG_HAS_MENU, false);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (hasMenu)
+            inflater.inflate(R.menu.menu_buckets, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_bucket:
+                showAddDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -62,6 +102,7 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
+        setHasOptionsMenu(hasMenu);
         mViewDataBinding.srlBuckets.setColorSchemeResources(R.color.dribbble_pink, R.color
                 .dribbble_link_blue, R.color.dribbble_playbook);
         mViewDataBinding.srlBuckets.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener
@@ -69,6 +110,7 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
             @Override
             public void onRefresh() {
                 mPresenter.loadBuckets();
+                mLoadMoreListener.reset();
             }
         });
 
@@ -111,7 +153,8 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     }
 
     @Override
-    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId, boolean enableClick) {
+    public void setLoadingIndicator(boolean visible, boolean active, @StringRes int resId,
+                                    boolean enableClick) {
         RecyclerView.Adapter adapter = mViewDataBinding.rvBuckets.getAdapter();
         if (adapter instanceof FooterWrapAdapter) {
             ((FooterWrapAdapter) adapter).setLoading(visible);
@@ -136,12 +179,78 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     }
 
     @Override
+    public void insertBucket(DribbbleBucket bucket) {
+        mAdapter.insertItem(bucket);
+    }
+
+    @Override
     public void showBucketShotsUi(int bucketId) {
         Intent intent = new Intent(getContext(), ShotsActivity.class);
         intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_bucket_shots));
         intent.putExtra(ShotsActivity.EXTRA_SHOTS_URL, DribbbleConstant.BASE_URL + "buckets/" +
                 bucketId + "/shots");
         startActivity(intent);
+    }
+
+    @Override
+    public void showBucketEditDialog(final int bucketId, String name, String description) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_bucket, null);
+        final EditText etName = (EditText) view.findViewById(R.id.et_bucket_name);
+        final EditText etDescription = (EditText) view.findViewById(R.id.et_bucket_description);
+        etName.setText(name);
+        etDescription.setText(description);
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.title_edit_bucket)
+                .setView(view)
+                .setPositiveButton(R.string.btn_update_bucket, new DialogInterface
+                        .OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mPresenter.updateBucket(bucketId, etName.getText().toString(), etDescription
+                                .getText().toString());
+                    }
+                })
+                .setNegativeButton(R.string.btn_cancel, null).create();
+
+        dialog.show();
+    }
+
+    @Override
+    public void showBucketDeleteDialog(final int bucketId) {
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.title_delete_bucket)
+                .setMessage(R.string.msg_delete_bucket)
+                .setPositiveButton(R.string.btn_delete_bucket, new DialogInterface
+                        .OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mPresenter.deleteBucket(bucketId);
+                    }
+                })
+                .setNegativeButton(R.string.btn_cancel, null).create();
+
+        dialog.show();
+    }
+
+    private void showAddDialog() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_bucket, null);
+        final EditText etName = (EditText) view.findViewById(R.id.et_bucket_name);
+        final EditText etDescription = (EditText) view.findViewById(R.id.et_bucket_description);
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.title_create_bucket)
+                .setView(view)
+                .setPositiveButton(R.string.btn_create_bucket, new DialogInterface
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mPresenter.createNewBucket(etName.getText().toString(), etDescription
+                                .getText().toString());
+                    }
+                }).setNegativeButton(R.string.btn_cancel, null).create();
+
+        dialog.show();
     }
 
     @Override
@@ -185,6 +294,11 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
             int start = mBuckets.size();
             mBuckets.addAll(buckets);
             notifyItemRangeInserted(start, buckets.size());
+        }
+
+        public void insertItem(DribbbleBucket bucket) {
+            mBuckets.add(0, bucket);
+            notifyItemInserted(0);
         }
 
         @Override

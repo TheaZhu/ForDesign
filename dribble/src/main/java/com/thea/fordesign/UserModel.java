@@ -14,6 +14,7 @@ public class UserModel {
     public static final String KEY_USER_SIGN_IN = "user_sign_in";
     public static final String KEY_DRIBBBLE_USER_ACCESS_TOKEN = "dribbble_access_token";
     public static final String KEY_DRIBBBLE_USER_TYPE = "dribbble_user_type";
+    public static final String KEY_DRIBBBLE_USER_PRO = "dribbble_user_pro";
     public static final String KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT = "dribbble_user_can_upload_shot";
 
     private SharedPreferences sp;
@@ -33,7 +34,8 @@ public class UserModel {
     public void setDribbbleUser(DribbbleUser user) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT, user.isCanUploadShot());
-        editor.putString(KEY_DRIBBBLE_USER_TYPE, user.getType()).apply();
+        editor.putString(KEY_DRIBBBLE_USER_TYPE, user.getType());
+        editor.putBoolean(KEY_DRIBBBLE_USER_PRO, user.isPro()).apply();
     }
 
     public String getDribbbleUserAccessToken() {
@@ -51,6 +53,10 @@ public class UserModel {
 
     public boolean isCanUploadShot() {
         return sp.getBoolean(KEY_DRIBBBLE_USER_CAN_UPLOAD_SHOT, false);
+    }
+
+    public boolean isPro() {
+        return sp.getBoolean(KEY_DRIBBBLE_USER_PRO, false);
     }
 
     public String getUserType() {

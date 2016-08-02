@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleUserLike;
 import com.thea.fordesign.util.LogUtil;
 
@@ -61,29 +62,30 @@ public class ShotsRepository implements ShotsDataSource {
             Call<List<DribbbleShot>> call = mService.getShots(authorization, list, sort,
                     timeframe, null, page, perPage);
             call.enqueue(new Callback<List<DribbbleShot>>() {
-                 @Override
-                 public void onResponse(Call<List<DribbbleShot>> call,
-                                        Response<List<DribbbleShot>> response) {
-                     LogUtil.i(TAG, "get shots code: " + response.code() + ", message: " +
-                             response.message());
-                     if (response.code() == 200) {
-                         List<DribbbleShot> shots = response.body();
-                         refreshCache(page, shots);
-                         if (callback != null) callback.onShotsLoaded(shots);
-                     } else if (callback != null) {
-                         callback.onDataNotAvailable();
-                     }
-                 }
+                             @Override
+                             public void onResponse(Call<List<DribbbleShot>> call,
+                                                    Response<List<DribbbleShot>> response) {
+                                 LogUtil.i(TAG, "get shots code: " + response.code() + ", " +
+                                         "message: " +
+                                         response.message());
+                                 if (response.code() == 200) {
+                                     List<DribbbleShot> shots = response.body();
+                                     refreshCache(page, shots);
+                                     if (callback != null) callback.onShotsLoaded(shots);
+                                 } else if (callback != null) {
+                                     callback.onDataNotAvailable();
+                                 }
+                             }
 
-                 @Override
-                 public void onFailure(Call<List<DribbbleShot>> call, Throwable t) {
-                     LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() +
-                             ", url: " + call.request().url());
-                     t.printStackTrace();
-                     if (callback != null)
-                         callback.onDataNotAvailable();
-                 }
-             }
+                             @Override
+                             public void onFailure(Call<List<DribbbleShot>> call, Throwable t) {
+                                 LogUtil.i(TAG, "get shots call executed: " + call.isExecuted() +
+                                         ", url: " + call.request().url());
+                                 t.printStackTrace();
+                                 if (callback != null)
+                                     callback.onDataNotAvailable();
+                             }
+                         }
 
             );
         } else if (callback != null) {
@@ -193,7 +195,7 @@ public class ShotsRepository implements ShotsDataSource {
 
             @Override
             public void onFailure(Call<DribbbleUserLike> call, Throwable t) {
-                LogUtil.i(TAG, "get shot call executed: " + call.isExecuted() + ", url: " + call
+                LogUtil.i(TAG, "like shot call executed: " + call.isExecuted() + ", url: " + call
                         .request().url());
                 t.printStackTrace();
                 if (callback != null)
@@ -204,13 +206,65 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void dislikeShot(@NonNull String authorization, @NonNull DribbbleShot shot) {
+    public void unlikeShot(@NonNull String authorization, int shotId, final UnlikeShotCallback callback) {
+        Call<Response> call = mService.unlikeShot(authorization, shotId);
+        call.enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, Response<Response>
+                    response) {
+                LogUtil.i(TAG, "unlike shot code: " + response.code() + ", message: " + response
+                        .message());
+                if (callback != null) {
+                    int code = response.code();
+                    if (code == DribbbleConstant.CODE_NO_CONTENT)
+                        callback.onSuccess();
+                    else
+                        callback.onFail(code, response.message());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                LogUtil.i(TAG, "unlike shot call executed: " + call.isExecuted() + ", url: " + call
+                        .request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
+
+            }
+        });
     }
 
     @Override
-    public void dislikeShot(@NonNull String authorization, int shotId) {
+    public void checkLikeShot(@NonNull String authorization, int shotId, final CheckLikeShotCallback
+            callback) {
+        Call<DribbbleShotLike> call = mService.getShotLike(authorization, shotId);
+        call.enqueue(new Callback<DribbbleShotLike>() {
+            @Override
+            public void onResponse(Call<DribbbleShotLike> call, Response<DribbbleShotLike>
+                    response) {
+                LogUtil.i(TAG, "check like shot code: " + response.code() + ", message: " + response
+                        .message());
+                if (callback != null) {
+                    int code = response.code();
+                    if (code == DribbbleConstant.CODE_OK)
+                        callback.onSuccess(true);
+                    else if (code == DribbbleConstant.CODE_NOT_FOUND)
+                        callback.onSuccess(false);
+                    else
+                        callback.onFail(code, response.message());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<DribbbleShotLike> call, Throwable t) {
+                LogUtil.i(TAG, "check like shot call executed: " + call.isExecuted() + ", url: " +
+                        call.request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
+            }
+        });
     }
 
     @Override

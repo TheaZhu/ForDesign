@@ -50,6 +50,11 @@ public class DribbbleUser implements Parcelable {
     @SerializedName("likes_received_count")
     private int likesReceivedCount;
 
+    @SerializedName("members_count")
+    private int membersCount;
+    @SerializedName("members_url")
+    private String membersUrl;
+
     @SerializedName("projects_count")
     private int projectsCount;
     @SerializedName("rebounds_received_count")
@@ -61,6 +66,8 @@ public class DribbbleUser implements Parcelable {
     private String shotsUrl;
     @SerializedName("can_upload_shot")
     private boolean canUploadShot;
+    @SerializedName("team_shots_url")
+    private String teamShotsUrl;
 
     @SerializedName("teams_count")
     private int teamsCount;
@@ -232,6 +239,18 @@ public class DribbbleUser implements Parcelable {
         this.likesReceivedCount = likesReceivedCount;
     }
 
+    public int getMembersCount() {
+        return membersCount;
+    }
+
+    public String getMembersUrl() {
+        return membersUrl;
+    }
+
+    public String getTeamShotsUrl() {
+        return teamShotsUrl;
+    }
+
     public int getProjectsCount() {
         return projectsCount;
     }
@@ -304,6 +323,10 @@ public class DribbbleUser implements Parcelable {
         this.updatedTime = updatedTime;
     }
 
+    public boolean isTeam(String type) {
+        return type.equalsIgnoreCase("Team");
+    }
+
     @Override
     public String toString() {
         return "DribbbleUser{" +
@@ -327,11 +350,14 @@ public class DribbbleUser implements Parcelable {
                 ", likesCount=" + likesCount +
                 ", likesUrl='" + likesUrl + '\'' +
                 ", likesReceivedCount=" + likesReceivedCount +
+                ", membersCount=" + membersCount +
+                ", membersUrl='" + membersUrl + '\'' +
                 ", projectsCount=" + projectsCount +
                 ", reboundsReceivedCount=" + reboundsReceivedCount +
                 ", shotsCount=" + shotsCount +
                 ", shotsUrl='" + shotsUrl + '\'' +
                 ", canUploadShot=" + canUploadShot +
+                ", teamShotsUrl='" + teamShotsUrl + '\'' +
                 ", teamsCount=" + teamsCount +
                 ", teamsUrl='" + teamsUrl + '\'' +
                 ", createdTime='" + createdTime + '\'' +
@@ -431,8 +457,14 @@ public class DribbbleUser implements Parcelable {
         dest.writeInt(this.shotsCount);
         dest.writeString(this.shotsUrl);
         dest.writeByte(this.canUploadShot ? (byte) 1 : (byte) 0);
-        dest.writeInt(this.teamsCount);
-        dest.writeString(this.teamsUrl);
+        if (isTeam(this.type)) {
+            dest.writeInt(this.membersCount);
+            dest.writeString(this.membersUrl);
+            dest.writeString(this.teamShotsUrl);
+        } else {
+            dest.writeInt(this.teamsCount);
+            dest.writeString(this.teamsUrl);
+        }
         dest.writeString(this.createdTime);
         dest.writeString(this.updatedTime);
     }
@@ -466,13 +498,20 @@ public class DribbbleUser implements Parcelable {
         this.shotsCount = in.readInt();
         this.shotsUrl = in.readString();
         this.canUploadShot = in.readByte() != 0;
-        this.teamsCount = in.readInt();
-        this.teamsUrl = in.readString();
+        if (isTeam(this.type)) {
+            this.membersCount = in.readInt();
+            this.membersUrl = in.readString();
+            this.teamShotsUrl = in.readString();
+        }else {
+            this.teamsCount = in.readInt();
+            this.teamsUrl = in.readString();
+        }
         this.createdTime = in.readString();
         this.updatedTime = in.readString();
     }
 
-    public static final Parcelable.Creator<DribbbleUser> CREATOR = new Parcelable.Creator<DribbbleUser>() {
+    public static final Parcelable.Creator<DribbbleUser> CREATOR = new Parcelable
+            .Creator<DribbbleUser>() {
         @Override
         public DribbbleUser createFromParcel(Parcel source) {
             return new DribbbleUser(source);

@@ -67,6 +67,7 @@ public class ProjectsFragment extends BaseDataBindingFragment<ProjectsFragBindin
             @Override
             public void onRefresh() {
                 mPresenter.loadProjects();
+                mLoadMoreListener.reset();
             }
         });
 

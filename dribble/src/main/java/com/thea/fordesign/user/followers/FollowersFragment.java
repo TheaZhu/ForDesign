@@ -192,11 +192,10 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
         Intent intent = new Intent(getContext(), UserDetailActivity.class);
         intent.putExtra(UserDetailActivity.EXTRA_USER, user);
         if (Build.VERSION.SDK_INT >= 21) {
-            View sharedView = v.findViewById(R.id.iv_avatar);
             String transitionName = getString(R.string.image_user_avatar);
 
             ActivityOptions transitionActivityOptions = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+                    .makeSceneTransitionAnimation(getActivity(), v, transitionName);
 
             startActivity(intent, transitionActivityOptions.toBundle());
         } else {
@@ -228,6 +227,7 @@ public class FollowersFragment extends BaseDataBindingFragment<UsersFragBinding>
 
     private void loadFollowers() {
         mPresenter.loadFollowers(mUrl);
+        mLoadMoreListener.reset();
     }
 
     private void loadMore(int page) {

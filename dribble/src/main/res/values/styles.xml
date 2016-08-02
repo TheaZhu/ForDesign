@@ -4,21 +4,41 @@
     </style>
 
     <style name="AppTheme" parent="Base.AppTheme">
-        <item name="colorPrimary">@color/dribbble_pink</item>
-        <item name="colorPrimaryDark">@color/dribbble_pink</item>
-        <item name="colorAccent">@color/dribbble_link_blue</item>
+        <item name="colorPrimary">@color/dribbble_charcoal</item>
+        <item name="colorPrimaryDark">@color/grey_900</item>
+        <item name="colorAccent">@color/white</item>
         <item name="android:windowBackground">@color/grey_100</item>
-        <item name="android:textColorPrimary">@color/dribbble_charcoal</item>
-        <item name="android:textColorSecondary">@color/dribbble_slate</item>
-        <item name="android:textColorHint">@color/dribbble_slate</item>
-        <item name="android:textColorLink">@color/dribbble_link_blue</item>
+        <item name="android:textColorPrimary">@color/dribbble_link_blue</item>
+        <item name="android:textColorSecondary">@color/secondary_light_text_color</item>
+        <item name="android:textColorTertiary">@color/dribbble_slate</item>
     </style>
 
     <style name="AppTheme.ShotDetail" parent="Base.AppTheme">
     </style>
 
+    <style name="AppTheme.Buckets" parent="AppTheme">
+        <item name="colorAccent">@color/dribbble_link_blue</item>
+        <item name="android:textColorHint">@color/hint_light_text_color</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.AppCompat.ButtonBar</item>
+        <!--<item name="android:textColorLink">@color/green_500</item>-->
+        <!--<item name="colorControlActivated">@color/dribbble_link_blue</item>-->
+        <!--<item name="colorButtonNormal">@color/orange_500</item>-->
+        <!--<item name="android:colorActivatedHighlight">@color/red_500</item>-->
+        <!--<item name="android:colorPressedHighlight">@color/purple_500</item>-->
+        <!--<item name="android:colorLongPressedHighlight">@color/deep_purple_500</item>-->
+        <!--<item name="android:positiveButtonText">@color/accent_light_btn_text_color</item>-->
+        <!--<item name="android:negativeButtonText">@color/secondary_light_text_color</item>-->
+        <!--<item name="android:actionMenuTextColor">@color/green_500</item>-->
+        <!--<item name="titleTextColor">@color/indigo_500</item>-->
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="alertButtonBar" parent="android:Widget">
+        <item name="android:textColor">@color/dribbble_link_blue</item>
+    </style>
+
 
 </resources>

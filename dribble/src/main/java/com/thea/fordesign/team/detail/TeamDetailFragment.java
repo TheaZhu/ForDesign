@@ -1,11 +1,10 @@
-package com.thea.fordesign.user.detail;
+package com.thea.fordesign.team.detail;
 
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,9 +13,10 @@ import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bucket.buckets.BucketsActivity;
-import com.thea.fordesign.databinding.UserDetailFragBinding;
+import com.thea.fordesign.databinding.TeamDetailFragBinding;
 import com.thea.fordesign.like.user.UserLikesActivity;
 import com.thea.fordesign.project.projects.ProjectsActivity;
+import com.thea.fordesign.shot.shots.ShotsActivity;
 import com.thea.fordesign.user.followers.FollowersActivity;
 import com.thea.fordesign.user.followers.FollowersFragment;
 import com.thea.fordesign.user.users.UsersActivity;
@@ -24,45 +24,41 @@ import com.thea.fordesign.util.Preconditions;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserDetailFragment#newInstance} factory method to
+ * Use the {@link TeamDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBinding> implements
-        UserDetailContract.SubView {
-    public static final String TAG = UserDetailFragment.class.getSimpleName();
-    private static final String ARG_USER = "dribbble_user";
+public class TeamDetailFragment extends BaseDataBindingFragment<TeamDetailFragBinding> implements
+        TeamDetailContract.View {
+    public static final String TAG = TeamDetailFragment.class.getSimpleName();
 
-    private UserDetailContract.SubPresenter mPresenter;
-    private DribbbleUser mUser;
+    private TeamDetailContract.Presenter mPresenter;
 
-    public UserDetailFragment() {
+    public TeamDetailFragment() {
     }
 
-    public static UserDetailFragment newInstance(DribbbleUser user) {
-        UserDetailFragment fragment = new UserDetailFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(ARG_USER, user);
-        fragment.setArguments(args);
-        return fragment;
+    public static TeamDetailFragment newInstance() {
+        return new TeamDetailFragment();
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mUser = getArguments().getParcelable(ARG_USER);
-        }
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_user_detail;
+        return R.layout.fragment_team_detail;
     }
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
         mViewDataBinding.setActionHandler(mPresenter);
-        mViewDataBinding.setUser(mUser);
+    }
+
+    @Override
+    public void showTeam(DribbbleUser team) {
+        mViewDataBinding.setTeam(team);
     }
 
     @Override
@@ -74,10 +70,18 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
     }
 
     @Override
-    public void showProjectsUi(int userId) {
+    public void showProjectsUi(int teamId) {
         Intent intent = new Intent(getContext(), ProjectsActivity.class);
         intent.putExtra(ProjectsActivity.EXTRA_TITLE, getString(R.string.title_projects));
-        intent.putExtra(ProjectsActivity.EXTRA_USER_ID, userId);
+        intent.putExtra(ProjectsActivity.EXTRA_USER_ID, teamId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showMembersUi(@NonNull String membersUrl) {
+        Intent intent = new Intent(getContext(), UsersActivity.class);
+        intent.putExtra(UsersActivity.EXTRA_TITLE, getString(R.string.title_members));
+        intent.putExtra(UsersActivity.EXTRA_USERS_URL, membersUrl);
         startActivity(intent);
     }
 
@@ -91,10 +95,10 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
     }
 
     @Override
-    public void showTeamsUi(@NonNull String teamsUrl) {
-        Intent intent = new Intent(getContext(), UsersActivity.class);
-        intent.putExtra(UsersActivity.EXTRA_TITLE, getString(R.string.title_teams));
-        intent.putExtra(UsersActivity.EXTRA_USERS_URL, teamsUrl);
+    public void showTeamShotsUi(@NonNull String teamShotsUrl) {
+        Intent intent = new Intent(getContext(), ShotsActivity.class);
+        intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_my_shots));
+        intent.putExtra(ShotsActivity.EXTRA_SHOTS_URL, teamShotsUrl);
         startActivity(intent);
     }
 
@@ -117,7 +121,7 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
     }
 
     @Override
-    public void setPresenter(@NonNull UserDetailContract.SubPresenter presenter) {
+    public void setPresenter(@NonNull TeamDetailContract.Presenter presenter) {
         mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
     }
 

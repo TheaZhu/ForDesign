@@ -60,8 +60,8 @@
             android:gravity="center_vertical"
             android:lines="1"
             android:text="@{shot.title}"
-            android:textColor="@color/dribbble_charcoal"
             tools:text="@string/default_title"/>
+        <!--android:textColor="@color/dribbble_charcoal"-->
 
         <TextView
             android:id="@+id/tv_shot_description"
@@ -72,8 +72,8 @@
             android:layout_marginRight="@dimen/normal_horizontal_margin"
             android:overScrollMode="ifContentScrolls"
             android:text="@{Html.fromHtml(shot.description ?? &quot;&quot;)}"
-            android:textColor="@color/grey_400"
             tools:text="@string/default_description"/>
+        <!--android:textColor="@color/grey_400"-->
 
         <include layout="@layout/toolbar_transparent"/>
     </RelativeLayout>

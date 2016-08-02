@@ -34,6 +34,20 @@ public interface ShotsDataSource {
         void onFail(int errCode, String message);
     }
 
+    interface UnlikeShotCallback {
+
+        void onSuccess();
+
+        void onFail(int errCode, String message);
+    }
+
+    interface CheckLikeShotCallback{
+
+        void onSuccess(boolean like);
+
+        void onFail(int errCode, String message);
+    }
+
     void getShots(@NonNull String authorization, @Nullable String list, @Nullable String timeframe,
                   @Nullable String date, @Nullable String sort, int page, int perPage,
                   LoadShotsCallback callback);
@@ -49,9 +63,9 @@ public interface ShotsDataSource {
 
     void likeShot(@NonNull String authorization, int shotId, LikeShotCallback callback);
 
-    void dislikeShot(@NonNull String authorization, @NonNull DribbbleShot shot);
+    void unlikeShot(@NonNull String authorization, int shotId, UnlikeShotCallback callback);
 
-    void dislikeShot(@NonNull String authorization, int shotId);
+    void checkLikeShot(@NonNull String authorization, int shotId, CheckLikeShotCallback callback);
 
     void refreshShots();
 

@@ -25,7 +25,13 @@ public interface BucketsContract {
 
         void insertBuckets(List<DribbbleBucket> buckets);
 
+        void insertBucket(DribbbleBucket bucket);
+
         void showBucketShotsUi(int bucketId);
+
+        void showBucketEditDialog(int bucketId, String name, String description);
+
+        void showBucketDeleteDialog(int bucketId);
 
     }
 
@@ -36,6 +42,12 @@ public interface BucketsContract {
         void loadBuckets();
 
         void loadMore(int page);
+
+        void createNewBucket(String name, String description);
+
+        void updateBucket(int bucketId, String name, String description);
+
+        void deleteBucket(int bucketId);
 
     }
 }

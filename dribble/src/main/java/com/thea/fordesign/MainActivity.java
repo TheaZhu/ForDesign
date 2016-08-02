@@ -206,6 +206,7 @@ public class MainActivity extends BaseActivity implements NavigationView
         if (mUser != null) {
             intent.putExtra(BucketsActivity.EXTRA_TITLE, getString(R.string.title_my_buckets));
             intent.putExtra(BucketsActivity.EXTRA_BUCKETS_URL, mUser.getBucketsUrl());
+            intent.putExtra(BucketsActivity.EXTRA_CAN_ADD, true);
         }
         startActivity(intent);
     }

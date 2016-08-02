@@ -40,10 +40,13 @@
     <string name="title_buckets">Buckets</string>
     <string name="title_projects">Projects</string>
     <string name="title_teams">Teams</string>
+    <string name="title_members">Members</string>
+    <string name="title_users">Users</string>
     <string name="title_followers">Followers</string>
 
     <string name="action_follow">FOLLOW</string>
     <string name="action_unfollow">UNFOLLOW</string>
+    <string name="action_add">ADD</string>
 
     // transition name
     <string name="image_shot">Image Shot</string>
@@ -89,6 +92,7 @@
     <string name="error_load_buckets">Error when load buckets.</string>
     <string name="error_load_projects">Error when load projects.</string>
     <string name="error_load_user_likes">Error when load user likes.</string>
+    <string name="error_load_users">Error when load users.</string>
     <string name="error_get_shot">Error when get shot.</string>
     <string name="error_load_shot_comments">Error when load shot comments.</string>
     <string name="error_load_user_followings">Error when load user followings.</string>
@@ -102,6 +106,24 @@
     <string name="msg_empty_comment">Please enter your comment.</string>
     <string name="msg_add_comment_success">Add comment successful.</string>
     <string name="msg_add_comment_fail">Add comment failed.</string>
+
+    <string name="btn_create_bucket">Create</string>
+    <string name="btn_update_bucket">Update</string>
+    <string name="btn_delete_bucket">Delete</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="msg_empty_bucket_name">Please enter the bucket name.</string>
+    <string name="title_create_bucket">Create a new bucket</string>
+    <string name="title_edit_bucket">Edit bucket</string>
+    <string name="title_delete_bucket">Delete bucket</string>
+    <string name="msg_create_bucket_success">Create bucket successful.</string>
+    <string name="msg_create_bucket_fail">Create bucket failed.</string>
+    <string name="msg_update_bucket_success">Update bucket successful.</string>
+    <string name="msg_update_bucket_fail">Update bucket failed.</string>
+    <string name="msg_delete_bucket">Are you sure to delete this bucket?</string>
+    <string name="msg_delete_bucket_success">Delete bucket successful.</string>
+    <string name="msg_delete_bucket_fail">Delete bucket failed.</string>
+    <string name="hint_bucket_name">Name</string>
+    <string name="hint_bucket_description">Description (optional)</string>
 
     <string name="test">Test</string>
 

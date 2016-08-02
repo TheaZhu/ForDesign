@@ -80,6 +80,7 @@ public class CommentsFragment extends BaseDataBindingFragment<CommentsFragBindin
             @Override
             public void onRefresh() {
                 mPresenter.loadComments();
+                mLoadMoreListener.reset();
             }
         });
 

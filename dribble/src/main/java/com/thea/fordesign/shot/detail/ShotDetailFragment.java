@@ -20,6 +20,7 @@ import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.bucket.buckets.BucketsActivity;
 import com.thea.fordesign.databinding.ShotDetailFragBinding;
 import com.thea.fordesign.like.shot.ShotLikesActivity;
 import com.thea.fordesign.shot.comments.CommentsActivity;
@@ -116,13 +117,11 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
         Intent intent = new Intent(getContext(), UserDetailActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra(UserDetailActivity.EXTRA_USER, user);
-//        intent.putExtra(UserDetailActivity.EXTRA_AVATAR_URL, (String) sharedView.getTag());
         if (Build.VERSION.SDK_INT >= 21) {
-            View sharedView = v.findViewById(R.id.iv_avatar);
             String transitionName = getString(R.string.image_user_avatar);
 
             ActivityOptions transitionActivityOptions = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), sharedView, transitionName);
+                    .makeSceneTransitionAnimation(getActivity(), v, transitionName);
 
             startActivity(intent, transitionActivityOptions.toBundle());
         } else {
@@ -142,6 +141,14 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
         Intent intent = new Intent(getContext(), CommentsActivity.class);
         intent.putExtra(CommentsActivity.EXTRA_SHOT_ID, shotId);
         intent.putExtra(CommentsActivity.EXTRA_COMMENT_URL, commentsUrl);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showBucketsUi(@NonNull String bucketsUrl) {
+        Intent intent = new Intent(getContext(), BucketsActivity.class);
+        intent.putExtra(BucketsActivity.EXTRA_TITLE, getString(R.string.title_buckets));
+        intent.putExtra(BucketsActivity.EXTRA_BUCKETS_URL, bucketsUrl);
         startActivity(intent);
     }
 

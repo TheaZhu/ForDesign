@@ -21,6 +21,8 @@ import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.UserDetailActBinding;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
+import com.thea.fordesign.team.detail.TeamDetailFragment;
+import com.thea.fordesign.team.detail.TeamDetailPresenter;
 import com.thea.fordesign.user.followers.FollowersFragment;
 import com.thea.fordesign.user.followers.FollowersPresenter;
 import com.thea.fordesign.util.ActivityUtil;
@@ -81,9 +83,16 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
 
     private void initTabLayoutWithViewPager() {
         UserPagerAdapter adapter = new UserPagerAdapter(getSupportFragmentManager());
-        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(mUser);
-        new UserDetailFragPresenter(userDetailFragment, mPresenter);
-        adapter.addItem(userDetailFragment, "DETAILS");
+        if (mUser.isTeam(mUser.getType())) {
+            TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance();
+            new TeamDetailPresenter(teamDetailFragment, mPresenter, mUser);
+            adapter.addItem(teamDetailFragment, "DETAILS");
+
+        } else {
+            UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(mUser);
+            new UserDetailFragPresenter(userDetailFragment, mPresenter);
+            adapter.addItem(userDetailFragment, "DETAILS");
+        }
 
         ShotsFragment shotsFragment = ShotsFragment.newInstance(mUser.getShotsUrl(), false);
         new ShotsPresenter(shotsFragment, new UserModel(this));

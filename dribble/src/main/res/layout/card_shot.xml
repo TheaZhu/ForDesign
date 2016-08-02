@@ -45,7 +45,6 @@
                 android:layout_alignRight="@id/iv_shot"
                 android:layout_alignStart="@id/iv_shot"
                 android:layout_alignTop="@id/iv_shot"
-                android:background="@color/white_alpha_ee"
                 android:padding="@dimen/normal_vertical_padding"
                 android:visibility="gone">
 
@@ -54,9 +53,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{shot.title}"
-                    android:textColor="@color/dribbble_charcoal"
                     android:textSize="@dimen/text_size_subhead"
                     tools:text="@string/default_title"/>
+
+                <!--android:textColor="@color/dribbble_charcoal"-->
 
                 <TextView
                     android:id="@+id/tv_shot_updated_time"
@@ -64,8 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:text="@{actionHandler.formatTime(shot.updatedTime)}"
-                    android:textColor="@color/grey_400"
                     tools:text="@string/default_time"/>
+                <!--android:textColor="@color/grey_400"-->
 
                 <TextView
                     android:id="@+id/tv_shot_description"

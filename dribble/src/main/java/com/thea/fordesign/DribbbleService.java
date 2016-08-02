@@ -8,20 +8,22 @@ import com.thea.fordesign.bean.DribbbleFollower;
 import com.thea.fordesign.bean.DribbbleProject;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleShotLike;
-import com.thea.fordesign.bean.DribbbleTeam;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bean.DribbbleUserLike;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -49,12 +51,12 @@ public interface DribbbleService {
     Call<List<DribbbleShot>> getUserShots(@Header("Authorization") String authorization);
 
     @GET("user/teams")
-    Call<List<DribbbleTeam>> getUserTeams(@Header("Authorization") String authorization);
+    Call<List<DribbbleUser>> getUserTeams(@Header("Authorization") String authorization);
 
     @GET("user/followers")
     Call<List<DribbbleFollower>> getUserFollowers(@Header("Authorization") String authorization,
-                                              @Query("page") int page,
-                                              @Query("per_page") int perPage);
+                                                  @Query("page") int page,
+                                                  @Query("per_page") int perPage);
 
     @GET("user/following")
     Call<List<DribbbleFollower>> getUserFollowing(@Header("Authorization") String authorization);
@@ -87,18 +89,18 @@ public interface DribbbleService {
                                           @Path("user") int userId);
 
     @GET("users/{user}/teams")
-    Call<List<DribbbleTeam>> getUserTeams(@Header("Authorization") String authorization,
+    Call<List<DribbbleUser>> getUserTeams(@Header("Authorization") String authorization,
                                           @Path("user") int userId);
 
     @GET("users/{user}/followers")
     Call<List<DribbbleFollower>> getUserFollowers(@Header("Authorization") String authorization,
-                                              @Path("user") int userId,
-                                              @Query("page") int page,
-                                              @Query("per_page") int perPage);
+                                                  @Path("user") int userId,
+                                                  @Query("page") int page,
+                                                  @Query("per_page") int perPage);
 
     @GET("users/{user}/following")
     Call<List<DribbbleFollower>> getUserFollowing(@Header("Authorization") String authorization,
-                                              @Path("user") int userId);
+                                                  @Path("user") int userId);
 
     @GET("users/{user}/likes")
     Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
@@ -201,8 +203,8 @@ public interface DribbbleService {
 
     @GET
     Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
-                                                  @Url String url,
-                                                  @Query("page") int page);
+                                              @Url String url,
+                                              @Query("page") int page);
 
     @GET
     Call<List<DribbbleBucket>> getBuckets(@Header("Authorization") String authorization,
@@ -210,9 +212,9 @@ public interface DribbbleService {
                                           @Query("page") int page);
 
     @GET
-    Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization,
-                                          @Url String url,
-                                          @Query("page") int page);
+    Call<List<DribbbleUser>> getUsers(@Header("Authorization") String authorization,
+                                      @Url String url,
+                                      @Query("page") int page);
 
     @GET
     Call<List<DribbbleProject>> getProjects(@Header("Authorization") String authorization,
@@ -226,8 +228,8 @@ public interface DribbbleService {
 
     @GET
     Call<List<DribbbleShotLike>> getShotLikes(@Header("Authorization") String authorization,
-                                      @Url String url,
-                                      @Query("page") int page);
+                                              @Url String url,
+                                              @Query("page") int page);
 
     @GET
     Call<List<DribbbleComment>> getShotComments(@Header("Authorization") String authorization,
@@ -235,18 +237,43 @@ public interface DribbbleService {
                                                 @Query("page") int page);
 
     @GET
-    Call<List<DribbbleTeam>> getTeams(@Header("Authorization") String authorization,
+    Call<List<DribbbleUser>> getTeams(@Header("Authorization") String authorization,
                                       @Url String url);
 
     @POST("shots/{shot}/like")
     Call<DribbbleUserLike> likeShot(@Header("Authorization") String authorization,
                                     @Path("shot") int shotId);
 
+    @DELETE("shots/{shot}/like")
+    Call<Response> unlikeShot(@Header("Authorization") String authorization,
+                              @Path("shot") int shotId);
+
+    @FormUrlEncoded
+    @POST("buckets")
+    Call<DribbbleBucket> createBucket(@Header("Authorization") String authorization,
+                                      @Field("name") String name,
+                                      @Field("description") String description);
+
+    @FormUrlEncoded
+    @PUT("buckets/{bucket}")
+    Call<DribbbleBucket> updateBucket(@Header("Authorization") String authorization,
+                                      @Path("bucket") int bucketId,
+                                      @Field("name") String name,
+                                      @Field("description") String description);
+
+    @DELETE("buckets/{bucket}")
+    Call<Response> deleteBucket(@Header("Authorization") String authorization,
+                              @Path("bucket") int bucketId);
+
     @FormUrlEncoded
     @POST("shots/{shot}/comments")
     Call<DribbbleComment> createComment(@Header("Authorization") String authorization,
                                         @Path("shot") int shotId,
                                         @Field("body") String body);
+
+    @DELETE("shots/{shot}")
+    Call<Response> deleteShot(@Header("Authorization") String authorization,
+                              @Path("shot") int shotId);
 
     class Builder {
         private Retrofit.Builder mRetrofitBuilder;

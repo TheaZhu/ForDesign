@@ -24,7 +24,7 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
     private DribbbleShot mShot;
 
     public ShotDetailPresenter(int shotId, @NonNull ShotDetailContract.View detailView, @NonNull
-    UserModel userModel) {
+            UserModel userModel) {
         mDetailView = Preconditions.checkNotNull(detailView, "detailView cannot be null");
         mRepository = ShotsRepository.getInstance();
         mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
@@ -89,11 +89,6 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
     }
 
     @Override
-    public void openViewers(@NonNull DribbbleShot shot) {
-
-    }
-
-    @Override
     public void openLikers(@NonNull DribbbleShot shot) {
         mDetailView.showLikesUi(shot.getLikesUrl());
     }
@@ -105,7 +100,7 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
 
     @Override
     public void openBuckets(@NonNull DribbbleShot shot) {
-
+        mDetailView.showBucketsUi(shot.getBucketsUrl());
     }
 
     @Override

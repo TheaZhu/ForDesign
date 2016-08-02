@@ -99,6 +99,7 @@ public class UserLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
             @Override
             public void onRefresh() {
                 mPresenter.loadLikes(mLikesUrl);
+                mLoadMoreListener.reset();
             }
         });
 

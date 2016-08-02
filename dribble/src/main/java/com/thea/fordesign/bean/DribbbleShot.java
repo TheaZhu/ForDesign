@@ -24,7 +24,7 @@ public class DribbbleShot implements Parcelable {
 
     private Image images;
     private DribbbleUser user;
-    private DribbbleTeam team;
+    private DribbbleUser team;
 
     @SerializedName("views_count")
     private int viewsCount;
@@ -113,11 +113,11 @@ public class DribbbleShot implements Parcelable {
         this.user = user;
     }
 
-    public DribbbleTeam getTeam() {
+    public DribbbleUser getTeam() {
         return team;
     }
 
-    public void setTeam(DribbbleTeam team) {
+    public void setTeam(DribbbleUser team) {
         this.team = team;
     }
 
@@ -277,9 +277,7 @@ public class DribbbleShot implements Parcelable {
                 ", height=" + height +
                 ", animated=" + animated +
                 ", tags=" + tags +
-                ", images=" + images +
-                ", user=" + user.toString() +
-                ", team=" + team +
+                ", images=" + images.toString() +
                 ", viewsCount=" + viewsCount +
                 ", likesCount=" + likesCount +
                 ", commentsCount=" + commentsCount +
@@ -340,6 +338,15 @@ public class DribbbleShot implements Parcelable {
         }
 
         public Image() {
+        }
+
+        @Override
+        public String toString() {
+            return "Image{" +
+                    "hidpi='" + hidpi + '\'' +
+                    ", normal='" + normal + '\'' +
+                    ", teaser='" + teaser + '\'' +
+                    '}';
         }
 
         protected Image(Parcel in) {
@@ -408,7 +415,7 @@ public class DribbbleShot implements Parcelable {
         this.tags = in.createStringArrayList();
         this.images = in.readParcelable(Image.class.getClassLoader());
         this.user = in.readParcelable(DribbbleUser.class.getClassLoader());
-        this.team = in.readParcelable(DribbbleTeam.class.getClassLoader());
+        this.team = in.readParcelable(DribbbleUser.class.getClassLoader());
         this.viewsCount = in.readInt();
         this.likesCount = in.readInt();
         this.commentsCount = in.readInt();
