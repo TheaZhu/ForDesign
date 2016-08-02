@@ -20,7 +20,8 @@
     <color name="secondary_light_text_color">@color/grey_600</color>
     <color name="hint_light_text_color">@color/dribbble_slate</color>
     <color name="selected_light_text_color">@color/grey_600</color>
-    <color name="accent_light_btn_text_color">@color/dribbble_link_blue</color>
+    <color name="activated_light_btn_text_color">@color/dribbble_link_blue</color>
+    <color name="inactivated_light_btn_text_color">@color/grey_600</color>
     <color name="accent_light_btn_background_color">@color/dribbble_pink</color>
     <color name="error_text_color">#FFFD5555</color>
 

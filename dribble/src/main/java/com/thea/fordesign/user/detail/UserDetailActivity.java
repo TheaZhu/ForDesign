@@ -1,6 +1,7 @@
 package com.thea.fordesign.user.detail;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -10,6 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +47,11 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
 
     private UserDetailContract.Presenter mPresenter;
 
+    private MenuItem mFollowMenuItem;
+    private SpannableString followString;
+    private SpannableString followingString;
+    private boolean isFollowing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,22 +63,32 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
             mUser = intent.getParcelableExtra(EXTRA_USER);
         }
         LogUtil.i(TAG, mUser.toString());
-        new UserDetailPresenter(this);
+        new UserDetailPresenter(this, mUser, new UserModel(this));
         initTabLayoutWithViewPager();
         showUser(mUser);
     }
 
-    /*@Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_user_detail, menu);
+        mFollowMenuItem = menu.findItem(R.id.action_follow);
         return super.onCreateOptionsMenu(menu);
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
+            case R.id.action_follow:
+                if (isFollowing)
+                    mPresenter.unFollowUser();
+                else
+                    mPresenter.followUser();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -135,12 +154,30 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
 
     @Override
     public void showFollowed() {
-
+        if (mFollowMenuItem == null)
+            return;
+        LogUtil.i(TAG, "followed");
+        if (followingString == null) {
+            followingString = new SpannableString(getString(R.string.action_following));
+            followingString.setSpan(new ForegroundColorSpan(Color.WHITE), 0, followingString
+                    .length()
+                    , 0);
+        }
+        mFollowMenuItem.setTitle(followingString);
+        isFollowing = true;
     }
 
     @Override
     public void showUnfollowed() {
-
+        if (mFollowMenuItem == null)
+            return;
+        LogUtil.i(TAG, "unfollowed");
+        if (followString == null) {
+            followString = new SpannableString(getString(R.string.action_follow));
+            followString.setSpan(new ForegroundColorSpan(Color.RED), 0, followString.length(), 0);
+        }
+        mFollowMenuItem.setTitle(followString);
+        isFollowing = false;
     }
 
     @Override

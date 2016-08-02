@@ -45,7 +45,7 @@
     <string name="title_followers">Followers</string>
 
     <string name="action_follow">FOLLOW</string>
-    <string name="action_unfollow">UNFOLLOW</string>
+    <string name="action_following">FOLLOWING</string>
     <string name="action_add">ADD</string>
 
     // transition name

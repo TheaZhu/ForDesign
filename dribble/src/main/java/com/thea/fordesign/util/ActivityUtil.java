@@ -1,12 +1,17 @@
 package com.thea.fordesign.util;
 
+import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.thea.fordesign.R;
 
 /**
  * This provides methods to help Activities load their UI.
@@ -33,5 +38,18 @@ public class ActivityUtil {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.add(frameId, fragment);
         transaction.commit();
+    }
+
+    public static void setupDialogButtonTextColor(final AlertDialog dialog) {
+        final Resources resources = dialog.getContext().getResources();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(resources.getColor(
+                        R.color.dribbble_pink));
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(resources.getColor(
+                        R.color.inactivated_light_btn_text_color));
+            }
+        });
     }
 }

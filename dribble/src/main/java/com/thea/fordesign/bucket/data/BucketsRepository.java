@@ -168,10 +168,10 @@ public class BucketsRepository implements BucketsDataSource {
 
     @Override
     public void deleteBucket(@NonNull String authorization, int bucketId, final DeleteBucketCallback callback) {
-        Call<Response> call = mService.deleteBucket(authorization, bucketId);
-        call.enqueue(new Callback<Response>() {
+        Call<Void> call = mService.deleteBucket(authorization, bucketId);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Response> call, Response<Response> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 int code = response.code();
                 String message = response.message();
                 LogUtil.i(TAG, "delete bucket code: " + code + ", message: " + message);
@@ -185,7 +185,7 @@ public class BucketsRepository implements BucketsDataSource {
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 LogUtil.i(TAG, "delete bucket call executed: " + call.isExecuted() +
                         ", url: " + call.request().url());
                 t.printStackTrace();

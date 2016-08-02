@@ -48,6 +48,20 @@ public interface ShotsDataSource {
         void onFail(int errCode, String message);
     }
 
+    interface AddShotToBucketCallback{
+
+        void onSuccess();
+
+        void onFail(int errCode, String message);
+    }
+
+    interface RemoveShotFromBucketCallback{
+
+        void onSuccess();
+
+        void onFail(int errCode, String message);
+    }
+
     void getShots(@NonNull String authorization, @Nullable String list, @Nullable String timeframe,
                   @Nullable String date, @Nullable String sort, int page, int perPage,
                   LoadShotsCallback callback);
@@ -66,6 +80,12 @@ public interface ShotsDataSource {
     void unlikeShot(@NonNull String authorization, int shotId, UnlikeShotCallback callback);
 
     void checkLikeShot(@NonNull String authorization, int shotId, CheckLikeShotCallback callback);
+
+    void addShotToBucket(@NonNull String authorization, int bucketId, int shotId,
+                         AddShotToBucketCallback callback);
+
+    void removeShotFromBucket(@NonNull String authorization, int bucketId, int shotId,
+                              RemoveShotFromBucketCallback callback);
 
     void refreshShots();
 

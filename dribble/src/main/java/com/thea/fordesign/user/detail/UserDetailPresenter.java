@@ -1,9 +1,9 @@
 package com.thea.fordesign.user.detail;
 
-import android.support.annotation.NonNull;
-
+import com.thea.fordesign.UserModel;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.util.LogUtil;
+import com.thea.fordesign.wrapper.DribbbleCommWrapper;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
@@ -11,9 +11,17 @@ import com.thea.fordesign.util.LogUtil;
 public class UserDetailPresenter implements UserDetailContract.Presenter {
     private static final String TAG = UserDetailPresenter.class.getSimpleName();
     private final UserDetailContract.View mView;
+    private final UserModel mUserModel;
+    private DribbbleCommWrapper mWrapper;
 
-    public UserDetailPresenter(UserDetailContract.View view) {
+    private DribbbleUser mUser;
+
+    public UserDetailPresenter(UserDetailContract.View view, DribbbleUser user, UserModel
+            userModel) {
         mView = view;
+        mUserModel = userModel;
+        mWrapper = DribbbleCommWrapper.getInstance();
+        mUser = user;
 
         mView.setPresenter(this);
     }
@@ -43,18 +51,55 @@ public class UserDetailPresenter implements UserDetailContract.Presenter {
     }
 
     @Override
-    public void followUser(@NonNull DribbbleUser requestedUser) {
-        LogUtil.i(TAG, "登录功能开发中");
-        mView.showFollowed();
+    public void followUser() {
+        mWrapper.followUser(mUserModel.getDribbbleUserAccessToken(), mUser.getId(), new
+                DribbbleCommWrapper.FollowUserCallback() {
+
+                    @Override
+                    public void onSuccess() {
+                        mView.showFollowed();
+                    }
+
+                    @Override
+                    public void onFail(int errCode, String message) {
+                        mView.showSnack(message + ": " + errCode);
+                    }
+                });
     }
 
     @Override
-    public void unFollowUser(@NonNull DribbbleUser requestedUser) {
-        LogUtil.i(TAG, "登录功能开发中");
-        mView.showUnfollowed();
+    public void unFollowUser() {
+        mWrapper.unfollowUser(mUserModel.getDribbbleUserAccessToken(), mUser.getId(), new
+                DribbbleCommWrapper.UnfollowUserCallback() {
+
+                    @Override
+                    public void onSuccess() {
+                        mView.showUnfollowed();
+                    }
+
+                    @Override
+                    public void onFail(int errCode, String message) {
+                        mView.showSnack(message + ": " + errCode);
+                    }
+                });
     }
 
     @Override
     public void start() {
+        LogUtil.i(TAG, "start");
+        mWrapper.checkFollowingUser(mUserModel.getDribbbleUserAccessToken(), mUser.getId(), new
+                DribbbleCommWrapper.CheckFollowingUserCallback() {
+                    @Override
+                    public void onSuccess(boolean following) {
+                        if (following)
+                            mView.showFollowed();
+                        else
+                            mView.showUnfollowed();
+                    }
+
+                    @Override
+                    public void onFail(int errCode, String message) {
+                    }
+                });
     }
 }

@@ -14,7 +14,6 @@ import com.thea.fordesign.bean.DribbbleUserLike;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.DELETE;
@@ -65,7 +64,8 @@ public interface DribbbleService {
     Call<List<DribbbleShot>> getUserFollowingShots(@Header("Authorization") String authorization);
 
     @GET("user/following/{user}")
-    Call checkIfFollowing(@Header("Authorization") String authorization, @Path("user") int userId);
+    Call<Void> checkIfFollowing(@Header("Authorization") String authorization, @Path("user") int
+            userId);
 
     @GET("user/likes")
     Call<List<DribbbleUserLike>> getUserLikes(@Header("Authorization") String authorization,
@@ -245,8 +245,8 @@ public interface DribbbleService {
                                     @Path("shot") int shotId);
 
     @DELETE("shots/{shot}/like")
-    Call<Response> unlikeShot(@Header("Authorization") String authorization,
-                              @Path("shot") int shotId);
+    Call<Void> unlikeShot(@Header("Authorization") String authorization,
+                          @Path("shot") int shotId);
 
     @FormUrlEncoded
     @POST("buckets")
@@ -262,8 +262,8 @@ public interface DribbbleService {
                                       @Field("description") String description);
 
     @DELETE("buckets/{bucket}")
-    Call<Response> deleteBucket(@Header("Authorization") String authorization,
-                              @Path("bucket") int bucketId);
+    Call<Void> deleteBucket(@Header("Authorization") String authorization,
+                            @Path("bucket") int bucketId);
 
     @FormUrlEncoded
     @POST("shots/{shot}/comments")
@@ -272,8 +272,27 @@ public interface DribbbleService {
                                         @Field("body") String body);
 
     @DELETE("shots/{shot}")
-    Call<Response> deleteShot(@Header("Authorization") String authorization,
-                              @Path("shot") int shotId);
+    Call<Void> deleteShot(@Header("Authorization") String authorization,
+                          @Path("shot") int shotId);
+
+    @PUT("users/{user}/follow")
+    Call<String> followUser(@Header("Authorization") String authorization,
+                            @Path("user") int userId);
+
+    @DELETE("users/{user}/follow")
+    Call<Void> unfollowUser(@Header("Authorization") String authorization,
+                            @Path("user") int userId);
+
+    @FormUrlEncoded
+    @PUT("buckets/{bucket}/shots")
+    Call<Void> addShotToBucket(@Header("Authorization") String authorization,
+                               @Path("bucket") int bucketId,
+                               @Field("shot_id") int shotId);
+    @FormUrlEncoded
+    @DELETE("buckets/{bucket}/shots")
+    Call<Void> removeShotFromBucket(@Header("Authorization") String authorization,
+                                    @Path("bucket") int bucketId,
+                                    @Field("shot_id") int shotId);
 
     class Builder {
         private Retrofit.Builder mRetrofitBuilder;

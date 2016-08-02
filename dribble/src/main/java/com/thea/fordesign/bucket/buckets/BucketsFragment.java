@@ -29,6 +29,7 @@ import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.databinding.BucketItemBinding;
 import com.thea.fordesign.databinding.BucketsFragBinding;
 import com.thea.fordesign.shot.shots.ShotsActivity;
+import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
@@ -213,6 +214,8 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
                 })
                 .setNegativeButton(R.string.btn_cancel, null).create();
 
+        ActivityUtil.setupDialogButtonTextColor(dialog);
+
         dialog.show();
     }
 
@@ -231,6 +234,8 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
                 })
                 .setNegativeButton(R.string.btn_cancel, null).create();
 
+        ActivityUtil.setupDialogButtonTextColor(dialog);
+
         dialog.show();
     }
 
@@ -238,7 +243,7 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_bucket, null);
         final EditText etName = (EditText) view.findViewById(R.id.et_bucket_name);
         final EditText etDescription = (EditText) view.findViewById(R.id.et_bucket_description);
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle(R.string.title_create_bucket)
                 .setView(view)
                 .setPositiveButton(R.string.btn_create_bucket, new DialogInterface
@@ -249,6 +254,8 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
                                 .getText().toString());
                     }
                 }).setNegativeButton(R.string.btn_cancel, null).create();
+
+        ActivityUtil.setupDialogButtonTextColor(dialog);
 
         dialog.show();
     }

@@ -41,9 +41,9 @@ public interface UserDetailContract {
 
         void openLikes();
 
-        void followUser(@NonNull DribbbleUser requestedUser);
+        void followUser();
 
-        void unFollowUser(@NonNull DribbbleUser requestedUser);
+        void unFollowUser();
     }
 
     interface SubView extends BaseView<SubPresenter> {
