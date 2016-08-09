@@ -28,6 +28,10 @@ public interface ShotDetailContract {
 
         void showBucketsUi(@NonNull String bucketsUrl);
 
+        void showMoreActionDialog(@NonNull DribbbleShot shot);
+
+        void hideMoreActionDialog();
+
     }
 
     interface Presenter extends UserItemPresenter {
@@ -38,6 +42,8 @@ public interface ShotDetailContract {
 
         void likeShot(@NonNull DribbbleShot shot);
 
+        void bucketShot(@NonNull DribbbleShot shot);
+
         void shareShot(@NonNull DribbbleShot shot, int where);
 
         void openLikers(@NonNull DribbbleShot shot);
@@ -47,5 +53,7 @@ public interface ShotDetailContract {
         void openBuckets(@NonNull DribbbleShot shot);
 
         String formatTime(String timeStr);
+
+        void moreActions();
     }
 }

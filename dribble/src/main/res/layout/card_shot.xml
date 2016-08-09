@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data class=".databinding.ShotItemBinding">
 
-        <import type="java.lang.String"/>
+        <import type="java.lang.String" />
 
-        <import type="com.thea.fordesign.bean.DribbbleUser"/>
+        <import type="android.text.Html" />
+
+        <import type="com.thea.fordesign.bean.DribbbleUser" />
 
         <variable
             name="shot"
-            type="com.thea.fordesign.bean.DribbbleShot"/>
+            type="com.thea.fordesign.bean.DribbbleShot" />
 
         <variable
             name="actionHandler"
-            type="com.thea.fordesign.shot.ShotItemPresenter"/>
+            type="com.thea.fordesign.shot.ShotItemPresenter" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -34,7 +36,7 @@
                 android:contentDescription="@string/default_image_description"
                 android:scaleType="centerCrop"
                 android:transitionName="@string/image_shot"
-                tools:src="@mipmap/default_shot"/>
+                tools:src="@mipmap/default_shot" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -54,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{shot.title}"
                     android:textSize="@dimen/text_size_subhead"
-                    tools:text="@string/default_title"/>
+                    tools:text="@string/default_title" />
 
                 <!--android:textColor="@color/dribbble_charcoal"-->
 
@@ -64,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:text="@{actionHandler.formatTime(shot.updatedTime)}"
-                    tools:text="@string/default_time"/>
+                    tools:text="@string/default_time" />
                 <!--android:textColor="@color/grey_400"-->
 
                 <TextView
@@ -75,8 +77,8 @@
                     android:layout_below="@id/tv_shot_title"
                     android:layout_marginBottom="@dimen/normal_vertical_margin"
                     android:ellipsize="end"
-                    android:text="@{shot.description}"
-                    tools:text="@string/default_description"/>
+                    android:text="@{Html.fromHtml(shot.description ?? @string/default_shot_description)}"
+                    tools:text="@string/default_description" />
             </RelativeLayout>
 
             <!--<TextView
@@ -104,7 +106,7 @@
                 android:paddingLeft="@dimen/item_padding"
                 android:paddingRight="@dimen/item_padding"
                 android:text="@{String.valueOf(shot.likesCount)}"
-                tools:text="@string/default_likes_count"/>
+                tools:text="@string/default_likes_count" />
 
             <TextView
                 android:id="@+id/tv_comments_count"
@@ -121,7 +123,7 @@
                 android:paddingLeft="@dimen/item_padding"
                 android:paddingRight="@dimen/normal_horizontal_padding"
                 android:text="@{String.valueOf(shot.commentsCount)}"
-                tools:text="@string/default_comments_count"/>
+                tools:text="@string/default_comments_count" />
 
             <!--<LinearLayout
                 android:layout_width="wrap_content"

@@ -2,39 +2,46 @@
 <resources>
 
     <color name="black">#000</color>
+    <color name="black_alpha_11">#11000000</color>
+    <color name="black_alpha_22">#22000000</color>
+    <color name="black_alpha_33">#33000000</color>
+    <color name="black_alpha_55">#55000000</color>
+    <color name="black_alpha_66">#66000000</color>
+    <color name="black_alpha_dd">#dd000000</color>
     <color name="white">#fff</color>
-    <color name="white_alpha_99">#99ffffff</color>
+    <color name="white_alpha_99">#99FFFFFF</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_200">#EEEEEE</color>
     <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#9E9E9E</color>
     <color name="grey_600">#757575</color>
+    <color name="grey_700">#707070</color>
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
 
     <color name="dribbble_charcoal">#333333</color>
-    <color name="dribbble_link_blue">#3a8bbb</color>
     <color name="dribbble_pink">#ea4c89</color>
+    <color name="dribbble_team">#00b6e3</color>
+    <color name="dribbble_link_blue">#3a8bbb</color>
+    <color name="dribbble_slate">#9da3a5</color>
 
     <color name="normal_light_text_color">@color/grey_800</color>
     <color name="normal_dark_text_color">@color/white</color>
-    <color name="secondary_light_text_color">@color/grey_600</color>
+    <color name="secondary_light_text_color">@color/grey_500</color>
     <color name="hint_light_text_color">@color/dribbble_slate</color>
-    <color name="selected_light_text_color">@color/grey_600</color>
+    <color name="high_light_text_color">@color/dribbble_link_blue</color>
     <color name="activated_light_btn_text_color">@color/dribbble_link_blue</color>
     <color name="inactivated_light_btn_text_color">@color/grey_600</color>
     <color name="accent_light_btn_background_color">@color/dribbble_pink</color>
     <color name="error_text_color">#FFFD5555</color>
-
 
     <!--图标激活色-->
     <color name="dribbble_grey">#FFBABABA</color>
     <color name="dribbble_project">#66cccc</color>
     <color name="dribbble_job">#7bbb5e</color>
     <!--突出按钮背景色，按钮文字颜色-->
-    <color name="dribbble_team">#00b6e3</color>
     <color name="dribbble_playbook">#66cc99</color>
     <!--普通文字颜色-->
-    <color name="dribbble_slate">#9da3a5</color>
 
     <color name="red_500">#F44336</color>
     <color name="pink_500">#E91E63</color>
@@ -53,6 +60,5 @@
     <color name="orange_500">#FF9800</color>
     <color name="deep_orange_500">#FF5722</color>
     <color name="brown_500">#795548</color>
-    <color name="grey_500">#9E9E9E</color>
     <color name="blue_grey_500">#607D8B</color>
 </resources>

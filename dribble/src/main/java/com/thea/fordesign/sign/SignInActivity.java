@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseActivity;

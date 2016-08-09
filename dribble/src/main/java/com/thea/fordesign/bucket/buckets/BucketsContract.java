@@ -27,6 +27,10 @@ public interface BucketsContract {
 
         void insertBucket(DribbbleBucket bucket);
 
+        void removeBucket(int id);
+
+        void updateBucket(DribbbleBucket bucket);
+
         void showBucketShotsUi(int bucketId);
 
         void showBucketEditDialog(int bucketId, String name, String description);

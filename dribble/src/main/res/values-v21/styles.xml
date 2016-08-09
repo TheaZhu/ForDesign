@@ -15,7 +15,7 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="AppTheme.ShotDetail" parent="Base.AppTheme">
+    <style name="AppTheme.ShotDetail" parent="Base.AppTheme.ShotDetail">
         <item name="android:windowEnterTransition">@android:transition/slide_bottom</item>
         <item name="android:windowExitTransition">@android:transition/fade</item>
     </style>

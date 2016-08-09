@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleUserLike;

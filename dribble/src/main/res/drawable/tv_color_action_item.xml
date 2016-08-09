@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/secondary_light_text_color" android:state_enabled="false" />
+    <item android:color="@color/dribbble_pink" android:state_activated="true" android:state_enabled="true" />
+    <item android:color="@color/dribbble_charcoal" android:state_activated="false" android:state_enabled="true" android:state_pressed="true" />
+    <item android:color="@color/grey_700" />
+</selector>

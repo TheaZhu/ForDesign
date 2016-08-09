@@ -2,7 +2,6 @@ package com.thea.fordesign.shot.shots;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
@@ -23,6 +22,7 @@ public class ShotsActivity extends BaseDataBindingActivity<ShotsActBinding> {
 
         Intent intent = getIntent();
         getSupportActionBar().setTitle(intent.getStringExtra(EXTRA_TITLE));
+
 
         if (intent.hasExtra(EXTRA_SHOTS_URL)) {
             String mShotUrl = intent.getStringExtra(EXTRA_SHOTS_URL);

@@ -73,8 +73,9 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 page, 12, new ShotsDataSource.LoadShotsCallback() {
                     @Override
                     public void onShotsLoaded(List<DribbbleShot> shots) {
-                        if (showRefreshingUI)
+                        if (showRefreshingUI) {
                             mShotsView.setRefreshingIndicator(false);
+                        }
                         if (isLoadMore)
                             mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
                         if (page == 1)

@@ -2,7 +2,7 @@ package com.thea.fordesign.wrapper;
 
 import android.support.annotation.NonNull;
 
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.util.LogUtil;
 

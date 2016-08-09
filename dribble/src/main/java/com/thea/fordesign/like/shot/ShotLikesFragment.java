@@ -18,7 +18,7 @@ import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleUser;
-import com.thea.fordesign.databinding.ShotsFragBinding;
+import com.thea.fordesign.databinding.UsersFragBinding;
 import com.thea.fordesign.user.detail.UserDetailActivity;
 import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterWrapAdapter;
@@ -35,7 +35,7 @@ import rx.functions.Action1;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShotLikesFragment extends BaseDataBindingFragment<ShotsFragBinding> implements
+public class ShotLikesFragment extends BaseDataBindingFragment<UsersFragBinding> implements
         ShotLikesContract.View {
     public static final String TAG = ShotLikesFragment.class.getSimpleName();
 
@@ -70,9 +70,9 @@ public class ShotLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
-        mViewDataBinding.srlShots.setColorSchemeResources(R.color.dribbble_pink, R.color
+        mViewDataBinding.srlUsers.setColorSchemeResources(R.color.dribbble_pink, R.color
                 .dribbble_link_blue, R.color.dribbble_playbook);
-        mViewDataBinding.srlShots.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mViewDataBinding.srlUsers.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.loadLikes();
@@ -80,7 +80,7 @@ public class ShotLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
             }
         });
 
-        final RecyclerView recyclerView = mViewDataBinding.rvShots;
+        final RecyclerView recyclerView = mViewDataBinding.rvUsers;
         mAdapter = new ShotLikeAdapter(this, new ArrayList<DribbbleShotLike>(), mPresenter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -105,7 +105,7 @@ public class ShotLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
 
     @Override
     public void setRefreshingIndicator(final boolean active) {
-        SwipeRefreshLayout srl = mViewDataBinding.srlShots;
+        SwipeRefreshLayout srl = mViewDataBinding.srlUsers;
         if (srl == null || srl.isRefreshing() == active) {
             return;
         }
@@ -113,7 +113,7 @@ public class ShotLikesFragment extends BaseDataBindingFragment<ShotsFragBinding>
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
-                        mViewDataBinding.srlShots.setRefreshing(active);
+                        mViewDataBinding.srlUsers.setRefreshing(active);
                     }
                 });
     }

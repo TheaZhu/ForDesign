@@ -1,6 +1,7 @@
 package com.thea.fordesign.shot.detail;
 
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -16,6 +17,8 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
     public static final String EXTRA_SHOT_IMAGE_URL = "shot_image_url";
     public static final String EXTRA_SHOT = "dribbble_shot";
 
+    private String mImageUrl;
+
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +26,7 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        mImageUrl = getIntent().getStringExtra(EXTRA_SHOT_IMAGE_URL);
         ShotDetailFragment fragment = (ShotDetailFragment) getSupportFragmentManager()
                 .findFragmentByTag(ShotDetailFragment.TAG);
         if (fragment == null) {
@@ -35,12 +39,33 @@ public class ShotDetailActivity extends BaseDataBindingActivity<ShotDetailActBin
         transaction.commit();
 
         Glide.with(ShotDetailActivity.this)
-                .load(getIntent().getStringExtra(EXTRA_SHOT_IMAGE_URL))
+                .load(mImageUrl)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .placeholder(R.mipmap.default_shot)
                 .into(mViewDataBinding.ivShot);
-//        Html.fromHtml("", Html.FROM_HTML_MODE_COMPACT)
+
+        mViewDataBinding.ivShot.setOnClickListener(mClickListener);
+    }
+
+    private View.OnClickListener mClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            showImageFullScreen();
+        }
+    };
+
+    private void showImageFullScreen() {
+        ShotImageFragment fragment = (ShotImageFragment) getSupportFragmentManager()
+                .findFragmentByTag(ShotImageFragment.TAG);
+        if (fragment == null) {
+            fragment = ShotImageFragment.newInstance(mImageUrl);
+            new ShotImagePresenter(fragment, mImageUrl);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.rl_content, fragment, ShotImageFragment.TAG);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     @Override

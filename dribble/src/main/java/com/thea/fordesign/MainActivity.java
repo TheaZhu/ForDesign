@@ -18,6 +18,7 @@ import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bucket.buckets.BucketsActivity;
 import com.thea.fordesign.like.user.UserLikesActivity;
 import com.thea.fordesign.project.projects.ProjectsActivity;
+import com.thea.fordesign.setting.SettingsActivity;
 import com.thea.fordesign.shot.shots.ShotsActivity;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity implements NavigationView
         .OnNavigationItemSelectedListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final int REQUEST_SIGN_IN = 20;
+    public static final int REQUEST_SETTINGS = 21;
+    public static final int RESULT_SIGN_OUT = 22;
 
     private DribbbleService mService;
     private UserModel userModel;
@@ -43,6 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView
     private DrawerLayout mDrawerLayout;
     private CircleImageView mAvatar;
     private TextView mUsername;
+    private TextView mBio;
 
     private DribbbleUser mUser;
 
@@ -78,12 +82,14 @@ public class MainActivity extends BaseActivity implements NavigationView
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(R.id.nav_home);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
         View view = navigationView.getHeaderView(0);
         mAvatar = (CircleImageView) view.findViewById(R.id.iv_user_avatar);
         mUsername = (TextView) view.findViewById(R.id.tv_user_name);
+        mBio = (TextView) view.findViewById(R.id.tv_user_bio);
         view.setOnClickListener(mHeaderClickListener);
         refreshUser();
     }
@@ -108,6 +114,7 @@ public class MainActivity extends BaseActivity implements NavigationView
                     mUser = response.body();
                     userModel.setDribbbleUser(mUser);
                     mUsername.setText(mUser.getName());
+                    mBio.setText(mUser.getBio());
                     Glide.with(MainActivity.this)
                             .load(mUser.getAvatarUrl())
                             .asBitmap()
@@ -138,6 +145,8 @@ public class MainActivity extends BaseActivity implements NavigationView
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SIGN_IN)
+            refreshUser();
+        else if (requestCode == REQUEST_SETTINGS && resultCode == RESULT_SIGN_OUT)
             refreshUser();
     }
 
@@ -173,6 +182,9 @@ public class MainActivity extends BaseActivity implements NavigationView
                     break;
                 case R.id.nav_my_following:
                     showMyFollowings();
+                    break;
+                case R.id.nav_settings:
+                    showSettings();
                     break;
                 default:
                     mDrawerLayout.closeDrawers();
@@ -241,5 +253,10 @@ public class MainActivity extends BaseActivity implements NavigationView
                     .TYPE_FOLLOWING);
         }
         startActivity(intent);
+    }
+
+    private void showSettings() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivityForResult(intent, REQUEST_SETTINGS);
     }
 }

@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
-    android:background="?attr/colorPrimaryDark"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:layout_height="172dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_user_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
         android:contentDescription="@string/default_image_description"
+        android:layout_marginLeft="@dimen/normal_horizontal_margin"
         android:src="@mipmap/default_user_avatar"/>
 
     <TextView
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/normal_horizontal_margin"
+        android:layout_toRightOf="@id/iv_user_avatar"
+        android:ellipsize="middle"
+        android:maxLines="2"
+        android:layout_marginRight="@dimen/normal_horizontal_margin"
         android:text="@string/dribbble"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_user_bio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_user_avatar"
+        android:layout_alignLeft="@id/iv_user_avatar"
+        android:layout_marginTop="@dimen/normal_vertical_margin"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey_800"/>
+
+</RelativeLayout>

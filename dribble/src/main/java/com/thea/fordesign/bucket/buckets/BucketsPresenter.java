@@ -71,12 +71,14 @@ public class BucketsPresenter implements BucketsContract.Presenter {
     }
 
     @Override
-    public void updateBucket(int bucketId, String name, String description) {
+    public void updateBucket(final int bucketId, String name, String description) {
         if (!TextUtils.isEmpty(name))
             mRepository.updateBucket(mUserModel.getDribbbleUserAccessToken(), bucketId, name,
                     description, new BucketsDataSource.SaveBucketCallback() {
                         @Override
                         public void onBucketSaved(DribbbleBucket bucket) {
+                            mRepository.updateBucket(bucket);
+                            mBucketsView.updateBucket(bucket);
                             mBucketsView.showSnack(R.string.msg_update_bucket_success);
                         }
 
@@ -88,12 +90,14 @@ public class BucketsPresenter implements BucketsContract.Presenter {
     }
 
     @Override
-    public void deleteBucket(int bucketId) {
+    public void deleteBucket(final int bucketId) {
         mRepository.deleteBucket(mUserModel.getDribbbleUserAccessToken(), bucketId, new
                 BucketsDataSource.DeleteBucketCallback() {
 
                     @Override
                     public void onBucketDeleted() {
+                        mRepository.deleteBucket(bucketId);
+                        mBucketsView.removeBucket(bucketId);
                         mBucketsView.showSnack(R.string.msg_delete_bucket_success);
                     }
 

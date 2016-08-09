@@ -32,7 +32,7 @@ public class ActivityUtil {
      * performed by the {@code fragmentManager}.
      */
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull
-    Fragment fragment, @IdRes int frameId) {
+            Fragment fragment, @IdRes int frameId) {
         Preconditions.checkNotNull(fragmentManager, "fragmentManager cannot be null");
         Preconditions.checkNotNull(fragment, "fragment cannot be null");
         FragmentTransaction transaction = fragmentManager.beginTransaction();

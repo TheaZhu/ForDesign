@@ -3,7 +3,7 @@ package com.thea.fordesign.shot.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleComment;
 import com.thea.fordesign.util.LogUtil;

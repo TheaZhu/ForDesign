@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleBucket;
@@ -185,6 +185,16 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
     }
 
     @Override
+    public void removeBucket(int id) {
+        mAdapter.removeItem(id);
+    }
+
+    @Override
+    public void updateBucket(DribbbleBucket bucket) {
+        mAdapter.updateItem(bucket);
+    }
+
+    @Override
     public void showBucketShotsUi(int bucketId) {
         Intent intent = new Intent(getContext(), ShotsActivity.class);
         intent.putExtra(ShotsActivity.EXTRA_TITLE, getString(R.string.title_bucket_shots));
@@ -306,6 +316,31 @@ public class BucketsFragment extends BaseDataBindingFragment<BucketsFragBinding>
         public void insertItem(DribbbleBucket bucket) {
             mBuckets.add(0, bucket);
             notifyItemInserted(0);
+        }
+
+        public void removeItem(int id) {
+            int index = -1;
+            for (DribbbleBucket item : mBuckets) {
+                index++;
+                if (item.getId() == id) {
+                    mBuckets.remove(item);
+                    notifyItemRemoved(index);
+                    return;
+                }
+            }
+        }
+
+        public void updateItem(DribbbleBucket bucket) {
+            int index = -1;
+            int id = bucket.getId();
+            for (DribbbleBucket item : mBuckets) {
+                index++;
+                if (item.getId() == id) {
+                    mBuckets.set(index, bucket);
+                    notifyItemChanged(index);
+                    return;
+                }
+            }
         }
 
         @Override

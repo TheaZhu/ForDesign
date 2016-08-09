@@ -148,7 +148,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_follower_24dp"
+                    android:src="@mipmap/ic_following_blue_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -173,7 +173,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_following_24dp"
+                    android:src="@mipmap/ic_follower_blue_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView

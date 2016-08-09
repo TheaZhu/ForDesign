@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".shot.detail.ShotDetailActivity">
+        <activity android:name=".shot.detail.ShotDetailActivity"
+            android:theme="@style/AppTheme.ShotDetail">
         </activity>
         <activity android:name=".user.detail.UserDetailActivity">
         </activity>
@@ -54,6 +55,8 @@
         <activity android:name=".shot.comments.CommentsActivity">
         </activity>
         <activity android:name=".user.users.UsersActivity">
+        </activity>
+        <activity android:name=".setting.SettingsActivity">
         </activity>
     </application>
 

@@ -30,9 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
+                android:onClick="@{() -> actionHandler.openShots(user.shotsUrl)}"
                 android:orientation="horizontal"
-                app:layout_widthPercent="50%"
-                android:onClick="@{() -> actionHandler.openShots(user.shotsUrl)}">
+                app:layout_widthPercent="50%">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -56,8 +56,8 @@
                 android:layout_alignRight="@id/ll_shots_count"
                 android:layout_below="@id/ll_shots_count"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}">
+                android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -81,8 +81,8 @@
                 android:layout_alignRight="@id/ll_shots_count"
                 android:layout_below="@id/ll_likes_count"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openBuckets(user.bucketsUrl)}">
+                android:onClick="@{() -> actionHandler.openBuckets(user.bucketsUrl)}"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -106,8 +106,8 @@
                 android:layout_alignRight="@id/ll_shots_count"
                 android:layout_below="@id/ll_buckets_count"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openProjects(user.id)}">
+                android:onClick="@{() -> actionHandler.openProjects(user.id)}"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -129,51 +129,26 @@
                 android:id="@+id/view_divider"
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignBottom="@id/ll_projects_count"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/normal_horizontal_margin"
                 android:layout_marginRight="@dimen/normal_horizontal_margin"
                 android:background="@color/grey_400"
                 app:layout_heightPercent="100%"/>
 
             <LinearLayout
-                android:id="@+id/ll_followers_count"
+                android:id="@+id/ll_followings_count"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_toRightOf="@id/view_divider"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openFollowers(user.followersUrl)}">
+                android:onClick="@{() -> actionHandler.openFollowings(user.followingUrl)}"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_follower_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.followersCount + &quot;  followers&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_followings_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignLeft="@id/ll_followers_count"
-                android:layout_below="@id/ll_followers_count"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openFollowings(user.followingUrl)}">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_following_24dp"
+                    android:src="@mipmap/ic_following_blue_24dp"
                     tools:ignore="ContentDescription"/>
 
                 <TextView
@@ -186,14 +161,39 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_teams_count"
+                android:id="@+id/ll_followers_count"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_alignLeft="@id/ll_followings_count"
                 android:layout_below="@id/ll_followings_count"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:onClick="@{() -> actionHandler.openTeams(user.teamsUrl)}">
+                android:onClick="@{() -> actionHandler.openFollowers(user.followersUrl)}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_follower_blue_24dp"
+                    tools:ignore="ContentDescription"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="@{user.followersCount + &quot;  followers&quot;}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_teams_count"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignLeft="@id/ll_followers_count"
+                android:layout_below="@id/ll_followers_count"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> actionHandler.openTeams(user.teamsUrl)}"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"

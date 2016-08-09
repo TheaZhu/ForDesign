@@ -5,7 +5,7 @@ import android.os.Parcelable;
 import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 
 import java.util.List;
 

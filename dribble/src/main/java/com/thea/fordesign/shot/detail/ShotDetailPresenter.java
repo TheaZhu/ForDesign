@@ -73,7 +73,8 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
 
             @Override
             public void onSuccess(DribbbleUserLike like) {
-                mDetailView.showSnack("喜欢shot成功");
+                mShot.setLikesCount(mShot.getLikesCount() + 1);
+                mDetailView.showShotLiked();
             }
 
             @Override
@@ -81,6 +82,11 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
                 mDetailView.showSnack(message);
             }
         });
+    }
+
+    @Override
+    public void bucketShot(@NonNull DribbbleShot shot) {
+
     }
 
     @Override
@@ -106,6 +112,11 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
     @Override
     public String formatTime(String timeStr) {
         return timeStr.substring(0, timeStr.indexOf("T"));
+    }
+
+    @Override
+    public void moreActions() {
+        mDetailView.showMoreActionDialog(mShot);
     }
 
     @Override

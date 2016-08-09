@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="ShotActionsBinding">
+
+        <import type="java.lang.String"/>
+
+        <variable
+            name="shot"
+            type="com.thea.fordesign.bean.DribbbleShot"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shot.detail.ShotDetailContract.Presenter"/>
+    </data>
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <RelativeLayout
+        android:id="@+id/ll_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_like_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:drawableLeft="@drawable/ic_action_like_shot"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.likeShot(shot)}"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@string/indicator_unlike"
+            android:textColor="@drawable/tv_color_action_item"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.openLikers(shot)}"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@{shot.likesCount + &quot;  likes&quot;}"
+            android:textColor="@drawable/tv_color_action_item"/>
+
+        <TextView
+            android:id="@+id/tv_bucket_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@+id/tv_like_shot"
+            android:drawableLeft="@drawable/ic_action_bucket_shot"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.bucketShot(shot)}"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@string/indicator_bucket"
+            android:textColor="@drawable/tv_color_action_item"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_like_shot"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.openBuckets(shot)}"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@{shot.bucketsCount + &quot;  buckets&quot;}"
+            android:textColor="@drawable/tv_color_action_item"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/tv_bucket_shot"
+            android:drawableLeft="@drawable/ic_action_shot_comment"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.openComments(shot)}"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@string/indicator_comment"
+            android:textColor="@drawable/tv_color_action_item"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_bucket_shot"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:enabled="false"
+            android:text="@{shot.viewsCount + &quot;  views&quot;}"/>
+    </RelativeLayout>
+    <!--</android.support.v7.widget.CardView>-->
+</layout>

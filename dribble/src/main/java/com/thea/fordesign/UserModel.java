@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.thea.fordesign.bean.DribbbleUser;
+import com.thea.fordesign.config.DribbbleConstant;
 
 /**
  * @author Thea (theazhu0321@gmail.com)

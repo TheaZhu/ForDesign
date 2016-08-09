@@ -77,7 +77,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="@{() -> actionHandler.openComments(shot)}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -89,7 +90,6 @@
                     android:id="@+id/tv_commenters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> actionHandler.openComments(shot)}"
                     android:text="@{String.valueOf(shot.commentsCount)}"
                     tools:text="@string/default_comments_count"/>
             </LinearLayout>
@@ -99,7 +99,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="@{() -> actionHandler.openBuckets(shot)}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -111,7 +112,6 @@
                     android:id="@+id/tv_buckets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> actionHandler.openBuckets(shot)}"
                     android:text="@{String.valueOf(shot.bucketsCount)}"
                     tools:text="@string/default_buckets_count"/>
             </LinearLayout>

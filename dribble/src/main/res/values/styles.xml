@@ -3,12 +3,15 @@
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
+    <style name="DarkStatusBar" parent="Theme.AppCompat.NoActionBar">
+    </style>
+
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimary">@color/dribbble_charcoal</item>
         <item name="colorPrimaryDark">@color/grey_900</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:windowBackground">@color/grey_100</item>
-        <item name="android:textColorPrimary">@color/dribbble_link_blue</item>
+        <item name="android:textColorPrimary">@color/normal_light_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_light_text_color</item>
         <item name="android:textColorTertiary">@color/dribbble_slate</item>
         <!-- To change the popup menu and app text color  -->
@@ -18,8 +21,11 @@
         <!--<item name="android:itemBackground">@color/skyBlue</item>-->
     </style>
 
-    <style name="AppTheme.ShotDetail" parent="Base.AppTheme">
+    <style name="Base.AppTheme.ShotDetail" parent="AppTheme">
+        <item name="colorAccent">@color/dribbble_team</item>
     </style>
+
+    <style name="AppTheme.ShotDetail" parent="Base.AppTheme.ShotDetail"></style>
 
     <style name="AppTheme.Buckets" parent="AppTheme">
         <item name="colorAccent">@color/dribbble_link_blue</item>
@@ -39,6 +45,21 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="TextAppearance.AppCompat.Name" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/normal_light_text_color</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Description" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondary_light_text_color</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="ActionsDialogAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
 
 
 </resources>

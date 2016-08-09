@@ -59,4 +59,5 @@ public interface BucketsDataSource {
 
     void deleteBucket(int bucketId);
 
+    void updateBucket(DribbbleBucket bucket);
 }

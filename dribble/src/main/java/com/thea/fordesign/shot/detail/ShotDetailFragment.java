@@ -3,16 +3,23 @@ package com.thea.fordesign.shot.detail;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +28,7 @@ import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bucket.buckets.BucketsActivity;
+import com.thea.fordesign.databinding.ShotActionsBinding;
 import com.thea.fordesign.databinding.ShotDetailFragBinding;
 import com.thea.fordesign.like.shot.ShotLikesActivity;
 import com.thea.fordesign.shot.comments.CommentsActivity;
@@ -38,6 +46,9 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     public static final String TAG = ShotDetailFragment.class.getSimpleName();
 
     private ShotDetailContract.Presenter mPresenter;
+
+    private ShotActionsBinding mActionsDataBinding;
+    private AlertDialog mActionsDialog;
 
     public ShotDetailFragment() {
     }
@@ -104,12 +115,12 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
 
     @Override
     public void showShotLiked() {
-
+        mViewDataBinding.llActions.tvLikeShot.setActivated(true);
     }
 
     @Override
     public void showShotDisliked() {
-
+        mViewDataBinding.llActions.tvLikeShot.setActivated(false);
     }
 
     @Override
@@ -132,6 +143,7 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     @Override
     public void showLikesUi(@NonNull String likesUrl) {
         Intent intent = new Intent(getContext(), ShotLikesActivity.class);
+        intent.putExtra(ShotLikesActivity.EXTRA_TITLE, getString(R.string.title_shot_likes));
         intent.putExtra(ShotLikesActivity.EXTRA_LIKE_URL, likesUrl);
         startActivity(intent);
     }
@@ -150,6 +162,33 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
         intent.putExtra(BucketsActivity.EXTRA_TITLE, getString(R.string.title_buckets));
         intent.putExtra(BucketsActivity.EXTRA_BUCKETS_URL, bucketsUrl);
         startActivity(intent);
+    }
+
+    @Override
+    public void showMoreActionDialog(@NonNull DribbbleShot shot) {
+        if (mActionsDataBinding == null) {
+            mActionsDataBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()
+            ), R.layout.card_shot_actions, (ViewGroup) mRootView, false);
+            mActionsDataBinding.setShot(shot);
+            mActionsDataBinding.setActionHandler(mPresenter);
+        }
+        mActionsDialog = new AlertDialog.Builder(getContext())
+                .setView(mActionsDataBinding.getRoot())
+                .create();
+        Window window = mActionsDialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.BOTTOM;
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        window.setWindowAnimations(R.style.ActionsDialogAnim);
+        window.setDimAmount(0f);
+
+        mActionsDialog.show();
+    }
+
+    @Override
+    public void hideMoreActionDialog() {
+        if (mActionsDialog != null)
+            mActionsDialog.dismiss();
     }
 
     @Override

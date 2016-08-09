@@ -7,8 +7,6 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.thea.fordesign.R;
-
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
@@ -23,9 +21,6 @@ public class BaseActivity extends AppCompatActivity {
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.setStatusBarColor(getResources().getColor(R.color.dribbble_pink));
-            }
         }
     }
 

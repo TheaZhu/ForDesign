@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.thea.fordesign.shot.detail.ShotImageFragment">
+
+    <data class=".databinding.ShotImageFragBinding">
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shot.detail.ShotImageContract.Presenter" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_alpha_dd">
+
+        <ImageView
+            android:id="@+id/iv_shot_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_close_white_24dp"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
+</layout>

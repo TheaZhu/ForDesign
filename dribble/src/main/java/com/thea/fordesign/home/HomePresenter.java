@@ -1,7 +1,7 @@
 package com.thea.fordesign.home;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;

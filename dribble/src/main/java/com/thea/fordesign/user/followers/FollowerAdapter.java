@@ -3,6 +3,7 @@ package com.thea.fordesign.user.followers;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         UserItemBinding viewDataBinding = DataBindingUtil.getBinding(holder.itemView);
         DribbbleUser item = mItems.get(position).getFollower();
+        if (TextUtils.isEmpty(item.getBio()))
+            item.setBio(null);
         viewDataBinding.setUser(item);
         viewDataBinding.setActionHandler(mItemActionListener);
 

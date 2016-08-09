@@ -3,7 +3,7 @@ package com.thea.fordesign.bucket.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.thea.fordesign.DribbbleConstant;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.util.LogUtil;
@@ -211,6 +211,11 @@ public class BucketsRepository implements BucketsDataSource {
     @Override
     public void deleteBucket(int bucketId) {
         mCachedBuckets.remove(bucketId);
+    }
+
+    @Override
+    public void updateBucket(DribbbleBucket bucket) {
+        mCachedBuckets.replace(bucket.getId(), bucket);
     }
 
     private void refreshCache(int page, List<DribbbleBucket> buckets) {
