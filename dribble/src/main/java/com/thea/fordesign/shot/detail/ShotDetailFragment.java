@@ -4,6 +4,7 @@ package com.thea.fordesign.shot.detail;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -183,6 +184,11 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
         window.setDimAmount(0f);
 
         mActionsDialog.show();
+    }
+
+    @Override
+    public void showInBrowser(@NonNull String url) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
     @Override

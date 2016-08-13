@@ -30,6 +30,8 @@ public interface ShotDetailContract {
 
         void showMoreActionDialog(@NonNull DribbbleShot shot);
 
+        void showInBrowser(@NonNull String url);
+
         void hideMoreActionDialog();
 
     }
@@ -51,6 +53,8 @@ public interface ShotDetailContract {
         void openComments(@NonNull DribbbleShot shot);
 
         void openBuckets(@NonNull DribbbleShot shot);
+
+        void openInBrowser();
 
         String formatTime(String timeStr);
 

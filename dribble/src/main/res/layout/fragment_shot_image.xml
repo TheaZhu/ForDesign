@@ -24,13 +24,56 @@
             android:layout_gravity="center"
             tools:ignore="ContentDescription" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:scaleType="center"
+            android:src="@mipmap/ic_close_white_24dp"
+            android:onClick="@{() -> actionHandler.close()}"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/iv_share_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_share_white_24dp"
+            android:onClick="@{() -> actionHandler.shareImage()}"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:id="@+id/iv_save_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:scaleType="center"
+            android:layout_toLeftOf="@id/iv_share_image"
+            android:src="@mipmap/ic_file_download_white_24dp"
+            android:onClick="@{() -> actionHandler.saveImageToLocal()}"
+            tools:ignore="ContentDescription"/>
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
             android:scaleType="center"
-            android:src="@mipmap/ic_close_white_24dp"
-            tools:ignore="ContentDescription" />
+            android:layout_toLeftOf="@id/iv_save_image"
+            android:src="@mipmap/ic_copy_link_white_24dp"
+            android:onClick="@{() -> actionHandler.copyImageUrl(context)}"
+            tools:ignore="ContentDescription"/>
+        </RelativeLayout>
 
     </FrameLayout>
 </layout>

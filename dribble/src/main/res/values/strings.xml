@@ -145,10 +145,14 @@
     <string name="hint_bucket_name">Name</string>
     <string name="hint_bucket_description">Description (optional)</string>
 
+    <string name="msg_shot_image_loading">Loading image, please wait a minute.</string>
+    <string name="msg_shot_image_load_success">Load image successful.</string>
+    <string name="msg_shot_image_load_fail">Load image failed.</string>
+    <string name="msg_shot_image_copy_link_success">Copy image link successful.</string>
+    <string name="msg_shot_image_share_fail">Share image failed.</string>
+    <string name="msg_shot_image_share_fail_empty">Shot image does not downloaded.</string>
+
+    <string name="title_send_to">Send To</string>
+
     <string name="test">Test</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
 </resources>

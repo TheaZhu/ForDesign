@@ -5,6 +5,8 @@ import android.content.Context;
 import com.thea.fordesign.base.BasePresenter;
 import com.thea.fordesign.base.BaseView;
 
+import java.io.File;
+
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
@@ -14,6 +16,8 @@ public interface ShotImageContract {
 
         void showPrevious();
 
+        void showShareChooser(File file);
+
         Context getContext();
     }
 
@@ -21,7 +25,7 @@ public interface ShotImageContract {
 
         void close();
 
-        void copyImage();
+        void copyImageUrl(Context context);
 
         void shareImage();
 

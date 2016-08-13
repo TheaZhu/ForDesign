@@ -3,6 +3,7 @@ package com.thea.fordesign.util;
 import android.os.Environment;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +17,8 @@ import okhttp3.ResponseBody;
 public class FileUtil {
     public static final String TAG = FileUtil.class.getSimpleName();
     public static final String BASE_PATH = Environment.getExternalStorageDirectory() +
-            "/fordesign/";
-    public static final String DRIBBBLE_IMAGE_DIRECTORY = BASE_PATH + "images/";
+            "/fordesign";
+    public static final String DRIBBBLE_IMAGE_DIRECTORY = BASE_PATH + "/images";
 
     public static File createNewFile(String name) {
         File dir1 = new File(BASE_PATH);
@@ -36,12 +37,16 @@ public class FileUtil {
         if (file.exists())
             file.delete();
 
+
         return file;
     }
 
     public static boolean saveFileToStore(ResponseBody body, String name) {
         try {
             File file = createNewFile(name);
+            file.createNewFile();
+//            if (!file.createNewFile())
+//                return false;
             InputStream inputStream = null;
             OutputStream outputStream = null;
 
@@ -71,6 +76,7 @@ public class FileUtil {
 
                 return true;
             } catch (IOException e) {
+                e.printStackTrace();
                 return false;
             } finally {
                 if (inputStream != null) {
@@ -82,6 +88,54 @@ public class FileUtil {
                 }
             }
         } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public static boolean saveFileToStore(File origin, String name) {
+        try {
+            File file = createNewFile(name);
+            if (!file.createNewFile())
+                return false;
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                byte[] fileReader = new byte[4096];
+
+                long fileSizeDownloaded = 0;
+
+                inputStream = new FileInputStream(origin);
+                outputStream = new FileOutputStream(file);
+
+                while (true) {
+                    int read = inputStream.read(fileReader);
+                    if (read == -1) {
+                        break;
+                    }
+
+                    outputStream.write(fileReader, 0, read);
+
+                    fileSizeDownloaded += read;
+                    LogUtil.d(TAG, "file download: " + fileSizeDownloaded);
+                }
+
+                outputStream.flush();
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            } finally {
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }

@@ -1,6 +1,8 @@
 package com.thea.fordesign.shot.detail;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +16,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.databinding.ShotImageFragBinding;
+import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
+
+import java.io.File;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -55,6 +60,7 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
 
     @Override
     protected void afterCreate(Bundle savedInstanceState) {
+        mViewDataBinding.setActionHandler(mPresenter);
         Glide.with(ShotImageFragment.this)
                 .load(mUrl)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -67,6 +73,25 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
     @Override
     public void showPrevious() {
         getActivity().onBackPressed();
+    }
+
+    @Override
+    public void showShareChooser(@NonNull File file) {
+//        Bitmap bitmap = ((BitmapDrawable)mViewDataBinding.ivShotImage.getDrawable()).getBitmap();
+//        if (bitmap == null)
+//            return;
+        LogUtil.i(TAG, "image url: " + mUrl);
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        if (file.exists()) {
+            Uri uri = Uri.fromFile(file);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/*");
+        } else {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, mUrl);
+            shareIntent.setType("text/plain");
+        }
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.title_send_to)));
     }
 
     @Override
