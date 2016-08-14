@@ -18,7 +18,9 @@ public interface ShotDetailContract {
 
         void showShotLiked();
 
-        void showShotDisliked();
+        void showShotUnliked();
+
+        void showShotToBucketUi(int shotId);
 
         void showUserDetailsUi(@NonNull DribbbleUser user, android.view.View v);
 
@@ -42,7 +44,7 @@ public interface ShotDetailContract {
 
         void getShot();
 
-        void likeShot(@NonNull DribbbleShot shot);
+        void likeShot(@NonNull DribbbleShot shot, boolean like);
 
         void bucketShot(@NonNull DribbbleShot shot);
 

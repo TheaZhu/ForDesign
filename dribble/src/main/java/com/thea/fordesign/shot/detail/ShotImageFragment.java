@@ -13,6 +13,9 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.databinding.ShotImageFragBinding;
@@ -33,6 +36,7 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
     private String mUrl;
 
     private ShotImageContract.Presenter mPresenter;
+    private PhotoViewAttacher attacher;
 
     public ShotImageFragment() {
     }
@@ -65,8 +69,15 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
                 .load(mUrl)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .fitCenter()
-                .into(mViewDataBinding.ivShotImage);
-        PhotoViewAttacher attacher = new PhotoViewAttacher(mViewDataBinding.ivShotImage);
+                .dontAnimate()
+                .into(new GlideDrawableImageViewTarget(mViewDataBinding.ivShotImage) {
+                    @Override
+                    public void onResourceReady(GlideDrawable drawable, GlideAnimation anim) {
+                        super.onResourceReady(drawable, anim);
+                        attacher = new PhotoViewAttacher(mViewDataBinding.ivShotImage);
+                    }
+                });
+
         mPresenter.start();
     }
 
@@ -77,9 +88,6 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
 
     @Override
     public void showShareChooser(@NonNull File file) {
-//        Bitmap bitmap = ((BitmapDrawable)mViewDataBinding.ivShotImage.getDrawable()).getBitmap();
-//        if (bitmap == null)
-//            return;
         LogUtil.i(TAG, "image url: " + mUrl);
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

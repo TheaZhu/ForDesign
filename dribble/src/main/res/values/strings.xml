@@ -46,6 +46,7 @@
     <string name="title_users">Users</string>
     <string name="title_followers">Followers</string>
     <string name="title_settings">Settings</string>
+    <string name="title_shot_to_bucket">Add shot to bucket</string>
 
     <string name="action_follow">FOLLOW</string>
     <string name="action_following">FOLLOWING</string>
@@ -146,13 +147,19 @@
     <string name="hint_bucket_description">Description (optional)</string>
 
     <string name="msg_shot_image_loading">Loading image, please wait a minute.</string>
-    <string name="msg_shot_image_load_success">Load image successful.</string>
-    <string name="msg_shot_image_load_fail">Load image failed.</string>
+    <string name="msg_shot_image_load_success">Download image successful.</string>
+    <string name="msg_shot_image_load_fail">Download image failed.</string>
     <string name="msg_shot_image_copy_link_success">Copy image link successful.</string>
     <string name="msg_shot_image_share_fail">Share image failed.</string>
     <string name="msg_shot_image_share_fail_empty">Shot image does not downloaded.</string>
 
+    <string name="msg_add_shot_to_bucket_fail">Add shot to bucket failed.</string>
+    <string name="msg_remove_shot_from_bucket_fail">Remove shot from bucket failed.</string>
+
     <string name="title_send_to">Send To</string>
 
     <string name="test">Test</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

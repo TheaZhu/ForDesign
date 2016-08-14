@@ -40,8 +40,24 @@ public interface BucketsDataSource {
         void onFailed(int errCode, String message);
     }
 
+    interface AddShotToBucketCallback{
+
+        void onSuccess();
+
+        void onFail(int errCode, String message);
+    }
+
+    interface RemoveShotFromBucketCallback{
+
+        void onSuccess();
+
+        void onFail(int errCode, String message);
+    }
+
     void getBuckets(@NonNull String authorization, @Nullable String url, int page,
                     LoadBucketsCallback callback);
+
+    void getBuckets(@NonNull String authorization, int page, LoadBucketsCallback callback);
 
     void getBucket(@NonNull String authorization, int bucketId, GetBucketCallback callback);
 
@@ -52,6 +68,12 @@ public interface BucketsDataSource {
             description, SaveBucketCallback callback);
 
     void deleteBucket(@NonNull String authorization, int bucketId, DeleteBucketCallback callback);
+
+    void addShotToBucket(@NonNull String authorization, int bucketId, int shotId,
+                         AddShotToBucketCallback callback);
+
+    void removeShotFromBucket(@NonNull String authorization, int bucketId, int shotId,
+                              RemoveShotFromBucketCallback callback);
 
     void refreshBuckets();
 

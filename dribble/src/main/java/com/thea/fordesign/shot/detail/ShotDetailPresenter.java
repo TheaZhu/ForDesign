@@ -62,13 +62,20 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
     }
 
     @Override
+    public void likeShot(@NonNull DribbbleShot shot, boolean like) {
+        if (like)
+            likeShot(shot);
+        else
+            unlikeShot(shot);
+    }
+
+    @Override
     public void openUserDetails(@NonNull DribbbleUser requestedUser, android.view.View v) {
         mDetailView.showUserDetailsUi(requestedUser, v);
     }
 
-    @Override
-    public void likeShot(@NonNull DribbbleShot shot) {
-        mRepository.likeShot(mUserModel.getDribbbleAccessToken(), shot, new ShotsDataSource
+    private void likeShot(@NonNull DribbbleShot shot) {
+        mRepository.likeShot(mUserModel.getDribbbleAccessToken(), shot.getId(), new ShotsDataSource
                 .LikeShotCallback() {
 
             @Override
@@ -84,9 +91,27 @@ public class ShotDetailPresenter implements ShotDetailContract.Presenter {
         });
     }
 
+    private void unlikeShot(@NonNull DribbbleShot shot) {
+        mRepository.unlikeShot(mUserModel.getDribbbleAccessToken(), shot.getId(), new
+                ShotsDataSource
+                .UnlikeShotCallback() {
+
+            @Override
+            public void onSuccess() {
+                mShot.setLikesCount(mShot.getLikesCount() - 1);
+                mDetailView.showShotUnliked();
+            }
+
+            @Override
+            public void onFail(int errCode, String message) {
+                mDetailView.showSnack(message);
+            }
+        });
+    }
+
     @Override
     public void bucketShot(@NonNull DribbbleShot shot) {
-
+        mDetailView.showShotToBucketUi(shot.getId());
     }
 
     @Override

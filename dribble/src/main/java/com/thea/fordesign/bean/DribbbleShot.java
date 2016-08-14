@@ -1,10 +1,13 @@
 package com.thea.fordesign.bean;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.webkit.URLUtil;
 
 import com.google.gson.annotations.SerializedName;
+import com.thea.fordesign.BR;
 import com.thea.fordesign.config.DribbbleConstant;
 
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.List;
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbbleShot implements Parcelable {
+public class DribbbleShot extends BaseObservable implements Parcelable {
 
     private int id;
     private String title = "";
@@ -121,20 +124,24 @@ public class DribbbleShot implements Parcelable {
         this.team = team;
     }
 
+    @Bindable
     public int getViewsCount() {
         return viewsCount;
     }
 
     public void setViewsCount(int viewsCount) {
         this.viewsCount = viewsCount;
+        notifyPropertyChanged(BR.viewsCount);
     }
 
+    @Bindable
     public int getLikesCount() {
         return likesCount;
     }
 
     public void setLikesCount(int likesCount) {
         this.likesCount = likesCount;
+        notifyPropertyChanged(BR.likesCount);
     }
 
     public int getCommentsCount() {
@@ -161,12 +168,14 @@ public class DribbbleShot implements Parcelable {
         this.reboundsCount = reboundsCount;
     }
 
+    @Bindable
     public int getBucketsCount() {
         return bucketsCount;
     }
 
     public void setBucketsCount(int bucketsCount) {
         this.bucketsCount = bucketsCount;
+        notifyPropertyChanged(BR.bucketsCount);
     }
 
     public String getCreatedTime() {

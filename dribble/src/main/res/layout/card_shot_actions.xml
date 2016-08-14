@@ -33,7 +33,7 @@
             android:drawableLeft="@drawable/ic_action_like_shot"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
-            android:onClick="@{() -> actionHandler.likeShot(shot)}"
+            android:onClick="@{(v) -> actionHandler.likeShot(shot, !v.isActivated())}"
             android:paddingLeft="@dimen/normal_horizontal_padding"
             android:paddingRight="@dimen/normal_horizontal_padding"
             android:text="@string/indicator_unlike"

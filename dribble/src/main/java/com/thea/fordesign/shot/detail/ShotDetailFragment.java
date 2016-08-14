@@ -29,6 +29,7 @@ import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.bucket.buckets.BucketsActivity;
+import com.thea.fordesign.bucket.selectable.ShotToBucketsActivity;
 import com.thea.fordesign.databinding.ShotActionsBinding;
 import com.thea.fordesign.databinding.ShotDetailFragBinding;
 import com.thea.fordesign.like.shot.ShotLikesActivity;
@@ -120,8 +121,15 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     }
 
     @Override
-    public void showShotDisliked() {
+    public void showShotUnliked() {
         mViewDataBinding.llActions.tvLikeShot.setActivated(false);
+    }
+
+    @Override
+    public void showShotToBucketUi(int shotId) {
+        Intent intent = new Intent(getContext(), ShotToBucketsActivity.class);
+        intent.putExtra(ShotToBucketsActivity.EXTRA_SHOT_ID, shotId);
+        startActivity(intent);
     }
 
     @Override

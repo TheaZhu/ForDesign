@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:onClick="@{() -> actionHandler.likeShot(shot)}">
+                android:onClick="@{() -> actionHandler.likeShot(shot, true)}">
 
                 <ImageView
                     android:layout_width="wrap_content"

@@ -268,64 +268,6 @@ public class ShotsRepository implements ShotsDataSource {
     }
 
     @Override
-    public void addShotToBucket(@NonNull String authorization, int bucketId, int shotId, final AddShotToBucketCallback callback) {
-        Call<Void> call = mService.addShotToBucket(authorization, bucketId, shotId);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                int code = response.code();
-                String message = response.message();
-                LogUtil.i(TAG, "add shot to bucket code: " + code + ", message: " + message);
-
-                if (callback == null)
-                    return;
-                if (code == DribbbleConstant.CODE_NO_CONTENT)
-                    callback.onSuccess();
-                else
-                    callback.onFail(code, message);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                LogUtil.i(TAG, "add shot to bucket call executed: " + call.isExecuted() +
-                        ", url: " + call.request().url());
-                t.printStackTrace();
-                if (callback != null)
-                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
-            }
-        });
-    }
-
-    @Override
-    public void removeShotFromBucket(@NonNull String authorization, int bucketId, int shotId, final RemoveShotFromBucketCallback callback) {
-        Call<Void> call = mService.removeShotFromBucket(authorization, bucketId, shotId);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                int code = response.code();
-                String message = response.message();
-                LogUtil.i(TAG, "remove shot from bucket code: " + code + ", message: " + message);
-
-                if (callback == null)
-                    return;
-                if (code == DribbbleConstant.CODE_NO_CONTENT)
-                    callback.onSuccess();
-                else
-                    callback.onFail(code, message);
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                LogUtil.i(TAG, "remove shot from bucket call executed: " + call.isExecuted() +
-                        ", url: " + call.request().url());
-                t.printStackTrace();
-                if (callback != null)
-                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
-            }
-        });
-    }
-
-    @Override
     public void refreshShots() {
         mCacheIsDirty = true;
     }

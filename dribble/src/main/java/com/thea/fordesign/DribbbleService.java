@@ -21,6 +21,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -41,7 +42,8 @@ public interface DribbbleService {
     Call<DribbbleUser> getUser(@Header("Authorization") String authorization);
 
     @GET("user/buckets")
-    Call<List<DribbbleBucket>> getUserBuckets(@Header("Authorization") String authorization);
+    Call<List<DribbbleBucket>> getUserBuckets(@Header("Authorization") String authorization,
+                                              @Query("page") int page);
 
     @GET("user/projects")
     Call<List<DribbbleProject>> getUserProjects(@Header("Authorization") String authorization,
@@ -78,7 +80,8 @@ public interface DribbbleService {
 
     @GET("users/{user}/buckets")
     Call<List<DribbbleBucket>> getUserBuckets(@Header("Authorization") String authorization,
-                                              @Path("user") int userId);
+                                              @Path("user") int userId,
+                                              @Query("page") int page);
 
     @GET("users/{user}/projects")
     Call<List<DribbbleProject>> getUserProjects(@Header("Authorization") String authorization,
@@ -289,8 +292,11 @@ public interface DribbbleService {
     Call<Void> addShotToBucket(@Header("Authorization") String authorization,
                                @Path("bucket") int bucketId,
                                @Field("shot_id") int shotId);
+
+    //    @Headers("Content-Type: application/x-www-form-urlencoded")
+//    @DELETE("buckets/{bucket}/shots")
     @FormUrlEncoded
-    @DELETE("buckets/{bucket}/shots")
+    @HTTP(method = "DELETE", path = "buckets/{bucket}/shots", hasBody = true)
     Call<Void> removeShotFromBucket(@Header("Authorization") String authorization,
                                     @Path("bucket") int bucketId,
                                     @Field("shot_id") int shotId);

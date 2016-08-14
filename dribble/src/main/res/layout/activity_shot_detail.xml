@@ -19,7 +19,7 @@
             android:src="@mipmap/default_shot"
             tools:ignore="ContentDescription"/>
 
-        <android.support.v4.widget.NestedScrollView
+        <ScrollView
             android:id="@+id/nsv_shot_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

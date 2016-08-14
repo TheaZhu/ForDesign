@@ -69,6 +69,38 @@ public class BucketsRepository implements BucketsDataSource {
     }
 
     @Override
+    public void getBuckets(@NonNull String authorization, final int page, final
+    LoadBucketsCallback callback) {
+        if (mCachedBuckets == null || mCacheIsDirty) {
+            LogUtil.i(TAG, "get buckets");
+            Call<List<DribbbleBucket>> call = mService.getUserBuckets(authorization, page);
+            call.enqueue(new Callback<List<DribbbleBucket>>() {
+                @Override
+                public void onResponse(Call<List<DribbbleBucket>> call,
+                                       Response<List<DribbbleBucket>> response) {
+                    LogUtil.i(TAG, "get buckets code: " + response.code() + ", message: " +
+                            response.message());
+                    List<DribbbleBucket> buckets = response.body();
+                    refreshCache(page, buckets);
+                    if (callback != null)
+                        callback.onBucketsLoaded(buckets);
+                }
+
+                @Override
+                public void onFailure(Call<List<DribbbleBucket>> call, Throwable t) {
+                    LogUtil.i(TAG, "get buckets call executed: " + call.isExecuted() + ", url: " +
+                            call.request().url());
+                    t.printStackTrace();
+                    if (callback != null)
+                        callback.onDataNotAvailable();
+                }
+            });
+        } else if (callback != null) {
+            callback.onBucketsLoaded(new ArrayList<>(mCachedBuckets.values()));
+        }
+    }
+
+    @Override
     public void getBucket(@NonNull String authorization, int bucketId, final GetBucketCallback
             callback) {
         DribbbleBucket cachedBucket = getBucketWithId(bucketId);
@@ -95,7 +127,7 @@ public class BucketsRepository implements BucketsDataSource {
                 public void onFailure(Call<DribbbleBucket> call, Throwable t) {
                     LogUtil.i(TAG, "get bucket call executed: " + call.isExecuted() + ", url: " +
                             call
-                            .request().url());
+                                    .request().url());
                     t.printStackTrace();
                     if (callback != null)
                         callback.onDataNotAvailable();
@@ -167,7 +199,8 @@ public class BucketsRepository implements BucketsDataSource {
     }
 
     @Override
-    public void deleteBucket(@NonNull String authorization, int bucketId, final DeleteBucketCallback callback) {
+    public void deleteBucket(@NonNull String authorization, int bucketId, final
+    DeleteBucketCallback callback) {
         Call<Void> call = mService.deleteBucket(authorization, bucketId);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -191,6 +224,66 @@ public class BucketsRepository implements BucketsDataSource {
                 t.printStackTrace();
                 if (callback != null)
                     callback.onFailed(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void addShotToBucket(@NonNull String authorization, int bucketId, int shotId, final
+    AddShotToBucketCallback callback) {
+        Call<Void> call = mService.addShotToBucket(authorization, bucketId, shotId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int code = response.code();
+                String message = response.message();
+                LogUtil.i(TAG, "add shot to bucket code: " + code + ", message: " + message);
+
+                if (callback == null)
+                    return;
+                if (code == DribbbleConstant.CODE_NO_CONTENT)
+                    callback.onSuccess();
+                else
+                    callback.onFail(code, message);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                LogUtil.i(TAG, "add shot to bucket call executed: " + call.isExecuted() +
+                        ", url: " + call.request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void removeShotFromBucket(@NonNull String authorization, int bucketId, int shotId,
+                                     final RemoveShotFromBucketCallback callback) {
+        Call<Void> call = mService.removeShotFromBucket(authorization, bucketId, shotId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int code = response.code();
+                String message = response.message();
+                LogUtil.i(TAG, "remove shot from bucket code: " + code + ", message: " + message);
+
+                if (callback == null)
+                    return;
+                if (code == DribbbleConstant.CODE_NO_CONTENT)
+                    callback.onSuccess();
+                else
+                    callback.onFail(code, message);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                LogUtil.i(TAG, "remove shot from bucket call executed: " + call.isExecuted() +
+                        ", url: " + call.request().url());
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFail(DribbbleConstant.CODE_REQUEST_FAIL, t.getMessage());
             }
         });
     }

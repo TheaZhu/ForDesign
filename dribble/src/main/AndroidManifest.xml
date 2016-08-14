@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".shot.detail.ShotDetailActivity"
+        <activity
+            android:name=".shot.detail.ShotDetailActivity"
             android:theme="@style/AppTheme.ShotDetail">
         </activity>
         <activity android:name=".user.detail.UserDetailActivity">
@@ -59,6 +60,9 @@
         <activity android:name=".user.users.UsersActivity">
         </activity>
         <activity android:name=".setting.SettingsActivity">
+        </activity>
+        <activity android:name=".bucket.selectable.ShotToBucketsActivity"
+                  android:theme="@style/AppTheme.Buckets">
         </activity>
     </application>
 
