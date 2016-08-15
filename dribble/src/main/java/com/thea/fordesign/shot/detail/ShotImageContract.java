@@ -1,6 +1,7 @@
 package com.thea.fordesign.shot.detail;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 
 import com.thea.fordesign.base.BasePresenter;
 import com.thea.fordesign.base.BaseView;
@@ -19,6 +20,9 @@ public interface ShotImageContract {
         void showShareChooser(File file);
 
         Context getContext();
+
+        void showSnack(@StringRes int resId, @StringRes int actionResId, android.view.View
+                .OnClickListener clickListener);
     }
 
     interface Presenter extends BasePresenter {

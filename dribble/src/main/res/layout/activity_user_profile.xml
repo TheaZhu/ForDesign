@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.thea.fordesign.user.profile.UserProfileActivity">
+
+    <data class=".databinding.UserProfileActBinding">
+
+        <import type="java.lang.String"/>
+
+        <import type="android.text.Html"/>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="user"
+            type="com.thea.fordesign.bean.DribbbleUser"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.user.profile.UserProfileContract.Presenter"/>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/dribbble_grey"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:src="@mipmap/ic_arrow_back_white_24dp"
+            android:scaleType="center"
+            android:onClick="@{() -> actionHandler.close()}"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="24dp"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:onClick="@{() -> actionHandler.settings()}"
+            android:scaleType="center"
+            android:src="@mipmap/ic_settings_white_24dp"
+            tools:ignore="ContentDescription"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_avatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            app:cardCornerRadius="80dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/image_user_avatar"
+                tools:ignore="ContentDescription"
+                tools:src="@mipmap/ic_dribbble_square"/>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_below="@id/cv_avatar"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/normal_horizontal_padding"
+            android:paddingRight="@dimen/normal_horizontal_padding"
+            android:text="@{user.name}"
+            android:textColor="@color/grey_800"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="@string/dribbble"/>
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_centerHorizontal="true"
+            android:text="@{user.username}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Description"
+            android:visibility="gone"
+            tools:text="@string/dribbble"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_user_name"
+            android:layout_centerHorizontal="true"
+            android:text="@{user.location}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Description"
+            android:visibility="@{user.location == null ? View.GONE : View.VISIBLE}"
+            tools:text="@string/dribbble"/>
+
+        <TextView
+            android:id="@+id/tv_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_location"
+            android:layout_centerHorizontal="true"
+            android:autoLink="all"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{Html.fromHtml(user.bio ?? @string/default_user_bio)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Description"
+            android:textColorLink="@drawable/tv_color_link"
+            android:visibility="@{user.bio == null ? View.GONE : View.VISIBLE}"
+            tools:text="@string/dribbble"/>
+
+        <LinearLayout
+            android:id="@+id/ll_counts_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_bio"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openShots(user.shotsUrl)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.shotsCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/shots"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openProjects(user.id)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.projectsCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/projects"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openFollowers(user.followersUrl)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.followersCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/followers"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_counts_1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openFollowings(user.followingUrl)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.followingsCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/following"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openBuckets(user.bucketsUrl)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.bucketsCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/buckets"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(user.likesCount)}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Count"
+                    tools:text="120"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/likes"
+                    android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

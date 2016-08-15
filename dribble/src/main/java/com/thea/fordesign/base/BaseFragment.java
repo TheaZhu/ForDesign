@@ -1,6 +1,8 @@
 package com.thea.fordesign.base;
 
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,20 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         afterCreate(savedInstanceState);
+    }
+
+    public void showSnack(final String msg) {
+        mRootView.post(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(mRootView, msg, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
+
+    public void showSnack(@StringRes int resId) {
+        showSnack(getString(resId));
     }
 
     protected abstract int getLayoutId();

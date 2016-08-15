@@ -29,7 +29,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBinding> implements ShotImageContract.View {
+public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBinding> implements
+        ShotImageContract.View {
     public static final String TAG = ShotImageFragment.class.getSimpleName();
     public static final String ARG_SHOT_IMAGE_URL = "shot_image_url";
 
@@ -103,24 +104,20 @@ public class ShotImageFragment extends BaseDataBindingFragment<ShotImageFragBind
     }
 
     @Override
-    public void setPresenter(@NonNull ShotImageContract.Presenter presenter) {
-        mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
-    }
-
-    @Override
-    public void showSnack(final String msg) {
-        final View view = mViewDataBinding.getRoot();
-        view.post(new Runnable() {
+    public void showSnack(@StringRes final int resId, @StringRes final int actionResId, final
+    View.OnClickListener clickListener) {
+        mRootView.post(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
+                Snackbar.make(mRootView, resId, Snackbar.LENGTH_SHORT)
+                        .setAction(actionResId, clickListener)
                         .show();
             }
         });
     }
 
     @Override
-    public void showSnack(@StringRes int resId) {
-        showSnack(getString(resId));
+    public void setPresenter(@NonNull ShotImageContract.Presenter presenter) {
+        mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
     }
 }

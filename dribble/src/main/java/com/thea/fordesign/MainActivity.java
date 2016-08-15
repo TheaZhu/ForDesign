@@ -1,6 +1,8 @@
 package com.thea.fordesign;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +27,7 @@ import com.thea.fordesign.shot.shots.ShotsPresenter;
 import com.thea.fordesign.sign.SignInActivity;
 import com.thea.fordesign.user.followers.FollowersActivity;
 import com.thea.fordesign.user.followers.FollowersFragment;
+import com.thea.fordesign.user.profile.UserProfileActivity;
 import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.LogUtil;
 
@@ -99,6 +102,8 @@ public class MainActivity extends BaseActivity implements NavigationView
         public void onClick(View view) {
             if (!userModel.getUserSignIn()) {
                 trySignIn();
+            } else {
+                showMyProfile();
             }
         }
     };
@@ -134,11 +139,6 @@ public class MainActivity extends BaseActivity implements NavigationView
             mAvatar.setImageResource(R.mipmap.ic_dribbble_square);
             mUsername.setText(R.string.sign_in);
         }
-    }
-
-    public void trySignIn() {
-        startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
-                REQUEST_SIGN_IN);
     }
 
     @Override
@@ -193,6 +193,28 @@ public class MainActivity extends BaseActivity implements NavigationView
             item.setChecked(true);
         }
         return true;
+    }
+
+    private void trySignIn() {
+        startActivityForResult(new Intent(MainActivity.this, SignInActivity.class),
+                REQUEST_SIGN_IN);
+    }
+
+    private void showMyProfile() {
+        if (mUser == null)
+            return;
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra(UserProfileActivity.EXTRA_USER, mUser);
+        if (Build.VERSION.SDK_INT >= 21) {
+            String transitionName = getString(R.string.image_user_avatar);
+
+            ActivityOptions transitionActivityOptions = ActivityOptions
+                    .makeSceneTransitionAnimation(this, mAvatar, transitionName);
+
+            startActivity(intent, transitionActivityOptions.toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
     private void showMyShots() {

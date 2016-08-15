@@ -56,6 +56,17 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="TextAppearance.AppCompat.Count" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/normal_light_text_color</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.CountItem" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondary_light_text_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="ActionsDialogAnim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>

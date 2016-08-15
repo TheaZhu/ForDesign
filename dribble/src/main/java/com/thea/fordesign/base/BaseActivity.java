@@ -2,6 +2,8 @@ package com.thea.fordesign.base;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;

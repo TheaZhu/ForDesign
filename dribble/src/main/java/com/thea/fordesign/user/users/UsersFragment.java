@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -154,23 +153,6 @@ public class UsersFragment extends BaseDataBindingFragment<UsersFragBinding> imp
     @Override
     public void setPresenter(@NonNull UsersContract.Presenter presenter) {
         mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
-    }
-
-    @Override
-    public void showSnack(final String msg) {
-        final View view = mViewDataBinding.getRoot();
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
-                        .show();
-            }
-        });
-    }
-
-    @Override
-    public void showSnack(@StringRes int resId) {
-        showSnack(getString(resId));
     }
 
     private void loadUsers() {

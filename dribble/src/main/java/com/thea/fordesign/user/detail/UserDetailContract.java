@@ -65,7 +65,7 @@ public interface UserDetailContract {
 
     interface SubPresenter extends BasePresenter {
 
-        void openShots(@NonNull String bucketsUrl);
+        void openShots(@NonNull String shotsUrl);
 
         void openBuckets(@NonNull String bucketsUrl);
 

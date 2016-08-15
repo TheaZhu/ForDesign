@@ -1,9 +1,13 @@
 package com.thea.fordesign.shot.detail;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -103,7 +107,7 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
                     int start = mUrl.lastIndexOf('/');
                     mImageName = mUrl.substring(start);
                     boolean writtenToDisk = FileUtil.saveFileToStore
-                            (file, mUrl.substring(start));
+                            (file, mImageName);
 
                     LogUtil.d(TAG, "file download successful? " +
                             writtenToDisk);
@@ -134,7 +138,15 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
                     @Override
                     public void onNext(Boolean written) {
                         if (written)
-                            mView.showSnack(R.string.msg_shot_image_load_success);
+                            mView.showSnack(R.string.msg_shot_image_load_success, R.string
+                                    .action_open, new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View view) {
+                                    openFile(mView.getContext(), new File(FileUtil
+                                            .DRIBBBLE_IMAGE_DIRECTORY + mImageName));
+                                }
+                            });
                         else mView.showSnack(R.string.msg_shot_image_load_fail);
                     }
                 });
@@ -174,5 +186,19 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
                         responseBody.close();
                     }
                 });*/
+    }
+
+    private void openFile(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(file), "image/*");
+        try {
+            context.startActivity(intent);
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string
+                    .title_select_browse_tool)));
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
