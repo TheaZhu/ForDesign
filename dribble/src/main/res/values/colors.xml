@@ -24,6 +24,7 @@
     <color name="dribbble_pink">#ea4c89</color>
     <color name="dribbble_team">#00b6e3</color>
     <color name="dribbble_link_blue">#3a8bbb</color>
+    <color name="dribbble_link_blue_alpha">#bb3a8bbb</color>
     <color name="dribbble_slate">#9da3a5</color>
 
     <color name="normal_light_text_color">@color/grey_800</color>

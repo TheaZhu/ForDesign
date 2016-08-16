@@ -34,6 +34,7 @@ import com.thea.fordesign.util.Preconditions;
 import com.thea.fordesign.widget.FooterSpanSizeLookup;
 import com.thea.fordesign.widget.FooterWrapAdapter;
 import com.thea.fordesign.widget.LoadMoreListener;
+import com.thea.fordesign.widget.MyEmptyView;
 import com.thea.fordesign.widget.MyLoadingView;
 
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
     private ShotAdapter mAdapter;
     private MyLoadingView mLoadingView;
     private LoadMoreListener mLoadMoreListener;
+
+    private MyEmptyView mEmptyView;
 
     public ShotsFragment() {
         mListType = DribbbleConstant.SHOT_LIST_DEFAULT;
@@ -246,6 +249,36 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
         Intent intent = new Intent(getContext(), UserDetailActivity.class);
         intent.putExtra(UserDetailActivity.EXTRA_USER_ID, userId);
         startActivity(intent);
+    }
+
+    @Override
+    public void showEmptyLayout(String message) {
+        ViewGroup parent = (ViewGroup) mViewDataBinding.getRoot();
+        if (mEmptyView == null) {
+            mEmptyView = new MyEmptyView(getContext(), parent);
+            mEmptyView.setOnRetryClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    loadShots();
+                }
+            });
+        }
+        mEmptyView.setEmptyMessage(message);
+        if (mEmptyView.getView().getParent() != parent && mEmptyView.getView().getParent() == null) {
+            ((ViewGroup) mViewDataBinding.getRoot()).addView(mEmptyView.getView());
+        }
+    }
+
+    @Override
+    public void showEmptyLayout(@StringRes int resId) {
+        showEmptyLayout(getString(resId));
+    }
+
+    @Override
+    public void hideEmptyLayout() {
+        ViewGroup parent = (ViewGroup) mViewDataBinding.getRoot();
+        if (mEmptyView.getView().getParent() == parent)
+            parent.removeView(mEmptyView.getView());
     }
 
     @Override

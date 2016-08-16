@@ -161,6 +161,9 @@
     <string name="msg_add_shot_to_bucket_fail">Add shot to bucket failed.</string>
     <string name="msg_remove_shot_from_bucket_fail">Remove shot from bucket failed.</string>
 
+    <string name="msg_empty_data">No data</string>
+    <string name="action_retry">Retry</string>
+
     <string name="title_send_to">Send To</string>
     <string name="title_select_browse_tool">Select</string>
 

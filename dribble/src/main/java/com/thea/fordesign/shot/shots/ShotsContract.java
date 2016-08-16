@@ -34,6 +34,12 @@ public interface ShotsContract {
 
         void showUserDetailsUi(int userId);
 
+        void showEmptyLayout(String message);
+
+        void showEmptyLayout(@StringRes int resId);
+
+        void hideEmptyLayout();
+
 //        void setShotLikeState(boolean like);
 
     }

@@ -70,8 +70,8 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:transitionName="@string/image_user_avatar"
-                tools:ignore="ContentDescription"
-                tools:src="@mipmap/ic_dribbble_square"/>
+                android:src="@mipmap/default_user_avatar"
+                tools:ignore="ContentDescription"/>
         </android.support.v7.widget.CardView>
 
         <TextView

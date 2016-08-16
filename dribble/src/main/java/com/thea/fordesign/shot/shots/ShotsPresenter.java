@@ -38,34 +38,56 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void loadShots(String list, String sort, String timeFrame) {
-        loadShots(list, sort, timeFrame, 1, true, false);
+        mShotsView.setRefreshingIndicator(true);
+
+        mRepository.refreshShots();
+
+        mRepository.getShots(mUserModel.getDribbbleAccessToken(), list, sort, timeFrame, null,
+                1, 12, new ShotsDataSource.LoadShotsCallback() {
+                    @Override
+                    public void onShotsLoaded(List<DribbbleShot> shots) {
+                        mShotsView.setRefreshingIndicator(false);
+                        mShotsView.hideEmptyLayout();
+                        mShotsView.showShots(shots);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+                        mShotsView.setRefreshingIndicator(false);
+                        mShotsView.showSnack(R.string.error_load_shots);
+                        mShotsView.showEmptyLayout(R.string.msg_empty_data);
+                    }
+                });
     }
 
     @Override
     public void loadShots(String shotsUrl) {
-        loadShots(shotsUrl, 1, true, false);
+        mShotsView.setRefreshingIndicator(true);
+
+        mRepository.refreshShots();
+
+        mRepository.getShots(mUserModel.getDribbbleAccessToken(), shotsUrl, 1, new ShotsDataSource
+                .LoadShotsCallback() {
+            @Override
+            public void onShotsLoaded(List<DribbbleShot> shots) {
+                mShotsView.setRefreshingIndicator(false);
+                mShotsView.hideEmptyLayout();
+                mShotsView.showShots(shots);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                mShotsView.setRefreshingIndicator(false);
+                mShotsView.showSnack(R.string.error_load_shots);
+                mShotsView.showEmptyLayout(R.string.msg_empty_data);
+            }
+        });
     }
 
     @Override
     public void loadMore(String list, String sort, String timeFrame, int page) {
         LogUtil.i(TAG, "load more: " + page);
-        loadShots(list, sort, timeFrame, page, false, true);
-    }
-
-    @Override
-    public void loadMore(String shotsUrl, int page) {
-        LogUtil.i(TAG, "load more: " + page);
-        loadShots(shotsUrl, page, false, true);
-    }
-
-    // TODO loadMore分离
-    private void loadShots(String list, String sort, String timeFrame, final int page, final boolean
-            showRefreshingUI, final boolean isLoadMore) {
-        if (showRefreshingUI)
-            mShotsView.setRefreshingIndicator(true);
-
-        if (isLoadMore)
-            mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
+        mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshShots();
 
@@ -73,65 +95,39 @@ public class ShotsPresenter implements ShotsContract.Presenter {
                 page, 12, new ShotsDataSource.LoadShotsCallback() {
                     @Override
                     public void onShotsLoaded(List<DribbbleShot> shots) {
-                        if (showRefreshingUI) {
-                            mShotsView.setRefreshingIndicator(false);
-                        }
-                        if (isLoadMore)
-                            mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
-                        if (page == 1)
-                            mShotsView.showShots(shots);
-                        else
-                            mShotsView.insertShots(shots);
+                        mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
+                        mShotsView.insertShots(shots);
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-                        if (showRefreshingUI) {
-                            mShotsView.setRefreshingIndicator(false);
-                            mShotsView.showSnack(R.string.error_load_shots);
-                        }
-                        if (isLoadMore) {
-                            mShotsView.setLoadingIndicator(true, false, R.string.loading_error, true);
-                            mShotsView.setLoadingError();
-                        }
+                        mShotsView.setLoadingIndicator(true, false, R.string.loading_error,
+                                true);
+                        mShotsView.setLoadingError();
                     }
                 });
     }
 
-    private void loadShots(String url, final int page, final boolean showRefreshingUI, final boolean
-            isLoadMore) {
-        if (showRefreshingUI)
-            mShotsView.setRefreshingIndicator(true);
-
-        if (isLoadMore)
-            mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
+    @Override
+    public void loadMore(String shotsUrl, int page) {
+        LogUtil.i(TAG, "load more: " + page);
+        mShotsView.setLoadingIndicator(true, true, R.string.loading, false);
 
         mRepository.refreshShots();
 
-        mRepository.getShots(mUserModel.getDribbbleAccessToken(), url, page, new ShotsDataSource
+        mRepository.getShots(mUserModel.getDribbbleAccessToken(), shotsUrl, page, new
+                ShotsDataSource
                 .LoadShotsCallback() {
             @Override
             public void onShotsLoaded(List<DribbbleShot> shots) {
-                if (showRefreshingUI)
-                    mShotsView.setRefreshingIndicator(false);
-                if (isLoadMore)
-                    mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
-                if (page == 1)
-                    mShotsView.showShots(shots);
-                else
-                    mShotsView.insertShots(shots);
+                mShotsView.setLoadingIndicator(false, false, R.string.loading, false);
+                mShotsView.insertShots(shots);
             }
 
             @Override
             public void onDataNotAvailable() {
-                if (showRefreshingUI) {
-                    mShotsView.setRefreshingIndicator(false);
-                    mShotsView.showSnack(R.string.error_load_shots);
-                }
-                if (isLoadMore) {
-                    mShotsView.setLoadingIndicator(true, false, R.string.loading_error, true);
-                    mShotsView.setLoadingError();
-                }
+                mShotsView.setLoadingIndicator(true, false, R.string.loading_error, true);
+                mShotsView.setLoadingError();
             }
         });
     }
