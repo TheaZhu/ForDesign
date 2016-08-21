@@ -25,6 +25,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.databinding.LaconicShotItemBinding;
 import com.thea.fordesign.databinding.ShotsFragBinding;
@@ -227,10 +228,13 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
     }
 
     @Override
-    public void showShotDetailsUi(int shotId, String imageUrl, View v) {
+    public void showShotDetailsUi(int shotId, String imageUrl, DribbbleUser user, View v) {
         Intent intent = new Intent(getContext(), ShotDetailActivity.class);
         intent.putExtra(ShotDetailActivity.EXTRA_SHOT_ID, shotId);
         intent.putExtra(ShotDetailActivity.EXTRA_SHOT_IMAGE_URL, imageUrl);
+        if (user != null)
+            intent.putExtra(ShotDetailActivity.EXTRA_USER, user);
+//        Palette p = Palette.generate(bitmap);
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            View sharedView = v.findViewById(R.id.iv_shot);
 //            String transitionName = getString(R.string.image_shot);
@@ -253,20 +257,16 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
 
     @Override
     public void showEmptyLayout(String message) {
-        ViewGroup parent = (ViewGroup) mViewDataBinding.getRoot();
         if (mEmptyView == null) {
-            mEmptyView = new MyEmptyView(getContext(), parent);
-            mEmptyView.setOnRetryClickListener(new View.OnClickListener() {
+            mEmptyView = new MyEmptyView(getContext(), (ViewGroup) mViewDataBinding.getRoot());
+            mEmptyView.setOnRetryClickListener(R.string.action_retry, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     loadShots();
                 }
             });
         }
-        mEmptyView.setEmptyMessage(message);
-        if (mEmptyView.getView().getParent() != parent && mEmptyView.getView().getParent() == null) {
-            ((ViewGroup) mViewDataBinding.getRoot()).addView(mEmptyView.getView());
-        }
+        mEmptyView.show(message);
     }
 
     @Override
@@ -276,9 +276,8 @@ public class ShotsFragment extends BaseDataBindingFragment<ShotsFragBinding> imp
 
     @Override
     public void hideEmptyLayout() {
-        ViewGroup parent = (ViewGroup) mViewDataBinding.getRoot();
-        if (mEmptyView.getView().getParent() == parent)
-            parent.removeView(mEmptyView.getView());
+        if (mEmptyView != null)
+            mEmptyView.dismiss();
     }
 
     @Override

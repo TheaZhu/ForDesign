@@ -1,7 +1,9 @@
 package com.thea.fordesign.like.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleUserLike;
@@ -43,6 +45,7 @@ public class UserLikesRepository implements UserLikesDataSource {
         return sInstance;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getLikes(@NonNull String authorization, final int page, int perPage, final LoadLikesCallback
             callback) {
@@ -72,6 +75,7 @@ public class UserLikesRepository implements UserLikesDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getLikes(@NonNull String authorization, @Nullable String url, final int page,
                          final LoadLikesCallback callback) {
@@ -101,10 +105,12 @@ public class UserLikesRepository implements UserLikesDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getLike(@NonNull String authorization, int likeId, GetLikeCallback callback) {
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void saveLike(@NonNull String authorization, @NonNull DribbbleUserLike like) {
     }

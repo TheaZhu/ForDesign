@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <data class=".databinding.SelectableBucketItemBinding">
@@ -62,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_bucket_name"
                 android:layout_toLeftOf="@id/iv_select_indicator"
-                android:text="@{bucket.shotsCount + &quot;  shot&quot;}"
+                android:text="@{bucket.shotsCount + &quot; &quot; + (bucket.shotsCount == 1 ? @string/indicator_shot : @string/indicator_shots)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Description"
                 tools:text="12 shots"/>
 

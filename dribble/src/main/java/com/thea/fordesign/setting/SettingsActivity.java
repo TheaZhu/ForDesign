@@ -1,5 +1,6 @@
 package com.thea.fordesign.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -10,6 +11,7 @@ import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
 import com.thea.fordesign.base.BaseDataBindingActivity;
 import com.thea.fordesign.databinding.SettingsActBinding;
+import com.thea.fordesign.setting.about.AboutActivity;
 import com.thea.fordesign.util.ActivityUtil;
 import com.thea.fordesign.util.Preconditions;
 
@@ -53,6 +55,11 @@ public class SettingsActivity extends BaseDataBindingActivity<SettingsActBinding
     @Override
     public void showSnack(@StringRes int resId) {
         showSnack(getString(resId));
+    }
+
+    @Override
+    public void showAboutUi() {
+        startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
     }
 
     @Override

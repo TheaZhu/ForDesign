@@ -114,12 +114,13 @@ public class ShotToBucketsPresenter implements ShotToBucketsContract.Presenter {
             removeShotFromBucket(v, bucket);
     }
 
-    private void addShotToBucket(final View v, DribbbleBucket bucket) {
+    private void addShotToBucket(final View v, final DribbbleBucket bucket) {
         mRepository.addShotToBucket(mUserModel.getDribbbleUserAccessToken(), bucket.getId(),
                 mShotId, new BucketsDataSource.AddShotToBucketCallback() {
 
                     @Override
                     public void onSuccess() {
+                        bucket.increaseShotsCount();
                         mView.showItemSelected(v, true);
                     }
 
@@ -130,12 +131,13 @@ public class ShotToBucketsPresenter implements ShotToBucketsContract.Presenter {
                 });
     }
 
-    private void removeShotFromBucket(final View v, DribbbleBucket bucket) {
+    private void removeShotFromBucket(final View v, final DribbbleBucket bucket) {
         mRepository.removeShotFromBucket(mUserModel.getDribbbleUserAccessToken(), bucket.getId(),
                 mShotId, new BucketsDataSource.RemoveShotFromBucketCallback() {
 
                     @Override
                     public void onSuccess() {
+                        bucket.decreaseShotsCount();
                         mView.showItemSelected(v, false);
                     }
 

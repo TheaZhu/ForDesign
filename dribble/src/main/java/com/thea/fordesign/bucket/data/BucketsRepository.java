@@ -1,11 +1,13 @@
 package com.thea.fordesign.bucket.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
-import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleBucket;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.util.LogUtil;
 
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ public class BucketsRepository implements BucketsDataSource {
         return Singleton.INSTANCE;
     }
 
+
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getBuckets(@NonNull String authorization, @Nullable String url, final int page,
                            final LoadBucketsCallback callback) {
@@ -68,6 +72,7 @@ public class BucketsRepository implements BucketsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getBuckets(@NonNull String authorization, final int page, final
     LoadBucketsCallback callback) {
@@ -100,6 +105,7 @@ public class BucketsRepository implements BucketsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getBucket(@NonNull String authorization, int bucketId, final GetBucketCallback
             callback) {
@@ -137,6 +143,7 @@ public class BucketsRepository implements BucketsDataSource {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void createBucket(@NonNull String authorization, @NonNull String name, String
             description, final SaveBucketCallback callback) {
@@ -167,6 +174,7 @@ public class BucketsRepository implements BucketsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void updateBucket(@NonNull String authorization, int bucketId, @NonNull String name,
                              String description, final SaveBucketCallback callback) {
@@ -198,6 +206,7 @@ public class BucketsRepository implements BucketsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void deleteBucket(@NonNull String authorization, int bucketId, final
     DeleteBucketCallback callback) {
@@ -228,6 +237,7 @@ public class BucketsRepository implements BucketsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void addShotToBucket(@NonNull String authorization, int bucketId, int shotId, final
     AddShotToBucketCallback callback) {
@@ -258,6 +268,7 @@ public class BucketsRepository implements BucketsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void removeShotFromBucket(@NonNull String authorization, int bucketId, int shotId,
                                      final RemoveShotFromBucketCallback callback) {
@@ -308,7 +319,7 @@ public class BucketsRepository implements BucketsDataSource {
 
     @Override
     public void updateBucket(DribbbleBucket bucket) {
-        mCachedBuckets.replace(bucket.getId(), bucket);
+        mCachedBuckets.put(bucket.getId(), bucket);
     }
 
     private void refreshCache(int page, List<DribbbleBucket> buckets) {

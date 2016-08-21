@@ -6,6 +6,7 @@ import android.view.View;
 import com.thea.fordesign.R;
 import com.thea.fordesign.UserModel;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.shot.data.ShotsDataSource;
 import com.thea.fordesign.shot.data.ShotsRepository;
 import com.thea.fordesign.util.LogUtil;
@@ -24,10 +25,21 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     private final ShotsRepository mRepository;
 
+    private DribbbleUser mUser = null;
+
     public ShotsPresenter(@NonNull ShotsContract.View shotsView, @NonNull UserModel userModel) {
         mShotsView = Preconditions.checkNotNull(shotsView, "shotsView cannot be null");
         mRepository = ShotsRepository.getInstance();
         mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
+        mShotsView.setPresenter(this);
+    }
+
+    public ShotsPresenter(@NonNull ShotsContract.View shotsView, @NonNull UserModel userModel, DribbbleUser user) {
+        mShotsView = Preconditions.checkNotNull(shotsView, "shotsView cannot be null");
+        mRepository = ShotsRepository.getInstance();
+        mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
+        mUser = user;
+
         mShotsView.setPresenter(this);
     }
 
@@ -139,7 +151,7 @@ public class ShotsPresenter implements ShotsContract.Presenter {
 
     @Override
     public void openShotDetails(@NonNull DribbbleShot requestedShot, View v) {
-        mShotsView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImage(), v);
+        mShotsView.showShotDetailsUi(requestedShot.getId(), requestedShot.getImage(), mUser, v);
     }
 
     @Override

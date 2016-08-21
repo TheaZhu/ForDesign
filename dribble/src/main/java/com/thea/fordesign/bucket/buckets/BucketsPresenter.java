@@ -1,5 +1,6 @@
 package com.thea.fordesign.bucket.buckets;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -8,6 +9,7 @@ import com.thea.fordesign.UserModel;
 import com.thea.fordesign.bean.DribbbleBucket;
 import com.thea.fordesign.bucket.data.BucketsDataSource;
 import com.thea.fordesign.bucket.data.BucketsRepository;
+import com.thea.fordesign.config.Constants;
 import com.thea.fordesign.util.Preconditions;
 
 import java.util.List;
@@ -38,6 +40,8 @@ public class BucketsPresenter implements BucketsContract.Presenter {
 
     @Override
     public void result(int requestCode, int resultCode) {
+        if (requestCode == Constants.REQUEST_SIGN_IN && resultCode == Activity.RESULT_OK)
+            loadBuckets();
     }
 
     @Override
@@ -59,8 +63,9 @@ public class BucketsPresenter implements BucketsContract.Presenter {
                     new BucketsDataSource.SaveBucketCallback() {
                         @Override
                         public void onBucketSaved(DribbbleBucket bucket) {
-                            mBucketsView.insertBucket(bucket);
+                            mBucketsView.hideEmptyLayout();
                             mBucketsView.showSnack(R.string.msg_create_bucket_success);
+                            mBucketsView.insertBucket(bucket);
                         }
 
                         @Override
@@ -123,8 +128,10 @@ public class BucketsPresenter implements BucketsContract.Presenter {
 
                     @Override
                     public void onBucketsLoaded(List<DribbbleBucket> buckets) {
-                        if (showLoadingUI)
+                        if (showLoadingUI) {
+                            mBucketsView.hideEmptyLayout();
                             mBucketsView.setRefreshingIndicator(false);
+                        }
                         if (isLoadMore)
                             mBucketsView.setLoadingIndicator(false, false, R.string.loading, false);
                         if (page == 1)
@@ -138,6 +145,7 @@ public class BucketsPresenter implements BucketsContract.Presenter {
                         if (showLoadingUI) {
                             mBucketsView.setRefreshingIndicator(false);
                             mBucketsView.showSnack(R.string.error_load_buckets);
+                            mBucketsView.showEmptyLayout(R.string.msg_empty_data);
                         }
                         if (isLoadMore) {
                             mBucketsView.setLoadingIndicator(true, false,

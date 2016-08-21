@@ -99,6 +99,14 @@ public class UserDetailFragment extends BaseDataBindingFragment<UserDetailFragBi
     }
 
     @Override
+    public void showMembersUi(@NonNull String membersUrl) {
+        Intent intent = new Intent(getContext(), UsersActivity.class);
+        intent.putExtra(UsersActivity.EXTRA_TITLE, getString(R.string.title_members));
+        intent.putExtra(UsersActivity.EXTRA_USERS_URL, membersUrl);
+        startActivity(intent);
+    }
+
+    @Override
     public void showLikesUi(@NonNull String likesUrl) {
         Intent intent = new Intent(getContext(), UserLikesActivity.class);
         intent.putExtra(UserLikesActivity.EXTRA_TITLE, getString(R.string.title_user_likes));

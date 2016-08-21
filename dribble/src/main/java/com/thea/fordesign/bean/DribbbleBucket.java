@@ -1,11 +1,15 @@
 package com.thea.fordesign.bean;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
 import com.google.gson.annotations.SerializedName;
+import com.thea.fordesign.BR;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
  */
-public class DribbbleBucket {
+public class DribbbleBucket extends BaseObservable {
 
     private int id;
     private String name;
@@ -52,12 +56,24 @@ public class DribbbleBucket {
         this.user = user;
     }
 
+    @Bindable
     public int getShotsCount() {
         return shotsCount;
     }
 
     public void setShotsCount(int shotsCount) {
         this.shotsCount = shotsCount;
+        notifyPropertyChanged(BR.shotsCount);
+    }
+
+    public void increaseShotsCount() {
+        shotsCount++;
+        notifyPropertyChanged(BR.shotsCount);
+    }
+
+    public void decreaseShotsCount() {
+        shotsCount--;
+        notifyPropertyChanged(BR.shotsCount);
     }
 
     public String getCreatedTime() {

@@ -34,7 +34,7 @@ public class DribbbleConstant {
 
     // default: any type
     public static final String SHOT_LIST_ANY = "any";
-    public static final String SHOT_LIST_ANIMATED = "animated";
+    public static final String SHOT_LIST_ANIMATED = "gif";
     public static final String SHOT_LIST_ATTACHMENT = "attachments";
     public static final String SHOT_LIST_DEBUT = "debuts";
     public static final String SHOT_LIST_PLAYOFF = "playoffs";
@@ -59,13 +59,15 @@ public class DribbbleConstant {
 
     public static final int PER_PAGE_DEFAULT = 12;
 
-
+    public static final int CODE_UNKNOWN_HOST = 198;
     public static final int CODE_REQUEST_FAIL = 199;
     public static final int CODE_OK = 200;
     public static final int CODE_CREATED = 201;
     public static final int CODE_NO_CONTENT = 204;
+    // 没有变化
     public static final int CODE_NOT_MODIFIED = 304;
     public static final int CODE_BAD_REQUEST = 400;
+    // 未登录或登录失效
     public static final int CODE_UNAUTHORIZED = 401;
     public static final int CODE_FORBIDDEN = 403;
     public static final int CODE_NOT_FOUND = 404;

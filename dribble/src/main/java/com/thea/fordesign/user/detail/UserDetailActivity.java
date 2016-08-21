@@ -25,8 +25,6 @@ import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.databinding.UserDetailActBinding;
 import com.thea.fordesign.shot.shots.ShotsFragment;
 import com.thea.fordesign.shot.shots.ShotsPresenter;
-import com.thea.fordesign.team.detail.TeamDetailFragment;
-import com.thea.fordesign.team.detail.TeamDetailPresenter;
 import com.thea.fordesign.user.followers.FollowersFragment;
 import com.thea.fordesign.user.followers.FollowersPresenter;
 import com.thea.fordesign.util.ActivityUtil;
@@ -102,29 +100,18 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
 
     private void initTabLayoutWithViewPager() {
         UserPagerAdapter adapter = new UserPagerAdapter(getSupportFragmentManager());
-        if (mUser.isTeam(mUser.getType())) {
-            TeamDetailFragment teamDetailFragment = TeamDetailFragment.newInstance();
-            new TeamDetailPresenter(teamDetailFragment, mPresenter, mUser);
-            adapter.addItem(teamDetailFragment, "DETAILS");
-
-        } else {
-            UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(mUser);
-            new UserDetailFragPresenter(userDetailFragment, mPresenter);
-            adapter.addItem(userDetailFragment, "DETAILS");
-        }
+        UserDetailFragment userDetailFragment = UserDetailFragment.newInstance(mUser);
+        new UserDetailFragPresenter(userDetailFragment, mPresenter);
+        adapter.addItem(userDetailFragment, getString(R.string.tab_details));
 
         ShotsFragment shotsFragment = ShotsFragment.newInstance(mUser.getShotsUrl(), false);
-        new ShotsPresenter(shotsFragment, new UserModel(this));
-        adapter.addItem(shotsFragment, "SHOTS");
+        new ShotsPresenter(shotsFragment, new UserModel(this), mUser);
+        adapter.addItem(shotsFragment, getString(R.string.tab_shots));
 
         FollowersFragment followingsFragment = FollowersFragment.newInstance(mUser
                 .getFollowingUrl(), FollowersFragment.TYPE_FOLLOWING, false);
         new FollowersPresenter(followingsFragment, new UserModel(this));
-        adapter.addItem(followingsFragment, "FOLLOWINGS");
-
-        /*ShotsFragment likesFragment = ShotsFragment.newInstance(mUser.getLikesUrl(), false);
-        new ShotsPresenter(likesFragment);
-        adapter.addItem(likesFragment, "LIKES");*/
+        adapter.addItem(followingsFragment, getString(R.string.tab_following));
 
         TabLayout tabLayout = mViewDataBinding.tlUserTabs;
         ViewPager viewPager = mViewDataBinding.vpUserPage;
@@ -160,7 +147,7 @@ public class UserDetailActivity extends BaseDataBindingActivity<UserDetailActBin
         if (followingString == null) {
             followingString = new SpannableString(getString(R.string.action_following));
             followingString.setSpan(new ForegroundColorSpan(Color.WHITE), 0, followingString
-                    .length()
+                            .length()
                     , 0);
         }
         mFollowMenuItem.setTitle(followingString);

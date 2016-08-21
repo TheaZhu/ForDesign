@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data class=".databinding.BucketItemBinding">
 
@@ -8,11 +8,11 @@
 
         <variable
             name="bucket"
-            type="com.thea.fordesign.bean.DribbbleBucket" />
+            type="com.thea.fordesign.bean.DribbbleBucket"/>
 
         <variable
             name="actionHandler"
-            type="com.thea.fordesign.bucket.BucketItemPresenter" />
+            type="com.thea.fordesign.bucket.BucketItemPresenter"/>
     </data>
 
     <!--<android.support.v7.widget.CardView
@@ -29,39 +29,39 @@
             android:id="@+id/ll_bucket_actions"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_gravity="end|right">
+            android:layout_gravity="end|right"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
                 android:background="@color/dribbble_charcoal"
+                android:onClick="@{() -> actionHandler.editBucket(bucket)}"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:src="@mipmap/ic_edit_white_24dp"
-                tools:ignore="ContentDescription"
-                android:onClick="@{() -> actionHandler.editBucket(bucket)}"/>
+                tools:ignore="ContentDescription"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:background="@color/error_text_color"
+                android:onClick="@{() -> actionHandler.deleteBucket(bucket)}"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:background="@color/error_text_color"
                 android:src="@mipmap/ic_delete_white_24dp"
-                tools:ignore="ContentDescription"
-                android:onClick="@{() -> actionHandler.deleteBucket(bucket)}"/>
+                tools:ignore="ContentDescription"/>
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> actionHandler.openBucketShots(bucket.id)}"
+            android:paddingBottom="@dimen/small_vertical_padding"
             android:paddingLeft="@dimen/normal_horizontal_padding"
             android:paddingRight="@dimen/normal_horizontal_padding"
-            android:paddingTop="@dimen/small_vertical_padding"
-            android:paddingBottom="@dimen/small_vertical_padding"
-            android:gravity="center_vertical"
-            android:onClick="@{() -> actionHandler.openBucketShots(bucket.id)}">
+            android:paddingTop="@dimen/small_vertical_padding">
 
             <TextView
                 android:id="@+id/tv_bucket_name"
@@ -70,7 +70,7 @@
                 android:text="@{bucket.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Name"
                 android:textStyle="bold"
-                tools:text="@string/dribbble" />
+                tools:text="@string/dribbble"/>
 
             <TextView
                 android:id="@+id/tv_shot_count"
@@ -79,21 +79,21 @@
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/tv_bucket_name"
                 android:gravity="right"
-                android:text="@{bucket.shotsCount + &quot;  shot&quot;}"
+                android:text="@{bucket.shotsCount + &quot; &quot; + (bucket.shotsCount == 1 ? @string/indicator_shot : @string/indicator_shots)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-                tools:text="@string/dribbble" />
+                tools:text="@string/dribbble"/>
 
             <TextView
                 android:id="@+id/tv_bucket_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_bucket_name"
+                android:autoLink="all"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:autoLink="all"
-                android:textColorLink="@drawable/tv_color_link"
                 android:text="@{Html.fromHtml(bucket.description ?? @string/default_bucket_description)}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Description" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Description"
+                android:textColorLink="@drawable/tv_color_link"/>
 
         </RelativeLayout>
 

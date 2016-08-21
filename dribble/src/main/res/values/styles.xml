@@ -3,9 +3,6 @@
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
-    <style name="DarkStatusBar" parent="Theme.AppCompat.NoActionBar">
-    </style>
-
     <style name="AppTheme" parent="Base.AppTheme">
         <item name="colorPrimary">@color/dribbble_charcoal</item>
         <item name="colorPrimaryDark">@color/grey_900</item>
@@ -42,9 +39,13 @@
         <!--<item name="titleTextColor">@color/indigo_500</item>-->
     </style>
 
+    <style name="AppTheme.AppBarOverlay.Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="AppTheme.AppBarOverlay.Light" parent="ThemeOverlay.AppCompat.ActionBar"/>
 
     <style name="TextAppearance.AppCompat.Name" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/normal_light_text_color</item>
@@ -63,6 +64,48 @@
     </style>
 
     <style name="TextAppearance.AppCompat.CountItem" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/secondary_light_text_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.TextView.Item" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@drawable/tv_color_action_item</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="UserCountsActionItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:lines">1</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:textColor">@drawable/tv_color_action_item</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="SettingsActionItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/normal_light_text_color</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/selectable_bucket_bg</item>
+    </style>
+
+    <style name="LicenseNameTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textColor">@color/normal_light_text_color</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="LicenseDescriptionTextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/secondary_light_text_color</item>
         <item name="android:textSize">14sp</item>
     </style>

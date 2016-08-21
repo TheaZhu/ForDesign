@@ -22,7 +22,7 @@
                 android:theme="@style/AppTheme.AppBarOverlay"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/my_followers"/>
+                app:title="@string/nav_my_followers"/>
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout

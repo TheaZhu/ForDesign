@@ -1,7 +1,9 @@
 package com.thea.fordesign.project.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleProject;
@@ -35,6 +37,7 @@ public class ProjectsRepository implements ProjectsDataSource {
         return Singleton.INSTANCE;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getProjects(@NonNull String authorization, int userId, final int page, final
     LoadProjectsCallback callback) {
@@ -71,6 +74,7 @@ public class ProjectsRepository implements ProjectsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getProject(@NonNull String authorization, int projectId, final GetProjectCallback
             callback) {
@@ -108,6 +112,7 @@ public class ProjectsRepository implements ProjectsDataSource {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void saveProject(@NonNull String authorization, @NonNull DribbbleProject project) {
 

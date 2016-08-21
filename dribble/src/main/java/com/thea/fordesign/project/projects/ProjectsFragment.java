@@ -15,10 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.R;
 import com.thea.fordesign.base.BaseDataBindingFragment;
 import com.thea.fordesign.bean.DribbbleProject;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.databinding.ProjectItemBinding;
 import com.thea.fordesign.databinding.ProjectsFragBinding;
 import com.thea.fordesign.shot.shots.ShotsActivity;

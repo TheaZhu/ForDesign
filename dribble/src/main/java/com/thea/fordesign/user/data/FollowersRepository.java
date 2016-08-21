@@ -1,7 +1,9 @@
 package com.thea.fordesign.user.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleFollower;
@@ -34,6 +36,7 @@ public class FollowersRepository implements FollowersDataSource {
         return Singleton.INSTANCE;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     public void getFollowers(@NonNull String authorization, @Nullable String url, final int page,
                              final LoadFollowersCallback callback) {
         if (mCachedFollowers == null || mCacheIsDirty) {

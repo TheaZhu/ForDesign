@@ -136,8 +136,8 @@ public class MainActivity extends BaseActivity implements NavigationView
                 }
             });
         } else {
-            mAvatar.setImageResource(R.mipmap.ic_dribbble_square);
-            mUsername.setText(R.string.sign_in);
+            mAvatar.setImageResource(R.mipmap.ic_dribbble);
+            mUsername.setText(R.string.nav_sign_in);
         }
     }
 

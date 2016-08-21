@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/ic_location_disabled_24dp" android:state_enabled="false"/>
+    <item android:drawable="@mipmap/ic_location_charcoal_24dp" android:state_enabled="true" android:state_pressed="true"/>
+    <item android:drawable="@mipmap/ic_location_grey_24dp"/>
+</selector>

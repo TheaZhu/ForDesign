@@ -2,7 +2,6 @@ package com.thea.fordesign.setting;
 
 import com.thea.fordesign.MainActivity;
 import com.thea.fordesign.UserModel;
-import com.thea.fordesign.util.LogUtil;
 import com.thea.fordesign.util.Preconditions;
 
 /**
@@ -18,6 +17,11 @@ public class SettingsPresenter implements SettingsContract.Presenter {
     public SettingsPresenter(SettingsContract.View view, UserModel userModel) {
         mView = Preconditions.checkNotNull(view, "view cannot be null");
         mUserModel = Preconditions.checkNotNull(userModel, "userModel cannot be null");
+    }
+
+    @Override
+    public void openAbout() {
+        mView.showAboutUi();
     }
 
     @Override

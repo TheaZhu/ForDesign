@@ -32,7 +32,8 @@ public class BucketsActivity extends BaseDataBindingActivity<BucketsActBinding> 
             BucketsFragment bucketsFragment = (BucketsFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.fl_content);
             if (bucketsFragment == null) {
-                bucketsFragment = BucketsFragment.newInstance(canAdd);
+                bucketsFragment = BucketsFragment.newInstance(canAdd, intent.getStringExtra
+                        (EXTRA_TITLE).equals(getString(R.string.title_my_buckets)));
                 ActivityUtil.addFragmentToActivity(
                         getSupportFragmentManager(), bucketsFragment, R.id.fl_content);
             }

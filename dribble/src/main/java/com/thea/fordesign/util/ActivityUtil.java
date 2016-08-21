@@ -1,6 +1,8 @@
 package com.thea.fordesign.util;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.thea.fordesign.R;
+import com.thea.fordesign.config.Constants;
+import com.thea.fordesign.sign.SignInActivity;
 
 /**
  * This provides methods to help Activities load their UI.
@@ -32,7 +36,7 @@ public class ActivityUtil {
      * performed by the {@code fragmentManager}.
      */
     public static void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull
-            Fragment fragment, @IdRes int frameId) {
+    Fragment fragment, @IdRes int frameId) {
         Preconditions.checkNotNull(fragmentManager, "fragmentManager cannot be null");
         Preconditions.checkNotNull(fragment, "fragment cannot be null");
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -51,5 +55,14 @@ public class ActivityUtil {
                         R.color.inactivated_light_btn_text_color));
             }
         });
+    }
+
+    public static void openSignInActivity(Context context) {
+        context.startActivity(new Intent(context, SignInActivity.class));
+    }
+
+    public static void openSignInActivity(@NonNull Fragment fragment) {
+        fragment.startActivityForResult(new Intent(fragment.getContext(), SignInActivity.class),
+                Constants.REQUEST_SIGN_IN);
     }
 }

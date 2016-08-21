@@ -12,8 +12,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/normal_horizontal_margin"
         android:contentDescription="@string/default_image_description"
-        android:src="@mipmap/default_user_avatar"
-        android:transitionName="@string/image_user_avatar"/>
+        android:src="@mipmap/default_user_avatar"/>
 
     <TextView
         android:id="@+id/tv_user_name"

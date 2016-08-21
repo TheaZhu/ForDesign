@@ -1,12 +1,11 @@
 package com.thea.fordesign.shot.detail;
 
-import android.content.ActivityNotFoundException;
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresPermission;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -60,6 +59,7 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
         mView.showSnack(R.string.msg_shot_image_copy_link_success);
     }
 
+    @RequiresPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     @Override
     public void shareImage() {
         Observable.create(new Observable.OnSubscribe<File>() {
@@ -95,6 +95,7 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
                 });
     }
 
+    @RequiresPermission(allOf = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE})
     @Override
     public void saveImageToLocal() {
         mView.showSnack(R.string.msg_shot_image_loading);
@@ -143,7 +144,7 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
 
                                 @Override
                                 public void onClick(View view) {
-                                    openFile(mView.getContext(), new File(FileUtil
+                                    FileUtil.openFile(mView.getContext(), new File(FileUtil
                                             .DRIBBBLE_IMAGE_DIRECTORY + mImageName));
                                 }
                             });
@@ -186,19 +187,5 @@ public class ShotImagePresenter implements ShotImageContract.Presenter {
                         responseBody.close();
                     }
                 });*/
-    }
-
-    private void openFile(Context context, File file) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setDataAndType(Uri.fromFile(file), "image/*");
-        try {
-            context.startActivity(intent);
-            context.startActivity(Intent.createChooser(intent, context.getString(R.string
-                    .title_select_browse_tool)));
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }

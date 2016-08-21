@@ -181,7 +181,7 @@ public class ShotToBucketsFragment extends BaseDataBindingFragment<ShotToBuckets
         final EditText etName = (EditText) view.findViewById(R.id.et_bucket_name);
         final EditText etDescription = (EditText) view.findViewById(R.id.et_bucket_description);
         final AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.title_create_bucket)
+                .setTitle(R.string.dialog_title_create_bucket)
                 .setView(view)
                 .setPositiveButton(R.string.btn_create_bucket, new DialogInterface
                         .OnClickListener() {

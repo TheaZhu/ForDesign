@@ -1,6 +1,12 @@
 package com.thea.fordesign.util;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
+
+import com.thea.fordesign.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -137,6 +143,20 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public static void openFile(Context context, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(file), "image/*");
+        try {
+            context.startActivity(intent);
+            context.startActivity(Intent.createChooser(intent, context.getString(R.string
+                    .title_select_browse_tool)));
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

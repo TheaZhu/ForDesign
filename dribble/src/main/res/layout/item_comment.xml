@@ -48,8 +48,7 @@
             android:lines="1"
             android:onClick="@{() -> actionHandler.openUserDetails(comment.user, ivUserAvatar)}"
             android:text="@{comment.user.name}"
-            android:textColor="@color/dribbble_charcoal"
-            tools:text="@string/default_designer" />
+            android:textColor="@color/dribbble_charcoal" />
 
         <TextView
             android:id="@+id/tv_comment_body"
@@ -63,8 +62,7 @@
             android:lines="1"
             android:text="@{Html.fromHtml(comment.body ?? @string/default_comment_body)}"
             android:textColor="@color/dribbble_slate"
-            android:textColorLink="@drawable/tv_color_link"
-            tools:text="@string/default_description" />
+            android:textColorLink="@drawable/tv_color_link" />
 
         <TextView
             android:id="@+id/tv_comment_time"
@@ -74,8 +72,7 @@
             android:layout_below="@id/tv_comment_body"
             android:layout_marginTop="@dimen/small_vertical_margin"
             android:text="@{actionHandler.formatTime(comment.updatedTime)}"
-            android:textColor="@color/dribbble_slate"
-            tools:text="@string/default_time" />
+            android:textColor="@color/dribbble_slate" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -89,7 +86,7 @@
                 android:id="@+id/iv_like_comment"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@mipmap/ic_like_inactive_normal"
+                android:src="@mipmap/ic_favorite_outline_grey_24dp"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -98,8 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/iv_like_comment"
                 android:text="@{String.valueOf(comment.likesCount)}"
-                android:textColor="@color/dribbble_slate"
-                tools:text="@string/default_likes_count" />
+                android:textColor="@color/dribbble_slate" />
 
         </RelativeLayout>
 

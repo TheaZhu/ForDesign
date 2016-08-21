@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data class=".databinding.AboutActBinding">
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.setting.about.AboutContract.Presenter"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/title_about"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/small_vertical_margin"
+                android:src="@mipmap/ic_launcher"
+                tools:ignore="ContentDescription"/>
+
+            <TextView
+                android:id="@+id/tv_version"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center"
+                android:textColor="@color/grey_700"
+                android:textSize="15sp"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="1dp"
+                android:onClick="@{() -> actionHandler.checkUpdate()}"
+                android:text="@string/action_check_update"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="1dp"
+                android:onClick="@{() -> actionHandler.openVersionIllustration()}"
+                android:text="@string/action_version_illustration"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="1dp"
+                android:onClick="@{() -> actionHandler.openFeedback()}"
+                android:text="@string/action_feedback"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="1dp"
+                android:onClick="@{() -> actionHandler.openStar()}"
+                android:text="@string/action_go_star"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="1dp"
+                android:onClick="@{() -> actionHandler.openCopyrightInformation(context)}"
+                android:text="@string/action_copyright_information"/>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

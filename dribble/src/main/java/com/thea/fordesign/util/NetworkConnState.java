@@ -1,8 +1,10 @@
 package com.thea.fordesign.util;
 
+import android.Manifest;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.RequiresPermission;
 
 /**
  * @author Thea (theazhu0321@gmail.com)
@@ -14,6 +16,7 @@ public class NetworkConnState {
      * @param context
      * @return
      */
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     public static boolean isConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
@@ -30,6 +33,7 @@ public class NetworkConnState {
      * @param context
      * @return
      */
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     public static int getConnectType(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);

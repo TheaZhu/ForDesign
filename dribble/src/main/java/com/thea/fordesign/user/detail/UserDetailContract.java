@@ -58,6 +58,8 @@ public interface UserDetailContract {
 
         void showTeamsUi(@NonNull String teamsUrl);
 
+        void showMembersUi(@NonNull String membersUrl);
+
         void showWeb(@NonNull String web);
 
         void showTwitter(@NonNull String twitter);
@@ -78,6 +80,8 @@ public interface UserDetailContract {
         void openFollowings(@NonNull String followingsUrl);
 
         void openTeams(@NonNull String teamsUrl);
+
+        void openMembers(@NonNull String membersUrl);
 
         void openWeb(String web);
 

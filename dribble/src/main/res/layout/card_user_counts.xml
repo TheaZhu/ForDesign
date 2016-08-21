@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View"/>
 
         <variable
             name="user"
@@ -25,190 +26,103 @@
             android:paddingLeft="@dimen/normal_horizontal_margin"
             android:paddingRight="@dimen/normal_horizontal_margin">
 
-            <LinearLayout
-                android:id="@+id/ll_shots_count"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_shots_count"
+                style="@style/UserCountsActionItem"
+                android:drawableLeft="@drawable/ic_action_shot"
+                android:enabled="@{user.shotsCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openShots(user.shotsUrl)}"
-                android:orientation="horizontal"
-                app:layout_widthPercent="50%">
+                android:text="@{user.shotsCount + &quot; &quot; + @string/indicator_shots}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_shot_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.shotsCount + &quot;  shots&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_likes_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignRight="@id/ll_shots_count"
-                android:layout_below="@id/ll_shots_count"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_likes_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignRight="@id/tv_shots_count"
+                android:layout_below="@id/tv_shots_count"
+                android:drawableLeft="@drawable/ic_action_favorite"
+                android:enabled="@{user.likesCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openLikes(user.likesUrl)}"
-                android:orientation="horizontal">
+                android:text="@{user.likesCount + &quot; &quot; + @string/indicator_likes}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_likes_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.likesCount + &quot;  likes&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_buckets_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignRight="@id/ll_shots_count"
-                android:layout_below="@id/ll_likes_count"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_buckets_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignRight="@id/tv_shots_count"
+                android:layout_below="@id/tv_likes_count"
+                android:drawableLeft="@drawable/ic_action_bucket_shot"
+                android:enabled="@{user.bucketsCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openBuckets(user.bucketsUrl)}"
-                android:orientation="horizontal">
+                android:text="@{user.bucketsCount + &quot; &quot; + @string/indicator_buckets}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_bucket_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.bucketsCount + &quot;  buckets&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_projects_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignRight="@id/ll_shots_count"
-                android:layout_below="@id/ll_buckets_count"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_projects_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignRight="@id/tv_shots_count"
+                android:layout_below="@id/tv_buckets_count"
+                android:drawableLeft="@drawable/ic_action_project"
+                android:enabled="@{user.projectsCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openProjects(user.id)}"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="center"
-                    android:src="@mipmap/ic_project_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.projectsCount + &quot;  projects&quot;}"/>
-            </LinearLayout>
+                android:text="@{user.projectsCount + &quot; &quot; + @string/indicator_projects}"
+                app:layout_widthPercent="50%"/>
 
             <View
                 android:id="@+id/view_divider"
                 android:layout_width="1dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/ll_projects_count"
+                android:layout_alignBottom="@id/tv_projects_count"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/normal_horizontal_margin"
                 android:layout_marginRight="@dimen/normal_horizontal_margin"
                 android:background="@color/grey_400"
                 app:layout_heightPercent="100%"/>
 
-            <LinearLayout
-                android:id="@+id/ll_followings_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+            <TextView
+                android:id="@+id/tv_followings_count"
+                style="@style/UserCountsActionItem"
                 android:layout_toRightOf="@id/view_divider"
-                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_action_following"
+                android:enabled="@{user.followingsCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openFollowings(user.followingUrl)}"
-                android:orientation="horizontal">
+                android:text="@{user.followingsCount + &quot; &quot; + @string/indicator_following}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_following_blue_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.followingsCount + &quot;  followings&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_followers_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignLeft="@id/ll_followings_count"
-                android:layout_below="@id/ll_followings_count"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_followers_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignLeft="@id/tv_followings_count"
+                android:layout_below="@id/tv_followings_count"
+                android:drawableLeft="@drawable/ic_action_follower"
+                android:enabled="@{user.followersCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openFollowers(user.followersUrl)}"
-                android:orientation="horizontal">
+                android:text="@{user.followersCount + &quot; &quot; + @string/indicator_followers}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_follower_blue_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.followersCount + &quot;  followers&quot;}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_teams_count"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_alignLeft="@id/ll_followers_count"
-                android:layout_below="@id/ll_followers_count"
-                android:gravity="center_vertical"
+            <TextView
+                android:id="@+id/tv_teams_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignLeft="@id/tv_followings_count"
+                android:layout_below="@id/tv_followers_count"
+                android:drawableLeft="@drawable/ic_action_team"
+                android:visibility="@{user.isTeam(user.type) ? View.GONE : View.VISIBLE}"
+                android:enabled="@{user.teamsCount == 0 ? false : true}"
                 android:onClick="@{() -> actionHandler.openTeams(user.teamsUrl)}"
-                android:orientation="horizontal">
+                android:text="@{user.teamsCount + &quot; &quot; + @string/indicator_teams}"
+                app:layout_widthPercent="50%"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_team_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.teamsCount + &quot;  teams&quot;}"/>
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_members_count"
+                style="@style/UserCountsActionItem"
+                android:layout_alignLeft="@id/tv_followings_count"
+                android:layout_below="@id/tv_teams_count"
+                android:drawableLeft="@drawable/ic_action_team"
+                android:visibility="@{user.isTeam(user.type) ? View.VISIBLE : View.GONE}"
+                android:enabled="@{user.membersCount == 0 ? false : true}"
+                android:onClick="@{() -> actionHandler.openMembers(user.membersUrl)}"
+                android:text="@{user.membersCount + &quot; &quot; + @string/indicator_members}"
+                app:layout_widthPercent="50%"/>
         </android.support.percent.PercentRelativeLayout>
     </android.support.v7.widget.CardView>
 </layout>

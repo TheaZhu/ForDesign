@@ -1,7 +1,9 @@
 package com.thea.fordesign.user.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleUser;
@@ -35,6 +37,7 @@ public class UsersRepository implements UsersDataSource {
         return Singleton.INSTANCE;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getUsers(@NonNull String authorization, @Nullable String url, final int page, final
     LoadUsersCallback callback) {
@@ -67,6 +70,7 @@ public class UsersRepository implements UsersDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getUser(@NonNull String authorization, int userId, final GetUserCallback
             callback) {
@@ -104,6 +108,7 @@ public class UsersRepository implements UsersDataSource {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void saveUser(@NonNull String authorization, @NonNull DribbbleUser user) {
 

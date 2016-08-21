@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="com.thea.fordesign.user.profile.UserProfileActivity">
 
@@ -37,11 +36,11 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> actionHandler.close()}"
             android:paddingLeft="@dimen/normal_horizontal_padding"
             android:paddingRight="@dimen/normal_horizontal_padding"
-            android:src="@mipmap/ic_arrow_back_white_24dp"
             android:scaleType="center"
-            android:onClick="@{() -> actionHandler.close()}"
+            android:src="@mipmap/ic_arrow_back_white_24dp"
             tools:ignore="ContentDescription"/>
 
         <ImageView
@@ -49,36 +48,38 @@
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="24dp"
+            android:onClick="@{() -> actionHandler.settings()}"
             android:paddingLeft="@dimen/normal_horizontal_padding"
             android:paddingRight="@dimen/normal_horizontal_padding"
-            android:onClick="@{() -> actionHandler.settings()}"
             android:scaleType="center"
             android:src="@mipmap/ic_settings_white_24dp"
             tools:ignore="ContentDescription"/>
 
-        <android.support.v7.widget.CardView
+        <!--<android.support.v7.widget.CardView
             android:id="@+id/cv_avatar"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="75dp"
-            app:cardCornerRadius="80dp">
+            app:cardCornerRadius="80dp">-->
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_avatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:transitionName="@string/image_user_avatar"
-                android:src="@mipmap/default_user_avatar"
-                tools:ignore="ContentDescription"/>
-        </android.support.v7.widget.CardView>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_user_avatar"
+            android:transitionName="@string/image_user_avatar"
+            tools:ignore="ContentDescription"/>
+        <!--</android.support.v7.widget.CardView>-->
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_below="@id/cv_avatar"
+            android:layout_below="@id/iv_avatar"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/normal_horizontal_padding"
@@ -132,6 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_bio"
             android:layout_marginTop="@dimen/small_vertical_margin"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -154,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/shots"
+                    android:text="@{user.shotsCount == 1 ? @string/indicator_shot : @string/indicator_shots}"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
 
             </LinearLayout>
@@ -178,7 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/projects"
+                    android:text="@string/indicator_projects"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
 
             </LinearLayout>
@@ -202,7 +204,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/followers"
+                    android:text="@string/indicator_followers"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
 
             </LinearLayout>
@@ -212,6 +214,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_counts_1"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -233,7 +236,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/following"
+                    android:text="@string/indicator_following"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
 
             </LinearLayout>
@@ -257,7 +260,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/buckets"
+                    android:text="@{user.bucketsCount == 1 ? @string/indicator_bucket : @string/indicator_buckets}"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
 
             </LinearLayout>
@@ -281,7 +284,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/likes"
+                    android:text="@string/indicator_likes"
                     android:textAppearance="@style/TextAppearance.AppCompat.CountItem"/>
             </LinearLayout>
         </LinearLayout>

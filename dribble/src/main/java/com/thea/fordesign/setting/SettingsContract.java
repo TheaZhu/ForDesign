@@ -11,11 +11,15 @@ public interface SettingsContract {
 
     interface View extends BaseView<Presenter> {
 
+        void showAboutUi();
+
         void showPrevious(int resultCode);
 
     }
 
     interface Presenter extends BasePresenter {
+
+        void openAbout();
 
         void signUp();
     }

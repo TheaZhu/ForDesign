@@ -1,6 +1,8 @@
 package com.thea.fordesign.shot.detail;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleShot;
@@ -34,6 +36,11 @@ public interface ShotDetailContract {
 
         void showInBrowser(@NonNull String url);
 
+        void showShareChooser(@NonNull String url);
+
+        void showSnack(@StringRes int resId, @StringRes int actionResId, android.view.View
+                .OnClickListener clickListener);
+
         void hideMoreActionDialog();
 
     }
@@ -57,6 +64,12 @@ public interface ShotDetailContract {
         void openBuckets(@NonNull DribbbleShot shot);
 
         void openInBrowser();
+
+        void copyShotUrl(Context context);
+
+        void shareShot();
+
+        void saveImageToLocal(Context context);
 
         String formatTime(String timeStr);
 

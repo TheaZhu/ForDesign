@@ -16,8 +16,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-                  android:theme="@style/AppTheme.ShotDetail">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -67,6 +68,10 @@
             android:theme="@style/AppTheme.Buckets">
         </activity>
         <activity android:name=".user.profile.UserProfileActivity">
+        </activity>
+        <activity android:name=".setting.about.AboutActivity">
+        </activity>
+        <activity android:name=".setting.licenses.LicensesActivity">
         </activity>
     </application>
 

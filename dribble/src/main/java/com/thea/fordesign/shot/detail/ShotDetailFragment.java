@@ -82,7 +82,17 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
             case android.R.id.home:
                 getActivity().onBackPressed();
                 return true;
-            case R.id.action_share:
+            case R.id.action_share_link:
+                mPresenter.shareShot();
+                return true;
+            case R.id.action_copy_link:
+                mPresenter.copyShotUrl(getContext());
+                return true;
+            case R.id.action_open_in_browser:
+                mPresenter.openInBrowser();
+                return true;
+            case R.id.action_download_image:
+                mPresenter.saveImageToLocal(getContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -135,7 +145,7 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     @Override
     public void showUserDetailsUi(@NonNull DribbbleUser user, View v) {
         Intent intent = new Intent(getContext(), UserDetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra(UserDetailActivity.EXTRA_USER, user);
         if (Build.VERSION.SDK_INT >= 21) {
             String transitionName = getString(R.string.image_user_avatar);
@@ -177,7 +187,7 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     public void showMoreActionDialog(@NonNull DribbbleShot shot) {
         if (mActionsDataBinding == null) {
             mActionsDataBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()
-            ), R.layout.card_shot_actions, (ViewGroup) mRootView, false);
+            ), R.layout.layout_shot_actions, (ViewGroup) mRootView, false);
             mActionsDataBinding.setShot(shot);
             mActionsDataBinding.setActionHandler(mPresenter);
         }
@@ -200,6 +210,28 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     }
 
     @Override
+    public void showShareChooser(@NonNull String url) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+        shareIntent.setType("text/plain");
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.title_send_to)));
+    }
+
+    @Override
+    public void showSnack(@StringRes final int resId, @StringRes final int actionResId, final
+    View.OnClickListener clickListener) {
+        mRootView.post(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(mRootView, resId, Snackbar.LENGTH_SHORT)
+                        .setAction(actionResId, clickListener)
+                        .show();
+            }
+        });
+    }
+
+    @Override
     public void hideMoreActionDialog() {
         if (mActionsDialog != null)
             mActionsDialog.dismiss();
@@ -208,22 +240,5 @@ public class ShotDetailFragment extends BaseDataBindingFragment<ShotDetailFragBi
     @Override
     public void setPresenter(@NonNull ShotDetailContract.Presenter presenter) {
         mPresenter = Preconditions.checkNotNull(presenter, "presenter cannot be null");
-    }
-
-    @Override
-    public void showSnack(final String msg) {
-        final View view = mViewDataBinding.getRoot();
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
-                        .show();
-            }
-        });
-    }
-
-    @Override
-    public void showSnack(@StringRes int resId) {
-        showSnack(getString(resId));
     }
 }

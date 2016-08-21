@@ -1,7 +1,9 @@
 package com.thea.fordesign.like.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleShotLike;
@@ -34,6 +36,7 @@ public class ShotLikesRepository implements ShotLikesDataSource {
         return Singleton.INSTANCE;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     public void getShotLikes(@NonNull String authorization, @Nullable String url, final int page,
                              final LoadLikesCallback callback) {
         if (mCachedShotLikes == null || mCacheIsDirty) {

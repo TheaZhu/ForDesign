@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class=".databinding.LicensesActBinding">
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:title="@string/title_copyright_information"/>
+        </android.support.design.widget.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/fl_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/normal_vertical_padding"
+                android:paddingLeft="@dimen/normal_horizontal_padding"
+                android:paddingRight="@dimen/normal_horizontal_padding">
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Retrofit"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright 2013 Square, Inc."/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Glide"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright 2012 Jake Wharton"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="RxAndroid"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright 2015 The RxAndroid authors"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="PhotoView"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright 2011, 2012 Chris Banes"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="CircleImageView"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright 2014 - 2016 Henning Dodenhof"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Android Design Support Library"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright (C) 2015 The Android Open Source Project"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Android Percent Support Library"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright (C) 2015 The Android Open Source Project"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Android V7 Support Library"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright (C) 2014 The Android Open Source Project"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Android Material Support Library"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright (C) 2013-2015 The Android Open Source Project"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+
+                <TextView
+                    style="@style/LicenseNameTextView"
+                    android:text="Android V4 Support Library"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="Copyright (C) 2011 The Android Open Source Project"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:layout_marginTop="@dimen/normal_vertical_margin"
+                    android:text="Licensed under the Apache License, Version 2.0"/>
+
+                <TextView
+                    style="@style/LicenseDescriptionTextView"
+                    android:text="http://www.apache.org/licenses/LICENSE-2.0"/>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

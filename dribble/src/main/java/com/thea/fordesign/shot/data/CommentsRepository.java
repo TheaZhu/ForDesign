@@ -1,11 +1,13 @@
 package com.thea.fordesign.shot.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
-import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.DribbbleService;
 import com.thea.fordesign.bean.DribbbleComment;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.util.LogUtil;
 
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ public class CommentsRepository implements CommentsDataSource {
         return sInstance;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getComments(@NonNull String authorization, @Nullable String url, final int page,
                             final LoadCommentsCallback callback) {
@@ -79,6 +82,7 @@ public class CommentsRepository implements CommentsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getComment(@NonNull String authorization, int commentId, final GetCommentCallback
             callback) {
@@ -96,31 +100,37 @@ public class CommentsRepository implements CommentsDataSource {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void saveComment(@NonNull DribbbleComment comment) {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void likeComment(@NonNull DribbbleComment comment) {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void likeComment(int commentId) {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void dislikeComment(@NonNull DribbbleComment comment) {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void dislikeComment(int commentId) {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void createComment(@NonNull String authorization, int shotId, String commentBody,
                               final CreateCommentCallback callback) {

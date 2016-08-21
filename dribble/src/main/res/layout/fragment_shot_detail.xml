@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data class=".databinding.ShotDetailFragBinding">
 
-        <import type="android.text.Html" />
+        <import type="android.text.Html"/>
 
         <variable
             name="shot"
-            type="com.thea.fordesign.bean.DribbbleShot" />
+            type="com.thea.fordesign.bean.DribbbleShot"/>
 
         <variable
             name="actionHandler"
-            type="com.thea.fordesign.shot.detail.ShotDetailContract.Presenter" />
+            type="com.thea.fordesign.shot.detail.ShotDetailContract.Presenter"/>
     </data>
 
     <RelativeLayout
@@ -27,17 +27,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_vertical_margin"
             app:actionHandler="@{actionHandler}"
-            app:user="@{shot.user}" />
+            app:user="@{shot.user}"/>
 
         <include
             android:id="@+id/ll_actions"
-            layout="@layout/card_shot_actions"
+            layout="@layout/layout_shot_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/cv_designer"
             android:layout_marginTop="@dimen/small_vertical_margin"
             app:actionHandler="@{actionHandler}"
-            app:shot="@{shot}" />
+            app:shot="@{shot}"/>
 
         <TextView
             android:id="@+id/tv_shot_title"
@@ -51,8 +51,7 @@
             android:lines="1"
             android:text="@{shot.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Name"
-            android:textStyle="bold"
-            tools:text="@string/default_title" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tv_shot_description"
@@ -65,11 +64,10 @@
             android:overScrollMode="ifContentScrolls"
             android:text="@{Html.fromHtml(shot.description ?? @string/default_shot_description)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Description"
-            android:textColorLink="@drawable/tv_color_link"
-            tools:text="@string/default_description" />
+            android:textColorLink="@drawable/tv_color_link"/>
 
 
-        <!--<include layout="@layout/card_shot_actions"
+        <!--<include layout="@layout/layout_shot_actions"
             android:id="@+id/ll_actions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +84,7 @@
             tools:ignore="ContentDescription"/>-->
 
         <!--<include
-            layout="@layout/card_shot_actions"/>-->
+            layout="@layout/layout_shot_actions"/>-->
 
         <!--<include
             android:id="@+id/cv_counts"

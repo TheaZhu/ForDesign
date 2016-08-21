@@ -1,13 +1,15 @@
 package com.thea.fordesign.shot.data;
 
+import android.Manifest;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 
 import com.thea.fordesign.DribbbleService;
-import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.bean.DribbbleShot;
 import com.thea.fordesign.bean.DribbbleShotLike;
 import com.thea.fordesign.bean.DribbbleUserLike;
+import com.thea.fordesign.config.DribbbleConstant;
 import com.thea.fordesign.util.LogUtil;
 
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class ShotsRepository implements ShotsDataSource {
         return sInstance;
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getShots(@NonNull String authorization, @Nullable String list, @Nullable String
             sort, @Nullable String timeframe, @Nullable String date, final int page, int perPage,
@@ -93,6 +96,7 @@ public class ShotsRepository implements ShotsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getShots(@NonNull String authorization, @Nullable String url, final int page,
                          final LoadShotsCallback callback) {
@@ -125,6 +129,7 @@ public class ShotsRepository implements ShotsDataSource {
         }
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void getShot(@NonNull String authorization, int shotId,
                         final GetShotCallback callback) {
@@ -163,6 +168,7 @@ public class ShotsRepository implements ShotsDataSource {
 
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void saveShot(@NonNull String authorization, @NonNull DribbbleShot shot) {
 
@@ -174,6 +180,7 @@ public class ShotsRepository implements ShotsDataSource {
         likeShot(authorization, shot.getId(), callback);
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void likeShot(@NonNull String authorization, int shotId, final LikeShotCallback
             callback) {
@@ -205,6 +212,7 @@ public class ShotsRepository implements ShotsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void unlikeShot(@NonNull String authorization, int shotId, final UnlikeShotCallback callback) {
         Call<Void> call = mService.unlikeShot(authorization, shotId);
@@ -235,6 +243,7 @@ public class ShotsRepository implements ShotsDataSource {
         });
     }
 
+    @RequiresPermission(Manifest.permission.INTERNET)
     @Override
     public void checkLikeShot(@NonNull String authorization, int shotId, final CheckLikeShotCallback
             callback) {

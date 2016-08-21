@@ -3,9 +3,27 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_share"
-        android:title="SHARE"
+        android:id="@+id/action_share_link"
+        android:title="@string/action_share_link"
         android:icon="@mipmap/ic_share_white_normal"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_copy_link"
+        android:title="@string/action_copy_link"
+        android:icon="@mipmap/ic_copy_link_white_24dp"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_open_in_browser"
+        android:title="@string/action_open_in_browser"
+        android:icon="@mipmap/ic_open_in_browser_white_24dp"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_download_image"
+        android:title="@string/action_download_image"
+        android:icon="@mipmap/ic_file_download_white_24dp"
+        app:showAsAction="never"/>
 
 </menu>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data class=".databinding.ProjectItemBinding">
@@ -66,7 +65,7 @@
                     android:layout_below="@id/tv_project_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/small_vertical_margin"
-                    android:text="@{project.shotsCount + &quot;  shot&quot;}"
+                    android:text="@{project.shotsCount + &quot; &quot; + (project.shotsCount == 1 ? @string/indicator_shot : @string/indicator_shots)}"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     tools:text="@string/dribbble" />

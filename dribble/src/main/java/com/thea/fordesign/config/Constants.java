@@ -31,5 +31,7 @@ public class Constants {
     public static final int BUCKET_SHOTS_ACTIVITY = 20;
     public static final int PROJECT_SHOTS_ACTIVITY = 21;
 
+    public static final int REQUEST_SIGN_IN = 3;
+
 
 }

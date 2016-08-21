@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data class=".databinding.UserDetailFragBinding">
 
@@ -35,83 +34,39 @@
                 app:actionHandler="@{actionHandler}"
                 app:user="@{user}"/>
 
-            <LinearLayout
-                android:id="@+id/ll_location"
+            <TextView
+                android:id="@+id/tv_location"
+                style="@style/UserCountsActionItem"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
                 android:layout_marginTop="@dimen/normal_vertical_margin"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:drawableLeft="@drawable/ic_action_location"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
                 android:paddingRight="@dimen/normal_horizontal_padding"
-                android:visibility="@{user.location == null ? View.GONE : View.VISIBLE}">
+                android:text="@{user.location}"
+                android:enabled="false"
+                android:visibility="@{user.location == null ? View.GONE : View.VISIBLE}"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_location_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.location}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_web"
+            <TextView
+                android:id="@+id/tv_web"
+                style="@style/UserCountsActionItem"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_action_web"
                 android:onClick="@{() -> actionHandler.openWeb(user.links.web)}"
-                android:orientation="horizontal"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
                 android:paddingRight="@dimen/normal_horizontal_padding"
-                android:visibility="@{user.links.web == null ? View.GONE : View.VISIBLE}">
+                android:text="@{user.links.web}"
+                android:visibility="@{user.links.web == null ? View.GONE : View.VISIBLE}"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_web_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.links.web}"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_twitter"
+            <TextView
+                android:id="@+id/tv_twitter"
+                style="@style/UserCountsActionItem"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_action_twitter"
                 android:onClick="@{() -> actionHandler.openTwitter(user.links.twitter)}"
-                android:orientation="horizontal"
                 android:paddingLeft="@dimen/normal_horizontal_padding"
                 android:paddingRight="@dimen/normal_horizontal_padding"
-                android:visibility="@{user.links.twitter == null ? View.GONE : View.VISIBLE}">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_twitter_24dp"
-                    tools:ignore="ContentDescription"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/normal_horizontal_margin"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:text="@{user.links.twitter}"/>
-            </LinearLayout>
+                android:text="@{user.links.twitter}"
+                android:visibility="@{user.links.twitter == null ? View.GONE : View.VISIBLE}"/>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </layout>

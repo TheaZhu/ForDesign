@@ -21,6 +21,10 @@ public interface BucketsContract {
 
         void setLoadingError();
 
+        void showEmptyLayout(@StringRes int resId);
+
+        void hideEmptyLayout();
+
         void showBuckets(List<DribbbleBucket> buckets);
 
         void insertBuckets(List<DribbbleBucket> buckets);

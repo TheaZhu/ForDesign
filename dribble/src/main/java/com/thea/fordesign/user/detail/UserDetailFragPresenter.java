@@ -37,6 +37,11 @@ public class UserDetailFragPresenter implements UserDetailContract.SubPresenter 
     }
 
     @Override
+    public void openMembers(@NonNull String membersUrl) {
+        mDetailView.showMembersUi(membersUrl);
+    }
+
+    @Override
     public void openFollowers(@NonNull String followersUrl) {
         mDetailView.showFollowersUi(followersUrl);
     }

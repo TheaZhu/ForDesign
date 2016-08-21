@@ -34,14 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_up"
-                android:onClick="@{() -> actionHandler.signUp()}"/>
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:onClick="@{() -> actionHandler.openAbout()}"
+                android:text="@string/action_about"/>
+
+            <TextView
+                style="@style/SettingsActionItem"
+                android:layout_marginTop="@dimen/normal_vertical_margin"
+                android:gravity="center"
+                android:onClick="@{() -> actionHandler.signUp()}"
+                android:text="@string/action_sign_up"
+                android:textSize="17sp"/>
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

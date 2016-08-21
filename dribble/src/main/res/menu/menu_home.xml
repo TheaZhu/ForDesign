@@ -5,42 +5,42 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@mipmap/ic_home_black_24dp"
-            android:title="@string/home"/>
+            android:title="@string/nav_home"/>
 
         <item
             android:id="@+id/nav_my_shots"
             android:icon="@mipmap/ic_shot_black_24dp"
-            android:title="@string/my_shots"/>
+            android:title="@string/nav_my_shots"/>
 
         <item
             android:id="@+id/nav_my_likes"
             android:icon="@mipmap/ic_favorite_black_24dp"
-            android:title="@string/my_likes"/>
+            android:title="@string/nav_my_likes"/>
 
         <item
             android:id="@+id/nav_my_buckets"
             android:icon="@mipmap/ic_bucket_black_24dp"
-            android:title="@string/my_buckets"/>
+            android:title="@string/nav_my_buckets"/>
 
         <item
             android:id="@+id/nav_my_projects"
             android:icon="@mipmap/ic_project_black_24dp"
-            android:title="@string/my_projects"/>
+            android:title="@string/nav_my_projects"/>
 
         <item
             android:id="@+id/nav_my_following"
             android:icon="@mipmap/ic_following_black_24dp"
-            android:title="@string/my_following"/>
+            android:title="@string/nav_my_following"/>
 
         <item
             android:id="@+id/nav_my_followers"
             android:icon="@mipmap/ic_follower_black_24dp"
-            android:title="@string/my_followers"/>
+            android:title="@string/nav_my_followers"/>
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@mipmap/ic_settings_black_24dp"
-            android:title="@string/settings"/>
+            android:title="@string/nav_settings"/>
     </group>
 
 

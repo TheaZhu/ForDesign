@@ -17,12 +17,12 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.design.widget.CollapsingToolbarLayout
@@ -52,7 +52,7 @@
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.6"
                     tools:ignore="ContentDescription"
-                    tools:src="@mipmap/ic_dribbble_square"/>
+                    tools:src="@mipmap/default_user_avatar"/>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"

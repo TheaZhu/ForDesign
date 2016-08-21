@@ -5,6 +5,7 @@ import android.support.annotation.StringRes;
 
 import com.thea.fordesign.base.BaseView;
 import com.thea.fordesign.bean.DribbbleShot;
+import com.thea.fordesign.bean.DribbbleUser;
 import com.thea.fordesign.shot.ShotItemPresenter;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface ShotsContract {
 
         void insertShots(List<DribbbleShot> shots);
 
-        void showShotDetailsUi(int shotId, String imageUrl, android.view.View v);
+        void showShotDetailsUi(int shotId, String imageUrl, DribbbleUser user, android.view.View v);
 
         void showUserDetailsUi(int userId);
 

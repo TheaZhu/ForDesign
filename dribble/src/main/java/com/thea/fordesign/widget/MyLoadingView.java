@@ -19,7 +19,7 @@ public class MyLoadingView {
     private boolean mEnableClick = true;
 
     public MyLoadingView(Context context, ViewGroup parent) {
-        mView = LayoutInflater.from(context).inflate(R.layout.loading_layout, parent, false);
+        mView = LayoutInflater.from(context).inflate(R.layout.layout_loading, parent, false);
         mBallLoadingView = (BallLoadingView) mView.findViewById(R.id.blv);
         mMessage = (TextView) mView.findViewById(R.id.tv_loading_message);
     }
