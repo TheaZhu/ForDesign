@@ -161,38 +161,48 @@ public class MainActivity extends BaseActivity implements NavigationView
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_my_shots:
+                if (checkSignIn())
+                    showMyShots();
+                break;
+            case R.id.nav_my_projects:
+                if (checkSignIn())
+                    showMyProjects();
+                break;
+            case R.id.nav_my_buckets:
+                if (checkSignIn())
+                    showMyBuckets();
+                break;
+            case R.id.nav_my_likes:
+                if (checkSignIn())
+                    showMyLikes();
+                break;
+            case R.id.nav_my_followers:
+                if (checkSignIn())
+                    showMyFollowers();
+                break;
+            case R.id.nav_my_following:
+                if (checkSignIn())
+                    showMyFollowings();
+                break;
+            case R.id.nav_settings:
+                showSettings();
+                break;
+            default:
+                mDrawerLayout.closeDrawers();
+                break;
+        }
+        item.setChecked(true);
+        return true;
+    }
+
+    private boolean checkSignIn() {
         if (!userModel.getUserSignIn() || userModel.getDribbbleUserAccessToken() == null) {
             trySignIn();
-        } else {
-            switch (item.getItemId()) {
-                case R.id.nav_my_shots:
-                    showMyShots();
-                    break;
-                case R.id.nav_my_projects:
-                    showMyProjects();
-                    break;
-                case R.id.nav_my_buckets:
-                    showMyBuckets();
-                    break;
-                case R.id.nav_my_likes:
-                    showMyLikes();
-                    break;
-                case R.id.nav_my_followers:
-                    showMyFollowers();
-                    break;
-                case R.id.nav_my_following:
-                    showMyFollowings();
-                    break;
-                case R.id.nav_settings:
-                    showSettings();
-                    break;
-                default:
-                    mDrawerLayout.closeDrawers();
-                    break;
-            }
-            item.setChecked(true);
-        }
-        return true;
+            return false;
+        } else
+            return true;
     }
 
     private void trySignIn() {
