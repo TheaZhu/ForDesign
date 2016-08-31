@@ -34,7 +34,7 @@ public class DribbbleConstant {
 
     // default: any type
     public static final String SHOT_LIST_ANY = "any";
-    public static final String SHOT_LIST_ANIMATED = "gif";
+    public static final String SHOT_LIST_ANIMATED = "animated";
     public static final String SHOT_LIST_ATTACHMENT = "attachments";
     public static final String SHOT_LIST_DEBUT = "debuts";
     public static final String SHOT_LIST_PLAYOFF = "playoffs";
