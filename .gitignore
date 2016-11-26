@@ -5,3 +5,9 @@ build
 local.properties
 .DS_Store
 /captures
+
+/.idea
+/.gradle
+/build
+.gitignore
+keystore.jks

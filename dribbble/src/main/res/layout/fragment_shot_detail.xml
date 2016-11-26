@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data class=".databinding.ShotDetailFragBinding">
+
+        <import type="android.text.Html"/>
+
+        <variable
+            name="shot"
+            type="com.thea.fordesign.bean.DribbbleShot"/>
+
+        <variable
+            name="actionHandler"
+            type="com.thea.fordesign.shot.detail.ShotDetailContract.Presenter"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/cv_designer"
+            layout="@layout/item_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            app:actionHandler="@{actionHandler}"
+            app:user="@{shot.user}"/>
+
+        <include
+            android:id="@+id/ll_actions"
+            layout="@layout/layout_shot_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_designer"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            app:actionHandler="@{actionHandler}"
+            app:shot="@{shot}"/>
+
+        <TextView
+            android:id="@+id/tv_shot_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/ll_actions"
+            android:layout_marginLeft="@dimen/normal_horizontal_margin"
+            android:layout_marginRight="@dimen/normal_horizontal_margin"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:text="@{shot.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Name"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_shot_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_shot_title"
+            android:layout_marginLeft="@dimen/normal_horizontal_margin"
+            android:layout_marginRight="@dimen/normal_horizontal_margin"
+            android:autoLink="all"
+            android:overScrollMode="ifContentScrolls"
+            android:text="@{Html.fromHtml(shot.description ?? @string/default_shot_description)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Description"
+            android:textColorLink="@drawable/tv_color_link"/>
+
+
+        <!--<include layout="@layout/layout_shot_actions"
+            android:id="@+id/ll_actions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_shot_description"/>-->
+
+        <!--<ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_more_vert_black_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/tv_shot_title"
+            android:scaleType="center"
+            android:onClick="@{() -> actionHandler.moreActions()}"
+            tools:ignore="ContentDescription"/>-->
+
+        <!--<include
+            layout="@layout/layout_shot_actions"/>-->
+
+        <!--<include
+            android:id="@+id/cv_counts"
+            layout="@layout/card_shot_counts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_designer"
+            app:actionHandler="@{actionHandler}"
+            app:shot="@{shot}"/>-->
+
+        <!--<View
+            android:id="@+id/view_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/cv_designer"
+            android:layout_marginLeft="@dimen/normal_horizontal_margin"
+            android:layout_marginRight="@dimen/normal_horizontal_margin"
+            android:layout_marginTop="@dimen/small_vertical_margin"
+            android:background="@color/grey_200"/>-->
+
+
+    </RelativeLayout>
+</layout>
